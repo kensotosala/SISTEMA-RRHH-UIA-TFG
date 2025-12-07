@@ -1,0 +1,12 @@
+[
+  {
+    "ContainingType": "PresentationLayer.Controllers.PuestosController",
+    "Method": "Get",
+    "RelativePath": "api/Puestos",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  }
+]

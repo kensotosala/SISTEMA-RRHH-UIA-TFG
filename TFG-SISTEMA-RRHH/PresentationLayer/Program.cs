@@ -1,3 +1,6 @@
+using DataAccessLayer.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -5,6 +8,16 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
+                               ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+
+builder.Services.AddDbContext<SistemaRhContext>(options =>
+    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));}
+
+// AutoMapper
+builder.Services.AddAutoMapper(typeof(Program));
+
 
 var app = builder.Build();
 

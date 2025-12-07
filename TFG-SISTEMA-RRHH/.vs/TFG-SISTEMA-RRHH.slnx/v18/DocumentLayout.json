@@ -3,16 +3,12 @@
   "WorkspaceRootPath": "D:\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{447460D3-5972-4C75-9604-39F1BDC6B47B}|DataAccessLayer\\DataAccessLayer.csproj|d:\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\dataaccesslayer\\dataaccesslayer.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{447460D3-5972-4C75-9604-39F1BDC6B47B}|DataAccessLayer\\DataAccessLayer.csproj|solutionrelative:dataaccesslayer\\dataaccesslayer.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+      "AbsoluteMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|d:\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\businesslogiclayer\\managers\\puestomanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|solutionrelative:businesslogiclayer\\managers\\puestomanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{447460D3-5972-4C75-9604-39F1BDC6B47B}|DataAccessLayer\\DataAccessLayer.csproj|d:\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\dataaccesslayer\\data\\sistemarhcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{447460D3-5972-4C75-9604-39F1BDC6B47B}|DataAccessLayer\\DataAccessLayer.csproj|solutionrelative:dataaccesslayer\\data\\sistemarhcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{447460D3-5972-4C75-9604-39F1BDC6B47B}|DataAccessLayer\\DataAccessLayer.csproj|d:\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\dataaccesslayer\\entities\\aguinaldos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{447460D3-5972-4C75-9604-39F1BDC6B47B}|DataAccessLayer\\DataAccessLayer.csproj|solutionrelative:dataaccesslayer\\entities\\aguinaldos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|d:\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\businesslogiclayer\\dtos\\puestodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|solutionrelative:businesslogiclayer\\dtos\\puestodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,41 +22,28 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Aguinaldos.cs",
-              "DocumentMoniker": "D:\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\DataAccessLayer\\Entities\\Aguinaldos.cs",
-              "RelativeDocumentMoniker": "DataAccessLayer\\Entities\\Aguinaldos.cs",
-              "ToolTip": "D:\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\DataAccessLayer\\Entities\\Aguinaldos.cs",
-              "RelativeToolTip": "DataAccessLayer\\Entities\\Aguinaldos.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 1,
+              "Title": "PuestoDTO.cs",
+              "DocumentMoniker": "D:\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\DTOs\\PuestoDTO.cs",
+              "RelativeDocumentMoniker": "BusinessLogicLayer\\DTOs\\PuestoDTO.cs",
+              "ToolTip": "D:\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\DTOs\\PuestoDTO.cs",
+              "RelativeToolTip": "BusinessLogicLayer\\DTOs\\PuestoDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-07T03:10:23.803Z",
+              "WhenOpened": "2025-12-07T04:08:33.947Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "DataAccessLayer",
-              "DocumentMoniker": "D:\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\DataAccessLayer\\DataAccessLayer.csproj",
-              "RelativeDocumentMoniker": "DataAccessLayer\\DataAccessLayer.csproj",
-              "ToolTip": "D:\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\DataAccessLayer\\DataAccessLayer.csproj",
-              "RelativeToolTip": "DataAccessLayer\\DataAccessLayer.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-12-07T03:08:54.938Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "SistemaRhContext.cs",
-              "DocumentMoniker": "D:\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\DataAccessLayer\\Data\\SistemaRhContext.cs",
-              "RelativeDocumentMoniker": "DataAccessLayer\\Data\\SistemaRhContext.cs",
-              "ToolTip": "D:\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\DataAccessLayer\\Data\\SistemaRhContext.cs",
-              "RelativeToolTip": "DataAccessLayer\\Data\\SistemaRhContext.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Title": "PuestoManager.cs",
+              "DocumentMoniker": "D:\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\Managers\\PuestoManager.cs",
+              "RelativeDocumentMoniker": "BusinessLogicLayer\\Managers\\PuestoManager.cs",
+              "ToolTip": "D:\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\Managers\\PuestoManager.cs",
+              "RelativeToolTip": "BusinessLogicLayer\\Managers\\PuestoManager.cs",
+              "ViewState": "AgIAACAAAAAAAAAAAAAgwDAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-07T03:07:23.664Z",
+              "WhenOpened": "2025-12-07T03:59:16.209Z",
               "EditorCaption": ""
             }
           ]
