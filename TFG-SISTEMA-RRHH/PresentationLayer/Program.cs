@@ -1,23 +1,36 @@
+using BusinessLogicLayer.Profiles;
 using DataAccessLayer.Data;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
                                ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
 builder.Services.AddDbContext<SistemaRhContext>(options =>
-    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));}
+    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
-// AutoMapper
-builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddLogging();
 
+builder.Services.AddAutoMapper(
+    cfg =>
+    {
+        cfg.AddProfile(new MappingProfile());
+    });
+
+// Registrar dependencias
+builder.Services.AddScoped<DataAccessLayer.Interfaces.IPuestosRepository,
+                           DataAccessLayer.Repositories.PuestoRepository>();
+
+builder.Services.AddScoped<BusinessLogicLayer.Interfaces.IPuestosManager, 
+                           BusinessLogicLayer.Managers.PuestoManager>();
+
+builder.Services.AddScoped<ApplicationLayer.Interfaces.IPuestoService, 
+                           ApplicationLayer.Services.PuestoService>();
 
 var app = builder.Build();
 
@@ -28,9 +41,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();

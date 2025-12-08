@@ -8,11 +8,7 @@ namespace BusinessLogicLayer.Profiles
     {
         public MappingProfile()
         {
-            // Mapea entre la entidad Puestos y el DTO PuestoDto
-            CreateMap<Puestos, PuestoDTO>().ReverseMap();
-
-            // Si tienes un DTO de creación o actualización:
-            // CreateMap<PuestoCreateDto, Puestos>();
+            CreateMap<Puestos, PuestoDto>().ReverseMap();
         }
     }
 }

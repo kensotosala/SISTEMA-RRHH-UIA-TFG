@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace BusinessLogicLayer.DTOs
+﻿namespace BusinessLogicLayer.DTOs
 {
-    public class PuestoDTO
+    public class PuestoDto
     {
         public int IdPuesto { get; set; }
         public string NombrePuesto { get; set; } = null!;

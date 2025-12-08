@@ -1,12 +1,44 @@
 [
   {
     "ContainingType": "PresentationLayer.Controllers.PuestosController",
-    "Method": "Get",
+    "Method": "GetAll",
     "RelativePath": "api/Puestos",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PresentationLayer.Controllers.PuestosController",
+    "Method": "CrearPuesto",
+    "RelativePath": "api/Puestos",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "puestoDto",
+        "Type": "BusinessLogicLayer.DTOs.PuestoDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PresentationLayer.Controllers.PuestosController",
+    "Method": "GetById",
+    "RelativePath": "api/Puestos/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   }
 ]

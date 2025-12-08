@@ -1,0 +1,16 @@
+D:\SISTEMA-RRHH-UIA-TFG\TFG-SISTEMA-RRHH\BusinessLogicLayer\obj\Debug\net10.0\BusinessLogicLayer.csproj.AssemblyReference.cache
+D:\SISTEMA-RRHH-UIA-TFG\TFG-SISTEMA-RRHH\BusinessLogicLayer\obj\Debug\net10.0\BusinessLogicLayer.GeneratedMSBuildEditorConfig.editorconfig
+D:\SISTEMA-RRHH-UIA-TFG\TFG-SISTEMA-RRHH\BusinessLogicLayer\obj\Debug\net10.0\BusinessLogicLayer.AssemblyInfoInputs.cache
+D:\SISTEMA-RRHH-UIA-TFG\TFG-SISTEMA-RRHH\BusinessLogicLayer\obj\Debug\net10.0\BusinessLogicLayer.AssemblyInfo.cs
+D:\SISTEMA-RRHH-UIA-TFG\TFG-SISTEMA-RRHH\BusinessLogicLayer\obj\Debug\net10.0\BusinessLogicLayer.csproj.CoreCompileInputs.cache
+D:\SISTEMA-RRHH-UIA-TFG\TFG-SISTEMA-RRHH\BusinessLogicLayer\obj\Debug\net10.0\BusinessLogicLayer.sourcelink.json
+D:\SISTEMA-RRHH-UIA-TFG\TFG-SISTEMA-RRHH\BusinessLogicLayer\bin\Debug\net10.0\BusinessLogicLayer.deps.json
+D:\SISTEMA-RRHH-UIA-TFG\TFG-SISTEMA-RRHH\BusinessLogicLayer\bin\Debug\net10.0\BusinessLogicLayer.dll
+D:\SISTEMA-RRHH-UIA-TFG\TFG-SISTEMA-RRHH\BusinessLogicLayer\bin\Debug\net10.0\BusinessLogicLayer.pdb
+D:\SISTEMA-RRHH-UIA-TFG\TFG-SISTEMA-RRHH\BusinessLogicLayer\bin\Debug\net10.0\DataAccessLayer.dll
+D:\SISTEMA-RRHH-UIA-TFG\TFG-SISTEMA-RRHH\BusinessLogicLayer\bin\Debug\net10.0\DataAccessLayer.pdb
+D:\SISTEMA-RRHH-UIA-TFG\TFG-SISTEMA-RRHH\BusinessLogicLayer\obj\Debug\net10.0\Business.450209FB.Up2Date
+D:\SISTEMA-RRHH-UIA-TFG\TFG-SISTEMA-RRHH\BusinessLogicLayer\obj\Debug\net10.0\BusinessLogicLayer.dll
+D:\SISTEMA-RRHH-UIA-TFG\TFG-SISTEMA-RRHH\BusinessLogicLayer\obj\Debug\net10.0\refint\BusinessLogicLayer.dll
+D:\SISTEMA-RRHH-UIA-TFG\TFG-SISTEMA-RRHH\BusinessLogicLayer\obj\Debug\net10.0\BusinessLogicLayer.pdb
+D:\SISTEMA-RRHH-UIA-TFG\TFG-SISTEMA-RRHH\BusinessLogicLayer\obj\Debug\net10.0\ref\BusinessLogicLayer.dll
