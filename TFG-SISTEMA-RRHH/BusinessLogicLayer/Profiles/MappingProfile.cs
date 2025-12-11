@@ -8,7 +8,9 @@ namespace BusinessLogicLayer.Profiles
     {
         public MappingProfile()
         {
-            CreateMap<Puestos, PuestoDto>().ReverseMap();
+            CreateMap<Puestos, PuestoDTO>();
+
+            CreateMap<PuestoDTO, Puestos>();
         }
     }
 }

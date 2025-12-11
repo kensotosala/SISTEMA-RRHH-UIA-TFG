@@ -32,17 +32,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/PuestoDto"
+                "$ref": "#/components/schemas/CrearPuestoDTO"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/PuestoDto"
+                "$ref": "#/components/schemas/CrearPuestoDTO"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/PuestoDto"
+                "$ref": "#/components/schemas/CrearPuestoDTO"
               }
             }
           },
@@ -80,12 +80,82 @@
             "description": "OK"
           }
         }
+      },
+      "put": {
+        "tags": [
+          "Puestos"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "pattern": "^-?(?:0|[1-9]\\d*)$",
+              "type": [
+                "integer",
+                "string"
+              ],
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ActualizarPuestoDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ActualizarPuestoDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ActualizarPuestoDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Puestos"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "pattern": "^-?(?:0|[1-9]\\d*)$",
+              "type": [
+                "integer",
+                "string"
+              ],
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
       }
     }
   },
   "components": {
     "schemas": {
-      "PuestoDto": {
+      "ActualizarPuestoDTO": {
         "type": "object",
         "properties": {
           "idPuesto": {
@@ -137,20 +207,53 @@
               "null",
               "boolean"
             ]
+          }
+        }
+      },
+      "CrearPuestoDTO": {
+        "type": "object",
+        "properties": {
+          "nombrePuesto": {
+            "type": "string"
           },
-          "fechaCreacion": {
+          "descripcion": {
             "type": [
               "null",
               "string"
-            ],
-            "format": "date-time"
+            ]
           },
-          "fechaModificacion": {
+          "nivelJerarquico": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
             "type": [
               "null",
+              "integer",
               "string"
             ],
-            "format": "date-time"
+            "format": "int32"
+          },
+          "salarioMinimo": {
+            "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?$",
+            "type": [
+              "null",
+              "number",
+              "string"
+            ],
+            "format": "double"
+          },
+          "salarioMaximo": {
+            "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?$",
+            "type": [
+              "null",
+              "number",
+              "string"
+            ],
+            "format": "double"
+          },
+          "estado": {
+            "type": [
+              "null",
+              "boolean"
+            ]
           }
         }
       }

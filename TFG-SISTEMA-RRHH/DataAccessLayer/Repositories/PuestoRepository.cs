@@ -1,13 +1,12 @@
-﻿using DataAccessLayer.Data;
-using DataAccessLayer.Entities;
-using DataAccessLayer.Interfaces;
-using Microsoft.EntityFrameworkCore;
-
-namespace DataAccessLayer.Repositories
+﻿namespace DataAccessLayer.Repositories
 {
+    using DataAccessLayer.Data;
+    using DataAccessLayer.Entities;
+    using DataAccessLayer.Interfaces;
+    using Microsoft.EntityFrameworkCore;
+
     public class PuestoRepository : IPuestosRepository
     {
-
         private readonly SistemaRhContext _context;
 
         public PuestoRepository(SistemaRhContext context)
@@ -22,15 +21,15 @@ namespace DataAccessLayer.Repositories
             return puesto;
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task<bool> DeleteAsync(int id)
         {
-            var puesto = await GetByIdAsync(id);
-            if (puesto != null) 
-            { 
-                _context.Puestos.Remove(puesto);
-                await _context.SaveChangesAsync();
-            }
+            var puesto = await _context.Puestos.FindAsync(id);
+            if (puesto == null)
+                return false;
 
+            _context.Puestos.Remove(puesto);
+            await _context.SaveChangesAsync();
+            return true;
         }
 
         public async Task<bool> ExistsAsync(int id)
@@ -43,14 +42,16 @@ namespace DataAccessLayer.Repositories
             return await _context.Puestos.ToListAsync();
         }
 
-        public async Task<Puestos?> GetByIdAsync(int ?id)
+        public async Task<Puestos?> GetByIdAsync(int id)
         {
             return await _context.Puestos.FindAsync(id);
         }
 
-        public Task UpdateAsync(Puestos puesto)
+        public async Task<bool> UpdateAsync(Puestos puesto)
         {
-            throw new NotImplementedException();
+            _context.Puestos.Update(puesto);
+            var affectedRows = await _context.SaveChangesAsync();
+            return affectedRows > 0;
         }
     }
 }

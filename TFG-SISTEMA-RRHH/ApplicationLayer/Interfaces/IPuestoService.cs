@@ -4,10 +4,14 @@ namespace ApplicationLayer.Interfaces
 {
     public interface IPuestoService
     {
-        Task<IEnumerable<PuestoDto>> GetAllPuestosAsync();
-        Task<PuestoDto> GetPuestoByIdAsync(int id);
-        Task<PuestoDto> CreatePuestoAsync(PuestoDto puesto);
-        Task UpdatePuestoAsync(int id, PuestoDto puesto);
-        Task DeletePuestoAsync(int id);
+        Task<IEnumerable<PuestoDTO>> GetAllPuestosAsync();
+
+        Task<PuestoDTO?> GetPuestoByIdAsync(int id);
+
+        Task<PuestoDTO> CreatePuestoAsync(CrearPuestoDTO puestoDto);
+
+        Task<bool> UpdatePuestoAsync(int id, ActualizarPuestoDTO puestoDto);
+
+        Task<bool> DeletePuestoAsync(int id);
     }
 }

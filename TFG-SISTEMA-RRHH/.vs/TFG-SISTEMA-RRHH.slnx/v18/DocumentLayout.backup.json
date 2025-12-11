@@ -3,24 +3,20 @@
   "WorkspaceRootPath": "D:\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A9FCCEB3-DD88-F8C0-89A3-FD31A7C54F23}|DataAccessLayer\\DataAccessLayer.csproj|d:\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\dataaccesslayer\\entities\\puestos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A9FCCEB3-DD88-F8C0-89A3-FD31A7C54F23}|DataAccessLayer\\DataAccessLayer.csproj|solutionrelative:dataaccesslayer\\entities\\puestos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|d:\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\businesslogiclayer\\interfaces\\ipuestosmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|solutionrelative:businesslogiclayer\\interfaces\\ipuestosmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|d:\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\businesslogiclayer\\dtos\\puestodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|solutionrelative:businesslogiclayer\\dtos\\puestodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{51B4CFD2-5728-0F00-60C4-E24DAE522468}|PresentationLayer\\PresentationLayer.csproj|d:\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\presentationlayer\\controllers\\puestoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{51B4CFD2-5728-0F00-60C4-E24DAE522468}|PresentationLayer\\PresentationLayer.csproj|solutionrelative:presentationlayer\\controllers\\puestoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{6452748F-3DA5-4BBD-AC09-A356E471643A}|ApplicationLayer\\ApplicationLayer.csproj|d:\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\applicationlayer\\interfaces\\ipuestoservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6452748F-3DA5-4BBD-AC09-A356E471643A}|ApplicationLayer\\ApplicationLayer.csproj|solutionrelative:applicationlayer\\interfaces\\ipuestoservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|d:\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\businesslogiclayer\\managers\\puestomanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|solutionrelative:businesslogiclayer\\managers\\puestomanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|d:\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\businesslogiclayer\\interfaces\\ipuestosmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|solutionrelative:businesslogiclayer\\interfaces\\ipuestosmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|d:\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\businesslogiclayer\\profiles\\mappingprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -31,12 +27,8 @@
       "RelativeMoniker": "D:0:0:{6452748F-3DA5-4BBD-AC09-A356E471643A}|ApplicationLayer\\ApplicationLayer.csproj|solutionrelative:applicationlayer\\services\\puestoservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{51B4CFD2-5728-0F00-60C4-E24DAE522468}|PresentationLayer\\PresentationLayer.csproj|d:\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\presentationlayer\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{51B4CFD2-5728-0F00-60C4-E24DAE522468}|PresentationLayer\\PresentationLayer.csproj|solutionrelative:presentationlayer\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6452748F-3DA5-4BBD-AC09-A356E471643A}|ApplicationLayer\\ApplicationLayer.csproj|d:\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\applicationlayer\\applicationlayer.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{6452748F-3DA5-4BBD-AC09-A356E471643A}|ApplicationLayer\\ApplicationLayer.csproj|solutionrelative:applicationlayer\\applicationlayer.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+      "AbsoluteMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|d:\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\businesslogiclayer\\dtos\\puestodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|solutionrelative:businesslogiclayer\\dtos\\puestodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -55,117 +47,89 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Puestos.cs",
-              "DocumentMoniker": "D:\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\DataAccessLayer\\Entities\\Puestos.cs",
-              "RelativeDocumentMoniker": "DataAccessLayer\\Entities\\Puestos.cs",
-              "ToolTip": "D:\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\DataAccessLayer\\Entities\\Puestos.cs",
-              "RelativeToolTip": "DataAccessLayer\\Entities\\Puestos.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABsAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-08T04:23:54.217Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
               "Title": "PuestosController.cs",
               "DocumentMoniker": "D:\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\PresentationLayer\\Controllers\\PuestosController.cs",
               "RelativeDocumentMoniker": "PresentationLayer\\Controllers\\PuestosController.cs",
               "ToolTip": "D:\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\PresentationLayer\\Controllers\\PuestosController.cs",
               "RelativeToolTip": "PresentationLayer\\Controllers\\PuestosController.cs",
-              "ViewState": "AgIAADAAAAAAAAAAAAAUwEQAAABZAAAAAAAAAA==",
+              "ViewState": "AgIAAGMAAAAAAAAAAAAowHIAAAA1AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-08T04:05:44.555Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "Program.cs",
-              "DocumentMoniker": "D:\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\PresentationLayer\\Program.cs",
-              "RelativeDocumentMoniker": "PresentationLayer\\Program.cs",
-              "ToolTip": "D:\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\PresentationLayer\\Program.cs",
-              "RelativeToolTip": "PresentationLayer\\Program.cs",
-              "ViewState": "AgIAABcAAAAAAAAAAAAswC4AAAAKAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-08T03:58:28.001Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "ApplicationLayer.csproj",
-              "DocumentMoniker": "D:\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\ApplicationLayer\\ApplicationLayer.csproj",
-              "RelativeDocumentMoniker": "ApplicationLayer\\ApplicationLayer.csproj",
-              "ToolTip": "D:\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\ApplicationLayer\\ApplicationLayer.csproj",
-              "RelativeToolTip": "ApplicationLayer\\ApplicationLayer.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-12-08T03:53:44.019Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "MappingProfile.cs",
-              "DocumentMoniker": "D:\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\Profiles\\MappingProfile.cs",
-              "RelativeDocumentMoniker": "BusinessLogicLayer\\Profiles\\MappingProfile.cs",
-              "ToolTip": "D:\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\Profiles\\MappingProfile.cs",
-              "RelativeToolTip": "BusinessLogicLayer\\Profiles\\MappingProfile.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-08T03:52:07.226Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "PuestoManager.cs",
-              "DocumentMoniker": "D:\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\Managers\\PuestoManager.cs",
-              "RelativeDocumentMoniker": "BusinessLogicLayer\\Managers\\PuestoManager.cs",
-              "ToolTip": "D:\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\Managers\\PuestoManager.cs",
-              "RelativeToolTip": "BusinessLogicLayer\\Managers\\PuestoManager.cs",
-              "ViewState": "AgIAAAsAAAAAAAAAAAAYwDEAAAAyAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-08T03:52:03.301Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "PuestoDto.cs",
-              "DocumentMoniker": "D:\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\DTOs\\PuestoDto.cs",
-              "RelativeDocumentMoniker": "BusinessLogicLayer\\DTOs\\PuestoDto.cs",
-              "ToolTip": "D:\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\DTOs\\PuestoDto.cs",
-              "RelativeToolTip": "BusinessLogicLayer\\DTOs\\PuestoDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-08T03:51:12.975Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "PuestoService.cs",
-              "DocumentMoniker": "D:\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\ApplicationLayer\\Services\\PuestoService.cs",
-              "RelativeDocumentMoniker": "ApplicationLayer\\Services\\PuestoService.cs",
-              "ToolTip": "D:\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\ApplicationLayer\\Services\\PuestoService.cs",
-              "RelativeToolTip": "ApplicationLayer\\Services\\PuestoService.cs",
-              "ViewState": "AgIAABYAAAAAAAAAAAAYwBYAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-08T03:50:48.993Z",
+              "WhenOpened": "2025-12-11T03:43:02.752Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "IPuestoService.cs",
+              "DocumentMoniker": "D:\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\ApplicationLayer\\Interfaces\\IPuestoService.cs",
+              "RelativeDocumentMoniker": "ApplicationLayer\\Interfaces\\IPuestoService.cs",
+              "ToolTip": "D:\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\ApplicationLayer\\Interfaces\\IPuestoService.cs",
+              "RelativeToolTip": "ApplicationLayer\\Interfaces\\IPuestoService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-11T03:41:32.726Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "IPuestosManager.cs",
               "DocumentMoniker": "D:\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\Interfaces\\IPuestosManager.cs",
               "RelativeDocumentMoniker": "BusinessLogicLayer\\Interfaces\\IPuestosManager.cs",
               "ToolTip": "D:\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\Interfaces\\IPuestosManager.cs",
               "RelativeToolTip": "BusinessLogicLayer\\Interfaces\\IPuestosManager.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAdAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-08T03:50:03.627Z",
+              "WhenOpened": "2025-12-11T03:41:01.926Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "MappingProfile.cs",
+              "DocumentMoniker": "D:\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\Profiles\\MappingProfile.cs",
+              "RelativeDocumentMoniker": "BusinessLogicLayer\\Profiles\\MappingProfile.cs",
+              "ToolTip": "D:\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\Profiles\\MappingProfile.cs",
+              "RelativeToolTip": "BusinessLogicLayer\\Profiles\\MappingProfile.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-11T03:40:33.732Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "PuestoManager.cs",
+              "DocumentMoniker": "D:\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\Managers\\PuestoManager.cs",
+              "RelativeDocumentMoniker": "BusinessLogicLayer\\Managers\\PuestoManager.cs",
+              "ToolTip": "D:\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\Managers\\PuestoManager.cs",
+              "RelativeToolTip": "BusinessLogicLayer\\Managers\\PuestoManager.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-11T03:40:13.028Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "PuestoService.cs",
+              "DocumentMoniker": "D:\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\ApplicationLayer\\Services\\PuestoService.cs",
+              "RelativeDocumentMoniker": "ApplicationLayer\\Services\\PuestoService.cs",
+              "ToolTip": "D:\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\ApplicationLayer\\Services\\PuestoService.cs",
+              "RelativeToolTip": "ApplicationLayer\\Services\\PuestoService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-11T03:40:03.924Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "PuestoDTO.cs",
+              "DocumentMoniker": "D:\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\DTOs\\PuestoDTO.cs",
+              "RelativeDocumentMoniker": "BusinessLogicLayer\\DTOs\\PuestoDTO.cs",
+              "ToolTip": "D:\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\DTOs\\PuestoDTO.cs",
+              "RelativeToolTip": "BusinessLogicLayer\\DTOs\\PuestoDTO.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAwwCQAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-11T03:39:52.753Z"
             }
           ]
         }

@@ -1,33 +1,29 @@
-﻿namespace ApplicationLayer.Services
-{
-    using ApplicationLayer.Interfaces;
-    using AutoMapper;
-    using BusinessLogicLayer.DTOs;
-    using BusinessLogicLayer.Interfaces;
-    using Microsoft.Extensions.Logging;
+﻿using ApplicationLayer.Interfaces;
+using BusinessLogicLayer.DTOs;
+using BusinessLogicLayer.Interfaces;
+using Microsoft.Extensions.Logging;
 
+namespace ApplicationLayer.Services
+{
     public class PuestoService : IPuestoService
     {
         private readonly IPuestosManager _puestoManager;
-
-        private readonly IMapper _mapper;
-
         private readonly ILogger<PuestoService> _logger;
 
-        public PuestoService(IPuestosManager puestoManager, IMapper mapper, ILogger<PuestoService> logger)
+        // SIN AutoMapper - ya que los DTOs se comparten
+        public PuestoService(IPuestosManager puestoManager, ILogger<PuestoService> logger)
         {
             _puestoManager = puestoManager;
-            _mapper = mapper;
             _logger = logger;
         }
 
-        public async Task<IEnumerable<PuestoDto>> GetAllPuestosAsync()
+        public async Task<IEnumerable<PuestoDTO>> GetAllPuestosAsync()
         {
             try
             {
+                // PuestoManager ya devuelve PuestoDTO
                 var result = await _puestoManager.GetAllPuestosAsync();
-
-                return result?.ToList() ?? [];
+                return result?.ToList() ?? new List<PuestoDTO>();
             }
             catch (Exception ex)
             {
@@ -36,27 +32,86 @@
             }
         }
 
-        public async Task<PuestoDto> GetPuestoByIdAsync(int id)
+        public async Task<PuestoDTO?> GetPuestoByIdAsync(int id)
         {
-            return await _puestoManager.GetPuestoByIdAsync(id);
+            try
+            {
+                return await _puestoManager.GetPuestoByIdAsync(id);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error en GetPuestoByIdAsync con ID={id}");
+                throw;
+            }
         }
 
-        public async Task<PuestoDto> CreatePuestoAsync(PuestoDto puestoDto)
+        public async Task<PuestoDTO> CreatePuestoAsync(CrearPuestoDTO puestoDto)
         {
-            return await _puestoManager.CreatePuestoAsync(puestoDto);
+            try
+            {
+                // Convierte CrearPuestoDTO a PuestoDTO
+                var puesto = new PuestoDTO
+                {
+                    NombrePuesto = puestoDto.NombrePuesto,
+                    Descripcion = puestoDto.Descripcion,
+                    NivelJerarquico = puestoDto.NivelJerarquico,
+                    SalarioMinimo = puestoDto.SalarioMinimo,
+                    SalarioMaximo = puestoDto.SalarioMaximo,
+                    Estado = puestoDto.Estado,
+                    FechaCreacion = DateTime.UtcNow
+                };
+
+                return await _puestoManager.CreatePuestoAsync(puesto);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error en CreatePuestoAsync");
+                throw;
+            }
         }
 
-        public async Task UpdatePuestoAsync(int id, PuestoDto puestoDto)
+        public async Task<bool> UpdatePuestoAsync(int id, ActualizarPuestoDTO puestoDto)
         {
             if (id != puestoDto.IdPuesto)
                 throw new ArgumentException("ID no coincide");
 
-            await _puestoManager.UpdatePuestoAsync(puestoDto);
+            try
+            {
+                // Convierte ActualizarPuestoDTO a PuestoDTO
+                var puesto = new PuestoDTO
+                {
+                    IdPuesto = puestoDto.IdPuesto,
+                    NombrePuesto = puestoDto.NombrePuesto,
+                    Descripcion = puestoDto.Descripcion,
+                    NivelJerarquico = puestoDto.NivelJerarquico,
+                    SalarioMinimo = puestoDto.SalarioMinimo,
+                    SalarioMaximo = puestoDto.SalarioMaximo,
+                    Estado = puestoDto.Estado,
+                    FechaModificacion = DateTime.UtcNow
+                };
+
+                await _puestoManager.UpdatePuestoAsync(puesto);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error en UpdatePuestoAsync con ID={id}");
+                return false;
+            }
         }
 
-        public async Task DeletePuestoAsync(int id)
+        public async Task<bool> DeletePuestoAsync(int id)
         {
-            await _puestoManager.DeletePuestoAsync(id);
+            try
+            {
+                await _puestoManager.DeletePuestoAsync(id);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error en DeletePuestoAsync con ID={id}");
+                return false;
+            }
         }
     }
 }

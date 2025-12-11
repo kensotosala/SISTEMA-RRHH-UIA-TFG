@@ -19,7 +19,7 @@
     "Parameters": [
       {
         "Name": "puestoDto",
-        "Type": "BusinessLogicLayer.DTOs.PuestoDto",
+        "Type": "BusinessLogicLayer.DTOs.CrearPuestoDTO",
         "IsRequired": true
       }
     ],
@@ -30,6 +30,43 @@
     "Method": "GetById",
     "RelativePath": "api/Puestos/{id}",
     "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PresentationLayer.Controllers.PuestosController",
+    "Method": "ActualizarPuesto",
+    "RelativePath": "api/Puestos/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "puestoDto",
+        "Type": "BusinessLogicLayer.DTOs.ActualizarPuestoDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PresentationLayer.Controllers.PuestosController",
+    "Method": "EliminarPuesto",
+    "RelativePath": "api/Puestos/{id}",
+    "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
     "Parameters": [

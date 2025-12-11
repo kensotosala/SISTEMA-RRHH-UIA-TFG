@@ -1,13 +1,14 @@
-﻿using BusinessLogicLayer.DTOs;
+﻿
+using BusinessLogicLayer.DTOs;
 
 namespace BusinessLogicLayer.Interfaces
 {
     public interface IPuestosManager
     {
-        Task<IEnumerable<PuestoDto>> GetAllPuestosAsync();
-        Task<PuestoDto> GetPuestoByIdAsync(int id);
-        Task<PuestoDto> CreatePuestoAsync(PuestoDto puestoDto);
-        Task UpdatePuestoAsync(PuestoDto puestoDto);
+        Task<IEnumerable<PuestoDTO>> GetAllPuestosAsync();
+        Task<PuestoDTO> GetPuestoByIdAsync(int id);
+        Task<PuestoDTO> CreatePuestoAsync(PuestoDTO puestoDto);
+        Task UpdatePuestoAsync(PuestoDTO puestoDto);
         Task DeletePuestoAsync(int id);
     }
 }

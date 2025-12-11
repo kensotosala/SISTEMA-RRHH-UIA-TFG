@@ -1,3 +1,4 @@
+D:\SISTEMA-RRHH-UIA-TFG\TFG-SISTEMA-RRHH\ApplicationLayer\obj\Debug\net10.0\ApplicationLayer.csproj.AssemblyReference.cache
 D:\SISTEMA-RRHH-UIA-TFG\TFG-SISTEMA-RRHH\ApplicationLayer\obj\Debug\net10.0\ApplicationLayer.GeneratedMSBuildEditorConfig.editorconfig
 D:\SISTEMA-RRHH-UIA-TFG\TFG-SISTEMA-RRHH\ApplicationLayer\obj\Debug\net10.0\ApplicationLayer.AssemblyInfoInputs.cache
 D:\SISTEMA-RRHH-UIA-TFG\TFG-SISTEMA-RRHH\ApplicationLayer\obj\Debug\net10.0\ApplicationLayer.AssemblyInfo.cs
@@ -10,7 +11,6 @@ D:\SISTEMA-RRHH-UIA-TFG\TFG-SISTEMA-RRHH\ApplicationLayer\bin\Debug\net10.0\Busi
 D:\SISTEMA-RRHH-UIA-TFG\TFG-SISTEMA-RRHH\ApplicationLayer\bin\Debug\net10.0\DataAccessLayer.dll
 D:\SISTEMA-RRHH-UIA-TFG\TFG-SISTEMA-RRHH\ApplicationLayer\bin\Debug\net10.0\BusinessLogicLayer.pdb
 D:\SISTEMA-RRHH-UIA-TFG\TFG-SISTEMA-RRHH\ApplicationLayer\bin\Debug\net10.0\DataAccessLayer.pdb
-D:\SISTEMA-RRHH-UIA-TFG\TFG-SISTEMA-RRHH\ApplicationLayer\obj\Debug\net10.0\ApplicationLayer.csproj.AssemblyReference.cache
 D:\SISTEMA-RRHH-UIA-TFG\TFG-SISTEMA-RRHH\ApplicationLayer\obj\Debug\net10.0\Applicat.033E422A.Up2Date
 D:\SISTEMA-RRHH-UIA-TFG\TFG-SISTEMA-RRHH\ApplicationLayer\obj\Debug\net10.0\ApplicationLayer.dll
 D:\SISTEMA-RRHH-UIA-TFG\TFG-SISTEMA-RRHH\ApplicationLayer\obj\Debug\net10.0\refint\ApplicationLayer.dll
