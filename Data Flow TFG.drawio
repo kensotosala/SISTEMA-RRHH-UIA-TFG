@@ -1,0 +1,70 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36" version="29.2.9">
+  <diagram name="Page-1" id="I4MXG9PJ5IaofNEimyhT">
+    <mxGraphModel dx="1489" dy="763" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="9ZSRAJtdXUEw9_LBAxhM-3" edge="1" parent="1" source="9ZSRAJtdXUEw9_LBAxhM-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="9ZSRAJtdXUEw9_LBAxhM-2" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="9ZSRAJtdXUEw9_LBAxhM-1" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="Inicio" vertex="1">
+          <mxGeometry height="80" width="80" x="80" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="9ZSRAJtdXUEw9_LBAxhM-7" edge="1" parent="1" source="9ZSRAJtdXUEw9_LBAxhM-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="9ZSRAJtdXUEw9_LBAxhM-6" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="9ZSRAJtdXUEw9_LBAxhM-2" parent="1" style="whiteSpace=wrap;html=1;" value="Realizar el registro del Empleado" vertex="1">
+          <mxGeometry height="60" width="120" x="220" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="9ZSRAJtdXUEw9_LBAxhM-4" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontFamily=Comic Sans MS;fontStyle=1" value="Flujo para la creación de un nuevo empleado" vertex="1">
+          <mxGeometry height="30" width="270" x="80" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="9ZSRAJtdXUEw9_LBAxhM-5" edge="1" parent="1" style="endArrow=none;html=1;rounded=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="80" y="60" as="sourcePoint" />
+            <mxPoint x="340" y="60" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="9ZSRAJtdXUEw9_LBAxhM-9" edge="1" parent="1" source="9ZSRAJtdXUEw9_LBAxhM-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="9ZSRAJtdXUEw9_LBAxhM-8" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="9ZSRAJtdXUEw9_LBAxhM-6" parent="1" style="whiteSpace=wrap;html=1;" value="Crear el hash de la contraseña" vertex="1">
+          <mxGeometry height="60" width="120" x="420" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="9ZSRAJtdXUEw9_LBAxhM-11" edge="1" parent="1" source="9ZSRAJtdXUEw9_LBAxhM-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="9ZSRAJtdXUEw9_LBAxhM-10" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="9ZSRAJtdXUEw9_LBAxhM-8" parent="1" style="whiteSpace=wrap;html=1;" value="Insertar el Usuario" vertex="1">
+          <mxGeometry height="60" width="120" x="620" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="9ZSRAJtdXUEw9_LBAxhM-13" edge="1" parent="1" source="9ZSRAJtdXUEw9_LBAxhM-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="9ZSRAJtdXUEw9_LBAxhM-12" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="9ZSRAJtdXUEw9_LBAxhM-10" parent="1" style="whiteSpace=wrap;html=1;" value="Asignar Rol al Usuario" vertex="1">
+          <mxGeometry height="60" width="120" x="620" y="230" as="geometry" />
+        </mxCell>
+        <mxCell id="9ZSRAJtdXUEw9_LBAxhM-15" edge="1" parent="1" source="9ZSRAJtdXUEw9_LBAxhM-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="9ZSRAJtdXUEw9_LBAxhM-14" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="9ZSRAJtdXUEw9_LBAxhM-12" parent="1" style="whiteSpace=wrap;html=1;" value="Registro del Empleado y Usuario Insertado" vertex="1">
+          <mxGeometry height="60" width="120" x="420" y="230" as="geometry" />
+        </mxCell>
+        <mxCell id="9ZSRAJtdXUEw9_LBAxhM-14" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Fin" vertex="1">
+          <mxGeometry height="80" width="80" x="240" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="9ZSRAJtdXUEw9_LBAxhM-17" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="Inicio" vertex="1">
+          <mxGeometry height="80" width="80" x="80" y="465" as="geometry" />
+        </mxCell>
+        <mxCell id="9ZSRAJtdXUEw9_LBAxhM-20" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontFamily=Comic Sans MS;fontStyle=1" value="Flujo para el cálculo del aguinaldo" vertex="1">
+          <mxGeometry height="30" width="270" x="80" y="415" as="geometry" />
+        </mxCell>
+        <mxCell id="9ZSRAJtdXUEw9_LBAxhM-21" edge="1" parent="1" style="endArrow=none;html=1;rounded=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="80" y="445" as="sourcePoint" />
+            <mxPoint x="340" y="445" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

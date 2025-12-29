@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\ApplicationLayer\\ApplicationLayer.csproj": {}
+    "C:\\Projects\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\ApplicationLayer\\ApplicationLayer.csproj": {}
   },
   "projects": {
-    "D:\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\ApplicationLayer\\ApplicationLayer.csproj": {
+    "C:\\Projects\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\ApplicationLayer\\ApplicationLayer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\ApplicationLayer\\ApplicationLayer.csproj",
+        "projectUniqueName": "C:\\Projects\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\ApplicationLayer\\ApplicationLayer.csproj",
         "projectName": "ApplicationLayer",
-        "projectPath": "D:\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\ApplicationLayer\\ApplicationLayer.csproj",
+        "projectPath": "C:\\Projects\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\ApplicationLayer\\ApplicationLayer.csproj",
         "packagesPath": "C:\\Users\\kenda\\.nuget\\packages\\",
-        "outputPath": "D:\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\ApplicationLayer\\obj\\",
+        "outputPath": "C:\\Projects\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\ApplicationLayer\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -32,8 +32,8 @@
           "net10.0": {
             "targetAlias": "net10.0",
             "projectReferences": {
-              "D:\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\BusinessLogicLayer.csproj": {
-                "projectPath": "D:\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\BusinessLogicLayer.csproj"
+              "C:\\Projects\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\BusinessLogicLayer.csproj": {
+                "projectPath": "C:\\Projects\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\BusinessLogicLayer.csproj"
               }
             }
           }
@@ -53,6 +53,12 @@
       "frameworks": {
         "net10.0": {
           "targetAlias": "net10.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[9.0.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -69,7 +75,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.100/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.101/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",
@@ -347,14 +353,14 @@
         }
       }
     },
-    "D:\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\BusinessLogicLayer.csproj": {
+    "C:\\Projects\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\BusinessLogicLayer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\BusinessLogicLayer.csproj",
+        "projectUniqueName": "C:\\Projects\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\BusinessLogicLayer.csproj",
         "projectName": "BusinessLogicLayer",
-        "projectPath": "D:\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\BusinessLogicLayer.csproj",
+        "projectPath": "C:\\Projects\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\BusinessLogicLayer.csproj",
         "packagesPath": "C:\\Users\\kenda\\.nuget\\packages\\",
-        "outputPath": "D:\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\obj\\",
+        "outputPath": "C:\\Projects\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -375,8 +381,8 @@
           "net10.0": {
             "targetAlias": "net10.0",
             "projectReferences": {
-              "D:\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\DataAccessLayer\\DataAccessLayer.csproj": {
-                "projectPath": "D:\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\DataAccessLayer\\DataAccessLayer.csproj"
+              "C:\\Projects\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\DataAccessLayer\\DataAccessLayer.csproj": {
+                "projectPath": "C:\\Projects\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\DataAccessLayer\\DataAccessLayer.csproj"
               }
             }
           }
@@ -418,7 +424,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.100/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.101/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",
@@ -696,14 +702,14 @@
         }
       }
     },
-    "D:\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\DataAccessLayer\\DataAccessLayer.csproj": {
+    "C:\\Projects\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\DataAccessLayer\\DataAccessLayer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\DataAccessLayer\\DataAccessLayer.csproj",
+        "projectUniqueName": "C:\\Projects\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\DataAccessLayer\\DataAccessLayer.csproj",
         "projectName": "DataAccessLayer",
-        "projectPath": "D:\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\DataAccessLayer\\DataAccessLayer.csproj",
+        "projectPath": "C:\\Projects\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\DataAccessLayer\\DataAccessLayer.csproj",
         "packagesPath": "C:\\Users\\kenda\\.nuget\\packages\\",
-        "outputPath": "D:\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\DataAccessLayer\\obj\\",
+        "outputPath": "C:\\Projects\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\DataAccessLayer\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -773,7 +779,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.100/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.101/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",

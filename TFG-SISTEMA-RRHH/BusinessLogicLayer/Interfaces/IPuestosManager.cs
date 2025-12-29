@@ -7,8 +7,8 @@ namespace BusinessLogicLayer.Interfaces
     {
         Task<IEnumerable<PuestoDTO>> GetAllPuestosAsync();
         Task<PuestoDTO> GetPuestoByIdAsync(int id);
-        Task<PuestoDTO> CreatePuestoAsync(PuestoDTO puestoDto);
-        Task UpdatePuestoAsync(PuestoDTO puestoDto);
+        Task<PuestoDTO> CreatePuestoAsync(PuestoDTO dto);
+        Task UpdatePuestoAsync(PuestoDTO dto);
         Task DeletePuestoAsync(int id);
     }
 }
