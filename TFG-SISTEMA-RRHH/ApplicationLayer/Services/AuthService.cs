@@ -4,7 +4,6 @@ using BusinessLogicLayer.Interfaces;
 using DataAccessLayer.Entities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.JSInterop.Infrastructure;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -49,7 +48,7 @@ namespace ApplicationLayer.Services
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        public Task<CrearPuestoDTO?> RegisterNewUser(RegistrarUsuarioDTO dto)
+        public Task<CrearPuestoDTO?>? RegisterNewUser(RegistrarUsuarioDTO dto)
         {
             var usuario = new Usuarios
             {
@@ -61,6 +60,8 @@ namespace ApplicationLayer.Services
                 FechaCreacion = DateTime.UtcNow,
                 FechaModificacion = DateTime.UtcNow,
             };
+
+            return null;
         }
     }
 }

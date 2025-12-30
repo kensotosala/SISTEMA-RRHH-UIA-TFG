@@ -1,6 +1,7 @@
 using BusinessLogicLayer.Profiles;
 using DataAccessLayer.Data;
 using Microsoft.EntityFrameworkCore;
+using PresentationLayer.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,14 +24,7 @@ builder.Services.AddAutoMapper(
     });
 
 // Registrar dependencias
-builder.Services.AddScoped<DataAccessLayer.Interfaces.IPuestosRepository,
-                           DataAccessLayer.Repositories.PuestoRepository>();
-
-builder.Services.AddScoped<BusinessLogicLayer.Interfaces.IPuestosManager, 
-                           BusinessLogicLayer.Managers.PuestoManager>();
-
-builder.Services.AddScoped<ApplicationLayer.Interfaces.IPuestoService, 
-                           ApplicationLayer.Services.PuestoService>();
+builder.Services.Dependencies();
 
 var app = builder.Build();
 
