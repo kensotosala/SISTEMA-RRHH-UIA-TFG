@@ -35,7 +35,7 @@ namespace ApplicationLayer.Services
             return await _manager.GetByIdAsync(id);
         }
 
-        public async Task<bool> UpdateAsync(int id, DepartamentoDTO dto)
+        public async Task<bool> UpdateAsync(DepartamentoDTO dto)
         {
             await _manager.UpdateAsync(dto);
             return true;

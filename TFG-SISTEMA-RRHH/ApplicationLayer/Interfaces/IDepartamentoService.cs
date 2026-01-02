@@ -10,7 +10,7 @@ namespace ApplicationLayer.Interfaces
 
         Task<DepartamentoDTO> CreateAsync(DepartamentoDTO dto);
 
-        Task<bool> UpdateAsync(int id, DepartamentoDTO dto);
+        Task<bool> UpdateAsync(DepartamentoDTO dto);
 
         Task<bool> DeleteAsync(int id);
     }

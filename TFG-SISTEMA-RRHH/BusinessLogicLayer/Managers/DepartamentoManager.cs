@@ -94,7 +94,7 @@ namespace BusinessLogicLayer.Managers
 
             departamento.NombreDepartamento = dto.NombreDepartamento;
             departamento.Descripcion = dto.Descripcion;
-            departamento.IdDepartamento = (int)dto.IdJefeDepartamento;
+            departamento.IdJefeDepartamento = dto.IdJefeDepartamento;
             departamento.Estado = dto.Estado;
             departamento.FechaModificacion = DateTime.UtcNow;
 

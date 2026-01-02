@@ -5,7 +5,7 @@ namespace DataAccessLayer.Entities;
 
 public partial class Departamentos
 {
-    public int IdDepartamento { get; set; }
+    public int IdDepartamento { get; set; } 
 
     public string NombreDepartamento { get; set; } = null!;
 
