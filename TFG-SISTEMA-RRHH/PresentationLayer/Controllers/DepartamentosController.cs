@@ -1,5 +1,5 @@
-﻿using ApplicationLayer.Interfaces;
-using BusinessLogicLayer.DTOs;
+﻿using BusinessLogicLayer.DTOs;
+using BusinessLogicLayer.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace PresentationLayer.Controllers
@@ -8,9 +8,9 @@ namespace PresentationLayer.Controllers
     [ApiController]
     public class DepartamentosController : ControllerBase
     {
-        private readonly IDepartamentoService _service;
+        private readonly IDepartamentosManager _service;
 
-        public DepartamentosController(IDepartamentoService service)
+        public DepartamentosController(IDepartamentosManager service)
         {
             _service = service;
         }
@@ -18,7 +18,7 @@ namespace PresentationLayer.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var departamentos = await _service.GetAllAsync();
+            var departamentos = await _service.ListAsync();
 
             if (departamentos == null || !departamentos.Any())
             {

@@ -1,5 +1,5 @@
-﻿using ApplicationLayer.Interfaces;
-using BusinessLogicLayer.DTOs;
+﻿using BusinessLogicLayer.DTOs;
+using BusinessLogicLayer.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace PresentationLayer.Controllers
@@ -8,117 +8,72 @@ namespace PresentationLayer.Controllers
     [ApiController]
     public class PuestosController : ControllerBase
     {
-        private readonly IPuestoService _puestoService;
+        private readonly IPuestosManager _puestoService;
         private readonly ILogger<PuestosController> _logger;
 
-        public PuestosController(IPuestoService puestoService, ILogger<PuestosController> logger)
+        public PuestosController(IPuestosManager puestoService, ILogger<PuestosController> logger)
         {
             _puestoService = puestoService;
             _logger = logger;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<ActionResult<IEnumerable<PuestoDTO>>> GetAll()
         {
-            try
-            {
-                var puestos = await _puestoService.GetAllPuestosAsync();
-                return Ok(puestos);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error al obtener todos los puestos");
-                return StatusCode(500, new { mensaje = "Error interno del servidor", detalle = ex.Message });
-            }
+            var puestos = await _puestoService.GetAllPuestosAsync();
+            return Ok(puestos);
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult<PuestoDTO>> GetById(int id)
         {
-            try
-            {
-                var puesto = await _puestoService.GetPuestoByIdAsync(id);
-                if (puesto == null)
-                {
-                    return NotFound($"No se encontró el puesto con ID {id}");
-                }
+            var puesto = await _puestoService.GetPuestoByIdAsync(id);
+            if (puesto == null)
+                return NotFound();
 
-                return Ok(puesto);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, $"Error al obtener el puesto de ID {id}");
-                return BadRequest(new { mensaje = ex.Message });
-            }
+            return Ok(puesto);
         }
 
         [HttpPost]
-        public async Task<IActionResult> CrearPuesto([FromBody] CrearPuestoDTO puestoDto)
+        public async Task<IActionResult> Create([FromBody] CrearPuestoDTO dto)
         {
-            try
-            {
-                if (puestoDto == null)
-                    return BadRequest("El puesto no puede ser nulo.");
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-                if (!ModelState.IsValid)
-                    return BadRequest(ModelState);
+            var id = await _puestoService.CreatePuestoAsync(dto);
 
-                var creado = await _puestoService.CreatePuestoAsync(puestoDto);
-                return CreatedAtAction(nameof(GetById), new { id = creado.IdPuesto }, creado);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, $"Error al crear el puesto: {puestoDto?.NombrePuesto}");
-                return StatusCode(500, new { mensaje = "Error interno del servidor", detalle = ex.Message });
-            }
+            if (id == 0)
+                return BadRequest("No se pudo crear el puesto.");
+
+            return CreatedAtAction(nameof(GetById), new { id }, null);
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> ActualizarPuesto(int id, [FromBody] ActualizarPuestoDTO puestoDto)
+        [HttpPut("{id:int}")]
+        public async Task<IActionResult> Update(int id, [FromBody] ActualizarPuestoDTO dto)
         {
-            try
-            {
-                if (puestoDto == null)
-                    return BadRequest("Los datos enviados son inválidos.");
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-                if (!ModelState.IsValid)
-                    return BadRequest(ModelState);
+            if (id != dto.IdPuesto)
+                return BadRequest("El ID de la URL no coincide con el del cuerpo.");
 
-                var resultado = await _puestoService.UpdatePuestoAsync(id, puestoDto);
+            var updated = await _puestoService.UpdatePuestoAsync(dto);
 
-                if (!resultado)
-                    return NotFound($"No se encontró el puesto con ID {id}.");
+            if (!updated)
+                return NotFound();
 
-                return Ok($"Puesto {puestoDto.IdPuesto} actualizado correctamente!");
-            }
-            catch (ArgumentException ex)
-            {
-                return BadRequest(new { mensaje = ex.Message });
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, $"Error al actualizar el puesto con ID {id}");
-                return StatusCode(500, new { mensaje = "Error interno del servidor", detalle = ex.Message });
-            }
+            return NoContent();
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> EliminarPuesto(int id)
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> Delete(int id)
         {
-            try
-            {
-                var resultado = await _puestoService.DeletePuestoAsync(id);
+            var deleted = await _puestoService.DeletePuestoAsync(id);
 
-                if (!resultado)
-                    return NotFound($"No se encontró el puesto con ID {id}.");
+            if (!deleted)
+                return NotFound();
 
-                return Ok($"Puesto {id} eliminado correctamente!");
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, $"Error al eliminar el puesto con ID {id}");
-                return StatusCode(500, new { mensaje = "Error interno del servidor", detalle = ex.Message });
-            }
+            return NoContent();
         }
     }
 }

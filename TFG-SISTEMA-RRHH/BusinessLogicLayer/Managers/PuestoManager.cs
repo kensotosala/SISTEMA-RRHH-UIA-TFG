@@ -3,79 +3,86 @@ using BusinessLogicLayer.DTOs;
 using BusinessLogicLayer.Interfaces;
 using DataAccessLayer.Entities;
 using DataAccessLayer.Interfaces;
-using Microsoft.Extensions.Logging;
 
 namespace BusinessLogicLayer.Managers
 {
     public class PuestoManager : IPuestosManager
     {
-        private readonly IPuestosRepository _puestoRepository;
+        private readonly IPuestosRepository _repo;
         private readonly IMapper _mapper;
-        private readonly ILogger<PuestoManager> _logger;
 
         public PuestoManager(
             IPuestosRepository puestosRepository,
-            IMapper mapper,
-            ILogger<PuestoManager> logger)
+            IMapper mapper)
         {
-            _puestoRepository = puestosRepository;
+            _repo = puestosRepository;
             _mapper = mapper;
-            _logger = logger;
         }
 
         public async Task<IEnumerable<PuestoDTO>> GetAllPuestosAsync()
         {
-            try
-            {
-                var puestos = await _puestoRepository.GetAllAsync();
-                var puestosList = puestos?.ToList() ?? new List<Puestos>();
-
-                _logger.LogInformation($"Retrieved {puestosList.Count} puestos from repository");
-
-                // Mapea a PuestoDTO (de ApplicationLayer)
-                var result = _mapper.Map<List<PuestoDTO>>(puestosList);
-
-                _logger.LogInformation($"Mapped to {result.Count} DTOs");
-
-                return result;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error in GetAllPuestosAsync");
-                throw;
-            }
+            var puestos = await _repo.GetAllAsync();
+            return _mapper.Map<IEnumerable<PuestoDTO>>(puestos);
         }
 
-        public async Task<PuestoDTO> GetPuestoByIdAsync(int id)
+        public async Task<PuestoDTO?> GetPuestoByIdAsync(int id)
         {
-            var puesto = await _puestoRepository.GetByIdAsync(id)
-                ?? throw new KeyNotFoundException($"Puesto con ID {id} no encontrado.");
+            if (id <= 0)
+                return null;
 
-            return _mapper.Map<PuestoDTO>(puesto);
+            var puesto = await _repo.GetByIdAsync(id);
+            return puesto == null ? null : _mapper.Map<PuestoDTO>(puesto);
         }
 
-        public async Task<PuestoDTO> CreatePuestoAsync(PuestoDTO puestoDto)
+        public async Task<bool> DeletePuestoAsync(int id)
         {
-            var puesto = _mapper.Map<Puestos>(puestoDto);
-            var creado = await _puestoRepository.CreateAsync(puesto);
-            return _mapper.Map<PuestoDTO>(creado);
+            if (id <= 0)
+                return false;
+
+            var puesto = await _repo.GetByIdAsync(id);
+            if (puesto == null)
+                return false;
+
+            await _repo.DeleteAsync(puesto.IdPuesto);
+            return true;
         }
 
-        public async Task UpdatePuestoAsync(PuestoDTO puestoDto)
+        public async Task<bool> UpdatePuestoAsync(ActualizarPuestoDTO dto)
         {
-            if (!await _puestoRepository.ExistsAsync(puestoDto.IdPuesto))
-                throw new KeyNotFoundException($"Puesto con ID {puestoDto.IdPuesto} no encontrado");
+            if (dto == null)
+                throw new ArgumentNullException(nameof(dto));
 
-            var puesto = _mapper.Map<Puestos>(puestoDto);
-            await _puestoRepository.UpdateAsync(puesto);
+            var puesto = await _repo.GetByIdAsync(dto.IdPuesto);
+            if (puesto == null)
+                return false;
+
+            if (dto.SalarioMinimo > dto.SalarioMaximo)
+                throw new ArgumentException("El salario mínimo no puede ser mayor al salario máximo.");
+
+            _mapper.Map(dto, puesto);
+
+            await _repo.UpdateAsync(puesto);
+
+            return true;
         }
 
-        public async Task DeletePuestoAsync(int id)
+        public async Task<int> CreatePuestoAsync(CrearPuestoDTO dto)
         {
-            if (!await _puestoRepository.ExistsAsync(id))
-                throw new KeyNotFoundException($"Puesto con ID {id} no encontrado");
+            if (dto == null)
+                return 0;
 
-            await _puestoRepository.DeleteAsync(id);
+            if (dto.SalarioMinimo > dto.SalarioMaximo)
+                return 0;
+
+            if (await _repo.ExistsByNameAsync(dto.NombrePuesto))
+                return 0;
+
+            var puesto = _mapper.Map<Puestos>(dto);
+            puesto.Estado = true;
+            puesto.FechaCreacion = DateTime.UtcNow;
+
+            await _repo.CreateAsync(puesto);
+            return puesto.IdPuesto;
         }
     }
 }

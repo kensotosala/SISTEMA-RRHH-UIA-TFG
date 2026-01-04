@@ -1,8 +1,6 @@
-﻿using BusinessLogicLayer.DTOs;
-using BusinessLogicLayer.Interfaces;
+﻿using BusinessLogicLayer.Interfaces;
 using DataAccessLayer.Entities;
 using DataAccessLayer.Interfaces;
-using DataAccessLayer.Repositories;
 
 namespace BusinessLogicLayer.Managers
 {
@@ -14,6 +12,8 @@ namespace BusinessLogicLayer.Managers
         {
             _repo = repo;
         }
+
+
 
         public async Task<Usuarios?> RegistrarNuevoUsuario(Usuarios usuario)
         {

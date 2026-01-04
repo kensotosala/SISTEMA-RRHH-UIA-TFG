@@ -1,21 +1,5 @@
 [
   {
-    "ContainingType": "PresentationLayer.Controllers.AuthController",
-    "Method": "Login",
-    "RelativePath": "api/Auth/login",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "login",
-        "Type": "BusinessLogicLayer.DTOs.LoginDTO",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
     "ContainingType": "PresentationLayer.Controllers.DepartamentosController",
     "Method": "GetAll",
     "RelativePath": "api/Departamentos",
@@ -102,18 +86,28 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
-    "ReturnTypes": []
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[BusinessLogicLayer.DTOs.PuestoDTO, BusinessLogicLayer, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   },
   {
     "ContainingType": "PresentationLayer.Controllers.PuestosController",
-    "Method": "CrearPuesto",
+    "Method": "Create",
     "RelativePath": "api/Puestos",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "puestoDto",
+        "Name": "dto",
         "Type": "BusinessLogicLayer.DTOs.CrearPuestoDTO",
         "IsRequired": true
       }
@@ -134,11 +128,21 @@
         "IsRequired": true
       }
     ],
-    "ReturnTypes": []
+    "ReturnTypes": [
+      {
+        "Type": "BusinessLogicLayer.DTOs.PuestoDTO",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   },
   {
     "ContainingType": "PresentationLayer.Controllers.PuestosController",
-    "Method": "ActualizarPuesto",
+    "Method": "Update",
     "RelativePath": "api/Puestos/{id}",
     "HttpMethod": "PUT",
     "IsController": true,
@@ -150,7 +154,7 @@
         "IsRequired": true
       },
       {
-        "Name": "puestoDto",
+        "Name": "dto",
         "Type": "BusinessLogicLayer.DTOs.ActualizarPuestoDTO",
         "IsRequired": true
       }
@@ -159,7 +163,7 @@
   },
   {
     "ContainingType": "PresentationLayer.Controllers.PuestosController",
-    "Method": "EliminarPuesto",
+    "Method": "Delete",
     "RelativePath": "api/Puestos/{id}",
     "HttpMethod": "DELETE",
     "IsController": true,

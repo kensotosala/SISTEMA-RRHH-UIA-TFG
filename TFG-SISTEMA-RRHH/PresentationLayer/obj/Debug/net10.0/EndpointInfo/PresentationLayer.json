@@ -1,50 +1,10 @@
 {
-  "openapi": "3.1.1",
+  "openapi": "3.0.4",
   "info": {
-    "title": "PresentationLayer | v1",
-    "version": "1.0.0"
+    "title": "PresentationLayer",
+    "version": "1.0"
   },
-  "servers": [
-    {
-      "url": "https://localhost:7121"
-    },
-    {
-      "url": "http://localhost:5071"
-    }
-  ],
   "paths": {
-    "/api/Auth/login": {
-      "post": {
-        "tags": [
-          "Auth"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/LoginDTO"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/LoginDTO"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/LoginDTO"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/api/Departamentos": {
       "get": {
         "tags": [
@@ -77,8 +37,7 @@
                 "$ref": "#/components/schemas/DepartamentoDTO"
               }
             }
-          },
-          "required": true
+          }
         },
         "responses": {
           "200": {
@@ -98,11 +57,7 @@
             "in": "path",
             "required": true,
             "schema": {
-              "pattern": "^-?(?:0|[1-9]\\d*)$",
-              "type": [
-                "integer",
-                "string"
-              ],
+              "type": "integer",
               "format": "int32"
             }
           }
@@ -123,12 +78,7 @@
             "in": "path",
             "required": true,
             "schema": {
-              "pattern": "^-?(?:0|[1-9]\\d*)$",
-              "type": [
-                "integer",
-                "string"
-              ],
-              "format": "int32"
+              "type": "string"
             }
           }
         ],
@@ -149,8 +99,7 @@
                 "$ref": "#/components/schemas/DepartamentoDTO"
               }
             }
-          },
-          "required": true
+          }
         },
         "responses": {
           "200": {
@@ -168,11 +117,7 @@
             "in": "path",
             "required": true,
             "schema": {
-              "pattern": "^-?(?:0|[1-9]\\d*)$",
-              "type": [
-                "integer",
-                "string"
-              ],
+              "type": "integer",
               "format": "int32"
             }
           }
@@ -191,7 +136,33 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PuestoDTO"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PuestoDTO"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PuestoDTO"
+                  }
+                }
+              }
+            }
           }
         }
       },
@@ -216,8 +187,7 @@
                 "$ref": "#/components/schemas/CrearPuestoDTO"
               }
             }
-          },
-          "required": true
+          }
         },
         "responses": {
           "200": {
@@ -237,18 +207,31 @@
             "in": "path",
             "required": true,
             "schema": {
-              "pattern": "^-?(?:0|[1-9]\\d*)$",
-              "type": [
-                "integer",
-                "string"
-              ],
+              "type": "integer",
               "format": "int32"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PuestoDTO"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PuestoDTO"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PuestoDTO"
+                }
+              }
+            }
           }
         }
       },
@@ -262,11 +245,7 @@
             "in": "path",
             "required": true,
             "schema": {
-              "pattern": "^-?(?:0|[1-9]\\d*)$",
-              "type": [
-                "integer",
-                "string"
-              ],
+              "type": "integer",
               "format": "int32"
             }
           }
@@ -288,8 +267,7 @@
                 "$ref": "#/components/schemas/ActualizarPuestoDTO"
               }
             }
-          },
-          "required": true
+          }
         },
         "responses": {
           "200": {
@@ -307,11 +285,7 @@
             "in": "path",
             "required": true,
             "schema": {
-              "pattern": "^-?(?:0|[1-9]\\d*)$",
-              "type": [
-                "integer",
-                "string"
-              ],
+              "type": "integer",
               "format": "int32"
             }
           }
@@ -330,158 +304,149 @@
         "type": "object",
         "properties": {
           "idPuesto": {
-            "pattern": "^-?(?:0|[1-9]\\d*)$",
-            "type": [
-              "integer",
-              "string"
-            ],
+            "type": "integer",
             "format": "int32"
           },
           "nombrePuesto": {
-            "type": "string"
+            "type": "string",
+            "nullable": true
           },
           "descripcion": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": "string",
+            "nullable": true
           },
           "nivelJerarquico": {
-            "pattern": "^-?(?:0|[1-9]\\d*)$",
-            "type": [
-              "null",
-              "integer",
-              "string"
-            ],
-            "format": "int32"
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
           },
           "salarioMinimo": {
-            "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?$",
-            "type": [
-              "null",
-              "number",
-              "string"
-            ],
-            "format": "double"
+            "type": "number",
+            "format": "double",
+            "nullable": true
           },
           "salarioMaximo": {
-            "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?$",
-            "type": [
-              "null",
-              "number",
-              "string"
-            ],
-            "format": "double"
+            "type": "number",
+            "format": "double",
+            "nullable": true
           },
           "estado": {
-            "type": [
-              "null",
-              "boolean"
-            ]
+            "type": "boolean",
+            "nullable": true
           }
-        }
+        },
+        "additionalProperties": false
       },
       "CrearPuestoDTO": {
         "type": "object",
         "properties": {
           "nombrePuesto": {
-            "type": "string"
+            "type": "string",
+            "nullable": true
           },
           "descripcion": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": "string",
+            "nullable": true
           },
           "nivelJerarquico": {
-            "pattern": "^-?(?:0|[1-9]\\d*)$",
-            "type": [
-              "null",
-              "integer",
-              "string"
-            ],
-            "format": "int32"
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
           },
           "salarioMinimo": {
-            "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?$",
-            "type": [
-              "null",
-              "number",
-              "string"
-            ],
-            "format": "double"
+            "type": "number",
+            "format": "double",
+            "nullable": true
           },
           "salarioMaximo": {
-            "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?$",
-            "type": [
-              "null",
-              "number",
-              "string"
-            ],
-            "format": "double"
+            "type": "number",
+            "format": "double",
+            "nullable": true
           },
           "estado": {
-            "type": [
-              "null",
-              "boolean"
-            ]
+            "type": "boolean",
+            "nullable": true
           }
-        }
+        },
+        "additionalProperties": false
       },
       "DepartamentoDTO": {
         "type": "object",
         "properties": {
           "idDepartamento": {
-            "pattern": "^-?(?:0|[1-9]\\d*)$",
-            "type": [
-              "integer",
-              "string"
-            ],
+            "type": "integer",
             "format": "int32"
           },
           "nombreDepartamento": {
-            "type": "string"
+            "type": "string",
+            "nullable": true
           },
           "descripcion": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": "string",
+            "nullable": true
           },
           "idJefeDepartamento": {
-            "pattern": "^-?(?:0|[1-9]\\d*)$",
-            "type": [
-              "null",
-              "integer",
-              "string"
-            ],
-            "format": "int32"
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
           },
           "estado": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": "string",
+            "nullable": true
           }
-        }
+        },
+        "additionalProperties": false
       },
-      "LoginDTO": {
+      "PuestoDTO": {
         "type": "object",
         "properties": {
-          "nombreUsuario": {
-            "type": "string"
+          "idPuesto": {
+            "type": "integer",
+            "format": "int32"
           },
-          "passwordHash": {
-            "type": "string"
+          "nombrePuesto": {
+            "type": "string",
+            "nullable": true
+          },
+          "descripcion": {
+            "type": "string",
+            "nullable": true
+          },
+          "nivelJerarquico": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "salarioMinimo": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "salarioMaximo": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "estado": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "fechaCreacion": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "fechaModificacion": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
           }
-        }
+        },
+        "additionalProperties": false
       }
     }
   },
   "tags": [
-    {
-      "name": "Auth"
-    },
     {
       "name": "Departamentos"
     },

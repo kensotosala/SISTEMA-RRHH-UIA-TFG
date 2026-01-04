@@ -1,5 +1,5 @@
-﻿using ApplicationLayer.Interfaces;
-using BusinessLogicLayer.DTOs;
+﻿using BusinessLogicLayer.DTOs;
+using BusinessLogicLayer.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace PresentationLayer.Controllers
@@ -8,20 +8,20 @@ namespace PresentationLayer.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly IAuthService _authService;
+        private readonly IAuthManager _authManager;
 
-        public AuthController(IAuthService authService)
+        public AuthController(IAuthManager authManager)
         {
-            _authService = authService;
+            _authManager = authManager;
         }
 
-        [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] LoginDTO login)
-        {
-            var token = await _authService.LoginAsync(login);
-            if (token == null) return Unauthorized("Invalid credentials");
+        //[HttpPost("login")]
+        //public async Task<IActionResult> Login([FromBody] LoginDTO login)
+        //{
+        //    var token = await _authManager.(login);
+        //    if (token == null) return Unauthorized("Invalid credentials");
 
-            return Ok(new { token });
-        }
+        //    return Ok(new { token });
+        //}
     }
 }

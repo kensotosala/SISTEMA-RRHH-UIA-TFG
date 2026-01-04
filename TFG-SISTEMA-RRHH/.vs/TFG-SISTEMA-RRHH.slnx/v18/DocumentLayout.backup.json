@@ -3,16 +3,8 @@
   "WorkspaceRootPath": "C:\\Projects\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|c:\\projects\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\businesslogiclayer\\managers\\departamentomanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|solutionrelative:businesslogiclayer\\managers\\departamentomanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A9FCCEB3-DD88-F8C0-89A3-FD31A7C54F23}|DataAccessLayer\\DataAccessLayer.csproj|c:\\projects\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\dataaccesslayer\\entities\\departamentos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A9FCCEB3-DD88-F8C0-89A3-FD31A7C54F23}|DataAccessLayer\\DataAccessLayer.csproj|solutionrelative:dataaccesslayer\\entities\\departamentos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|c:\\projects\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\businesslogiclayer\\dtos\\departamentodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|solutionrelative:businesslogiclayer\\dtos\\departamentodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{51B4CFD2-5728-0F00-60C4-E24DAE522468}|PresentationLayer\\PresentationLayer.csproj|c:\\projects\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\presentationlayer\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{51B4CFD2-5728-0F00-60C4-E24DAE522468}|PresentationLayer\\PresentationLayer.csproj|solutionrelative:presentationlayer\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,49 +14,23 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 1,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "DepartamentoDTO.cs",
-              "DocumentMoniker": "C:\\Projects\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\DTOs\\DepartamentoDTO.cs",
-              "RelativeDocumentMoniker": "BusinessLogicLayer\\DTOs\\DepartamentoDTO.cs",
-              "ToolTip": "C:\\Projects\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\DTOs\\DepartamentoDTO.cs",
-              "RelativeToolTip": "BusinessLogicLayer\\DTOs\\DepartamentoDTO.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAASAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-02T03:19:35.754Z",
-              "EditorCaption": ""
-            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Departamentos.cs",
-              "DocumentMoniker": "C:\\Projects\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\DataAccessLayer\\Entities\\Departamentos.cs",
-              "RelativeDocumentMoniker": "DataAccessLayer\\Entities\\Departamentos.cs",
-              "ToolTip": "C:\\Projects\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\DataAccessLayer\\Entities\\Departamentos.cs",
-              "RelativeToolTip": "DataAccessLayer\\Entities\\Departamentos.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAPAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-02T03:22:12.231Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "DepartamentoManager.cs",
-              "DocumentMoniker": "C:\\Projects\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\Managers\\DepartamentoManager.cs",
-              "RelativeDocumentMoniker": "BusinessLogicLayer\\Managers\\DepartamentoManager.cs",
-              "ToolTip": "C:\\Projects\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\Managers\\DepartamentoManager.cs",
-              "RelativeToolTip": "BusinessLogicLayer\\Managers\\DepartamentoManager.cs",
-              "ViewState": "AgIAADEAAAAAAAAAAAAkwGYAAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-02T03:19:37.057Z",
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "C:\\Projects\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\PresentationLayer\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "PresentationLayer\\Properties\\launchSettings.json",
+              "ToolTip": "C:\\Projects\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\PresentationLayer\\Properties\\launchSettings.json",
+              "RelativeToolTip": "PresentationLayer\\Properties\\launchSettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-01-04T15:14:11.237Z",
               "EditorCaption": ""
             }
           ]

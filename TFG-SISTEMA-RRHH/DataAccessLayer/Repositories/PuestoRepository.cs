@@ -37,6 +37,11 @@
             return await _context.Puestos.AnyAsync(e => e.IdPuesto == id);
         }
 
+        public async Task<bool> ExistsByNameAsync(string nombrePuesto)
+        {
+            return await _context.Puestos.AnyAsync(p => p.NombrePuesto == nombrePuesto);
+        }
+
         public async Task<IEnumerable<Puestos>> GetAllAsync()
         {
             return await _context.Puestos.ToListAsync();
