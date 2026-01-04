@@ -24,17 +24,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/DepartamentoDTO"
+                "$ref": "#/components/schemas/CrearDepartamentoDTO"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/DepartamentoDTO"
+                "$ref": "#/components/schemas/CrearDepartamentoDTO"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/DepartamentoDTO"
+                "$ref": "#/components/schemas/CrearDepartamentoDTO"
               }
             }
           }
@@ -78,7 +78,8 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "integer",
+              "format": "int32"
             }
           }
         ],
@@ -86,17 +87,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/DepartamentoDTO"
+                "$ref": "#/components/schemas/ActualizarDepartamentoDTO"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/DepartamentoDTO"
+                "$ref": "#/components/schemas/ActualizarDepartamentoDTO"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/DepartamentoDTO"
+                "$ref": "#/components/schemas/ActualizarDepartamentoDTO"
               }
             }
           }
@@ -300,6 +301,29 @@
   },
   "components": {
     "schemas": {
+      "ActualizarDepartamentoDTO": {
+        "type": "object",
+        "properties": {
+          "nombreDepartamento": {
+            "type": "string",
+            "nullable": true
+          },
+          "descripcion": {
+            "type": "string",
+            "nullable": true
+          },
+          "idJefeDepartamento": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "estado": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "ActualizarPuestoDTO": {
         "type": "object",
         "properties": {
@@ -337,6 +361,25 @@
         },
         "additionalProperties": false
       },
+      "CrearDepartamentoDTO": {
+        "type": "object",
+        "properties": {
+          "nombreDepartamento": {
+            "type": "string",
+            "nullable": true
+          },
+          "descripcion": {
+            "type": "string",
+            "nullable": true
+          },
+          "idJefeDepartamento": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "CrearPuestoDTO": {
         "type": "object",
         "properties": {
@@ -361,37 +404,6 @@
           "salarioMaximo": {
             "type": "number",
             "format": "double",
-            "nullable": true
-          },
-          "estado": {
-            "type": "boolean",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "DepartamentoDTO": {
-        "type": "object",
-        "properties": {
-          "idDepartamento": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "nombreDepartamento": {
-            "type": "string",
-            "nullable": true
-          },
-          "descripcion": {
-            "type": "string",
-            "nullable": true
-          },
-          "idJefeDepartamento": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "estado": {
-            "type": "string",
             "nullable": true
           }
         },

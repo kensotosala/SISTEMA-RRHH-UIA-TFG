@@ -54,9 +54,9 @@ C:\Projects\SISTEMA-RRHH-UIA-TFG\TFG-SISTEMA-RRHH\PresentationLayer\obj\Debug\ne
 C:\Projects\SISTEMA-RRHH-UIA-TFG\TFG-SISTEMA-RRHH\PresentationLayer\obj\Debug\net10.0\PresentationLayer.AssemblyInfoInputs.cache
 C:\Projects\SISTEMA-RRHH-UIA-TFG\TFG-SISTEMA-RRHH\PresentationLayer\obj\Debug\net10.0\PresentationLayer.AssemblyInfo.cs
 C:\Projects\SISTEMA-RRHH-UIA-TFG\TFG-SISTEMA-RRHH\PresentationLayer\obj\Debug\net10.0\PresentationLayer.csproj.CoreCompileInputs.cache
+C:\Projects\SISTEMA-RRHH-UIA-TFG\TFG-SISTEMA-RRHH\PresentationLayer\obj\Debug\net10.0\PresentationLayer.MvcApplicationPartsAssemblyInfo.cs
 C:\Projects\SISTEMA-RRHH-UIA-TFG\TFG-SISTEMA-RRHH\PresentationLayer\obj\Debug\net10.0\PresentationLayer.MvcApplicationPartsAssemblyInfo.cache
 C:\Projects\SISTEMA-RRHH-UIA-TFG\TFG-SISTEMA-RRHH\PresentationLayer\obj\Debug\net10.0\PresentationLayer.sourcelink.json
-C:\Projects\SISTEMA-RRHH-UIA-TFG\TFG-SISTEMA-RRHH\PresentationLayer\obj\Debug\net10.0\PresentationLayer.MvcApplicationPartsAssemblyInfo.cs
 C:\Projects\SISTEMA-RRHH-UIA-TFG\TFG-SISTEMA-RRHH\PresentationLayer\bin\Debug\net10.0\appsettings.Development.json
 C:\Projects\SISTEMA-RRHH-UIA-TFG\TFG-SISTEMA-RRHH\PresentationLayer\bin\Debug\net10.0\appsettings.json
 C:\Projects\SISTEMA-RRHH-UIA-TFG\TFG-SISTEMA-RRHH\PresentationLayer\bin\Debug\net10.0\PresentationLayer.staticwebassets.endpoints.json

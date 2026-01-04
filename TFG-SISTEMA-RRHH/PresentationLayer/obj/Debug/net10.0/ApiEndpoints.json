@@ -19,7 +19,7 @@
     "Parameters": [
       {
         "Name": "dto",
-        "Type": "BusinessLogicLayer.DTOs.DepartamentoDTO",
+        "Type": "BusinessLogicLayer.DTOs.CrearDepartamentoDTO",
         "IsRequired": true
       }
     ],
@@ -50,13 +50,13 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "dto",
-        "Type": "BusinessLogicLayer.DTOs.DepartamentoDTO",
+        "Name": "id",
+        "Type": "System.Int32",
         "IsRequired": true
       },
       {
-        "Name": "id",
-        "Type": "",
+        "Name": "dto",
+        "Type": "BusinessLogicLayer.DTOs.ActualizarDepartamentoDTO",
         "IsRequired": true
       }
     ],

@@ -20,7 +20,8 @@ builder.Services.AddLogging();
 builder.Services.AddAutoMapper(
     cfg =>
     {
-        cfg.AddProfile(new MappingProfile());
+        cfg.AddProfile(new PuestosProfile());
+        cfg.AddProfile(new DepartamentosProfile());
     });
 
 // Registrar dependencias

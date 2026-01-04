@@ -8,9 +8,9 @@ namespace BusinessLogicLayer.Interfaces
 
         Task<DepartamentoDTO> GetByIdAsync(int id);
 
-        Task<DepartamentoDTO> CreateAsync(DepartamentoDTO dto);
+        Task<DepartamentoDTO> CreateAsync(CrearDepartamentoDTO dto);
 
-        Task UpdateAsync(DepartamentoDTO dto);
+        Task UpdateAsync(int id, ActualizarDepartamentoDTO dto);
 
         Task DeleteAsync(int id);
     }
