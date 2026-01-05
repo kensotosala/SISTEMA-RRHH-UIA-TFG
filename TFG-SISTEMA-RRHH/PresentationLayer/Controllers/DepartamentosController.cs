@@ -62,9 +62,7 @@ namespace PresentationLayer.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(
-    int id,
-    [FromBody] ActualizarDepartamentoDTO dto)
+        public async Task<IActionResult> Update(int id, [FromBody] ActualizarDepartamentoDTO dto)
         {
             if (id <= 0)
                 return BadRequest("El ID no es válido.");

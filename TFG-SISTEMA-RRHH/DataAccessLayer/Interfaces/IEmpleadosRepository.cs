@@ -10,10 +10,16 @@ namespace DataAccessLayer.Interfaces
 
         Task<Empleados> CreateAsync(Empleados empleado);
 
-        Task UpdateAsync(Empleados empleado);
+        Task<bool> UpdateAsync(Empleados empleado);
 
-        Task DeleteAsync(int id);
+        Task<bool> DeleteAsync(int id);
 
         Task<bool> ExistsAsync(int id);
+
+        Task<bool> ExistsByCodigoAsync(string codigo);
+
+        Task<bool> TieneSubordinadosAsync(int id);
+
+        Task<int> ContarSubordinadosAsync(int id);
     }
 }

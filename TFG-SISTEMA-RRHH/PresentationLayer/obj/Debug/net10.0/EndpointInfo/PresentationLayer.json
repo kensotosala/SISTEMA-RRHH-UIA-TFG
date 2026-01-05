@@ -130,6 +130,131 @@
         }
       }
     },
+    "/api/Empleados": {
+      "get": {
+        "tags": [
+          "Empleados"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Empleados"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CrearEmpleadoUsuarioDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CrearEmpleadoUsuarioDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CrearEmpleadoUsuarioDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Empleados/{id}": {
+      "get": {
+        "tags": [
+          "Empleados"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Empleados"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ActualizarEmpleadoUsuarioDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ActualizarEmpleadoUsuarioDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ActualizarEmpleadoUsuarioDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Empleados"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Puestos": {
       "get": {
         "tags": [
@@ -324,6 +449,18 @@
         },
         "additionalProperties": false
       },
+      "ActualizarEmpleadoUsuarioDto": {
+        "type": "object",
+        "properties": {
+          "empleado": {
+            "$ref": "#/components/schemas/CrearEmpleadoDTO"
+          },
+          "usuario": {
+            "$ref": "#/components/schemas/CrearUsuarioDTO"
+          }
+        },
+        "additionalProperties": false
+      },
       "ActualizarPuestoDTO": {
         "type": "object",
         "properties": {
@@ -380,6 +517,100 @@
         },
         "additionalProperties": false
       },
+      "CrearEmpleadoDTO": {
+        "required": [
+          "codigoEmpleado",
+          "departamentoId",
+          "email",
+          "fechaContratacion",
+          "nombre",
+          "primerApellido",
+          "puestoId",
+          "tipoContrato"
+        ],
+        "type": "object",
+        "properties": {
+          "codigoEmpleado": {
+            "maxLength": 20,
+            "minLength": 3,
+            "type": "string"
+          },
+          "nombre": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string"
+          },
+          "primerApellido": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string"
+          },
+          "segundoApellido": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "maxLength": 150,
+            "minLength": 0,
+            "type": "string",
+            "format": "email"
+          },
+          "telefono": {
+            "maxLength": 20,
+            "minLength": 0,
+            "type": "string",
+            "format": "tel",
+            "nullable": true
+          },
+          "fechaContratacion": {
+            "type": "string",
+            "format": "date"
+          },
+          "puestoId": {
+            "maximum": 2147483647,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "departamentoId": {
+            "maximum": 2147483647,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "jefeInmediatoId": {
+            "maximum": 2147483647,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "salarioBase": {
+            "maximum": 1.7976931348623157E+308,
+            "minimum": 0,
+            "type": "number",
+            "format": "double"
+          },
+          "tipoContrato": {
+            "$ref": "#/components/schemas/TipoContrato"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CrearEmpleadoUsuarioDto": {
+        "type": "object",
+        "properties": {
+          "empleado": {
+            "$ref": "#/components/schemas/CrearEmpleadoDTO"
+          },
+          "usuario": {
+            "$ref": "#/components/schemas/CrearUsuarioDTO"
+          }
+        },
+        "additionalProperties": false
+      },
       "CrearPuestoDTO": {
         "type": "object",
         "properties": {
@@ -404,6 +635,20 @@
           "salarioMaximo": {
             "type": "number",
             "format": "double",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CrearUsuarioDTO": {
+        "type": "object",
+        "properties": {
+          "nombreUsuario": {
+            "type": "string",
+            "nullable": true
+          },
+          "password": {
+            "type": "string",
             "nullable": true
           }
         },
@@ -455,12 +700,24 @@
           }
         },
         "additionalProperties": false
+      },
+      "TipoContrato": {
+        "enum": [
+          0,
+          1,
+          2
+        ],
+        "type": "integer",
+        "format": "int32"
       }
     }
   },
   "tags": [
     {
       "name": "Departamentos"
+    },
+    {
+      "name": "Empleados"
     },
     {
       "name": "Puestos"

@@ -6,9 +6,9 @@ namespace BusinessLogicLayer.Managers
 {
     public class AuthManager : IAuthManager
     {
-        private readonly IUsuarioRespository _repo;
+        private readonly IUsuarioRepository _repo;
 
-        public AuthManager(IUsuarioRespository repo)
+        public AuthManager(IUsuarioRepository repo)
         {
             _repo = repo;
         }

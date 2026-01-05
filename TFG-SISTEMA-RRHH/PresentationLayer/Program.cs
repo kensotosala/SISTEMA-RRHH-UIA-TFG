@@ -22,6 +22,7 @@ builder.Services.AddAutoMapper(
     {
         cfg.AddProfile(new PuestosProfile());
         cfg.AddProfile(new DepartamentosProfile());
+        cfg.AddProfile(new EmpleadosProfile());
     });
 
 // Registrar dependencias
