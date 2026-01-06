@@ -55,6 +55,16 @@ namespace DataAccessLayer.Repositories
             return await _context.Empleados.Include(e => e.Usuarios).ToListAsync();
         }
 
+        public async Task<IEnumerable<Empleados>> GetAllWithUsersAndRolesAsync()
+        {
+            return await _context.Empleados
+                .Include(e => e.Usuarios)
+                    .ThenInclude(u => u!.UsuariosRoles)
+                        .ThenInclude(ur => ur.Rol)
+                .AsNoTracking()
+                .ToListAsync();
+        }
+
         public async Task<Empleados?> GetByIdAsync(int id)
         {
             return await _context.Empleados.Include(e => e.Usuarios).FirstOrDefaultAsync(e => e.IdEmpleado == id);

@@ -21,5 +21,7 @@ namespace DataAccessLayer.Interfaces
         Task<bool> ExistsAsync(int id);
 
         Task<bool> ExistsByUsernameAsync(string username);
+
+        Task<Usuarios?> GetByEmpleadoIdAsync(int empleadoId);
     }
 }

@@ -72,5 +72,13 @@ namespace DataAccessLayer.Repositories
             var result = await _context.SaveChangesAsync();
             return result > 0;
         }
+
+        public async Task<Usuarios?> GetByEmpleadoIdAsync(int empleadoId)
+        {
+            return await _context.Usuarios
+                .Include(u => u.UsuariosRoles)
+                    .ThenInclude(ur => ur.Rol)
+                .FirstOrDefaultAsync(u => u.EmpleadoId == empleadoId);
+        }
     }
 }

@@ -12,6 +12,7 @@ namespace BusinessLogicLayer.Managers
         private readonly IUsuarioRepository _repoUsuarios;
         private readonly IPuestosRepository _repoPuestos;
         private readonly IDepartamentosRepository _repoDepartamentos;
+        private readonly IRolesRepository _repoRoles;
         private readonly IPasswordHasher _passwordHasher;
 
         public EmpleadosManager(
@@ -19,12 +20,15 @@ namespace BusinessLogicLayer.Managers
             IUsuarioRepository repoUsuarios,
             IPuestosRepository repoPuestos,
             IDepartamentosRepository repoDepartamentos,
+            IRolesRepository repoRoles,
+            IUsuariosRolesRepository repoUsuariosRoles,
             IPasswordHasher passwordHasher)
         {
             _repoEmpleados = repoEmpleados;
             _repoUsuarios = repoUsuarios;
             _repoPuestos = repoPuestos;
             _repoDepartamentos = repoDepartamentos;
+            _repoRoles = repoRoles;
             _passwordHasher = passwordHasher;
         }
 
@@ -51,12 +55,12 @@ namespace BusinessLogicLayer.Managers
                     $"La dirección de correo '{dto.Email}' ya está en uso.",
                     code: "EMAIL_DUPLICADO");
 
-            if (await _repoPuestos.ExistsAsync(dto.PuestoId))
+            if (!await _repoPuestos.ExistsAsync(dto.PuestoId))
                 throw new BusinessException(
                     $"El Puesto cuyo ID es '{dto.PuestoId}' no se encuentra",
                     code: "PUESTO_NO_EXISTE");
 
-            if (await _repoDepartamentos.ExistsAsync(dto.PuestoId))
+            if (!await _repoDepartamentos.ExistsAsync(dto.PuestoId))
                 throw new BusinessException(
                     $"El Departamento cuyo ID es '{dto.PuestoId}' no se encuentra.",
                     code: "DEPARTAMENTO_NO_EXISTE");
@@ -70,6 +74,18 @@ namespace BusinessLogicLayer.Managers
                 throw new BusinessException(
                    $"La fecha de contratación no puede ser futura.",
                    code: "FUTURE_DATE");
+
+            if (dto.JefeInmediatoId.HasValue && !await _repoEmpleados.ExistsAsync(dto.JefeInmediatoId.Value))
+            {
+                throw new BusinessException(
+                    $"El jefe inmediato con ID '{dto.JefeInmediatoId}' no existe.",
+                    "JEFE_NO_EXISTE");
+            }
+
+            if (!await _repoRoles.ExistsAsync(dto.RolId))
+                throw new BusinessException(
+                    $"El Rol cuyo ID es '{dto.RolId}' no se encuentra.",
+                    code: "ROL_NO_EXISTE");
 
             // ======================================================
             // CREAR EMPLEADO (DTO → ENTIDAD)
@@ -124,6 +140,8 @@ namespace BusinessLogicLayer.Managers
             // RESPUESTA (ENTIDAD → DTO)
             // ======================================================
 
+            var rol = await _repoRoles.GetByIdAsync(dto.RolId);
+
             return new DetalleEmpleadoDTO
             {
                 IdEmpleado = empleadoCreado.IdEmpleado,
@@ -148,20 +166,16 @@ namespace BusinessLogicLayer.Managers
 
                 IdUsuario = usuarioCreado.IdUsuario,
                 NombreUsuario = usuarioCreado.NombreUsuario,
-                NombreRol = usuarioCreado.UsuariosRoles
-                    .FirstOrDefault()?.Rol?.Nombre ?? string.Empty
+                NombreRol = rol?.Nombre ?? string.Empty
             };
         }
 
         public async Task<DetalleEmpleadoDTO?> GetByIdAsync(int id)
         {
-            if (id <= 0)
-                throw new ArgumentException("El ID debe ser mayor a 0.", nameof(id));
-
             var empleado = await _repoEmpleados.GetByIdAsync(id);
+            if (empleado == null) return null;
 
-            if (empleado == null)
-                return null;
+            var usuario = await _repoUsuarios.GetByEmpleadoIdAsync(empleado.IdEmpleado);
 
             return new DetalleEmpleadoDTO
             {
@@ -173,38 +187,63 @@ namespace BusinessLogicLayer.Managers
                 Email = empleado.Email,
                 Telefono = empleado.Telefono,
                 FechaContratacion = empleado.FechaContratacion,
-
                 PuestoId = empleado.PuestoId,
                 DepartamentoId = empleado.DepartamentoId,
                 JefeInmediatoId = empleado.JefeInmediatoId,
                 SalarioBase = empleado.SalarioBase,
-
-                // Persistencia (string) → API (enum)
                 TipoContrato = Enum.Parse<TipoContrato>(empleado.TipoContrato),
-
                 Estado = empleado.Estado,
                 FechaCreacion = empleado.FechaCreacion,
                 FechaModificacion = empleado.FechaModificacion,
-
-                // ===== USUARIO =====
-                IdUsuario = empleado.Usuarios?.IdUsuario ?? 0,
-                NombreUsuario = empleado.Usuarios?.NombreUsuario ?? string.Empty,
-
-                // ===== ROL =====
-                NombreRol = empleado.Usuarios?.UsuariosRoles
-                    .FirstOrDefault()?.Rol?.Nombre ?? string.Empty
+                IdUsuario = usuario?.IdUsuario ?? 0,
+                NombreUsuario = usuario?.NombreUsuario ?? string.Empty,
+                NombreRol = usuario?.UsuariosRoles
+                    .Select(ur => ur.Rol.Nombre)
+                    .FirstOrDefault() ?? string.Empty
             };
         }
 
         public async Task<IEnumerable<DetalleEmpleadoDTO>> ListAsync()
         {
-            var empleados = await _repoEmpleados.GetAllAsync();
+            // Cargar empleados con los usuarios y sus roles (Eager Loading)
+            var empleados = await _repoEmpleados.GetAllWithUsersAndRolesAsync();
 
-            var resultado = new List<DetalleEmpleadoDTO>();
+            // Extraer todos los IDs de roles únicos
+            var rolIds = empleados
+                .Select(e => e.Usuarios)
+                .Where(u => u != null)
+                .SelectMany(u => u!.UsuariosRoles)
+                .Select(ur => ur.RolId)
+                .Distinct()
+                .ToList();
 
-            foreach (var empleado in empleados)
+            // Obtener nombres de roles en batch
+            var rolesLookup = await _repoRoles.GetNamesByIdsAsync(rolIds);
+
+            // Mapear a DTO usando LINQ (más eficiente y legible)
+            var resultado = empleados.Select(empleado =>
             {
-                resultado.Add(new DetalleEmpleadoDTO
+                var usuario = empleado.Usuarios;
+                var nombreRol = string.Empty;
+                var roles = new List<string>();
+
+                if (usuario?.UsuariosRoles != null && usuario.UsuariosRoles.Any())
+                {
+                    // Si un usuario puede tener múltiples roles, obtenemos todos
+                    var rolesUsuario = usuario.UsuariosRoles
+                        .Select(ur => ur.RolId)
+                        .Where(rolId => rolesLookup.ContainsKey(rolId))
+                        .Select(rolId => rolesLookup[rolId])
+                        .ToList();
+
+                    if (rolesUsuario.Any())
+                    {
+                        roles = rolesUsuario;
+                        nombreRol = rolesUsuario.First(); // Para compatibilidad con propiedad existente
+                    }
+                }
+
+                return new DetalleEmpleadoDTO
                 {
                     IdEmpleado = empleado.IdEmpleado,
                     CodigoEmpleado = empleado.CodigoEmpleado,
@@ -214,28 +253,19 @@ namespace BusinessLogicLayer.Managers
                     Email = empleado.Email,
                     Telefono = empleado.Telefono,
                     FechaContratacion = empleado.FechaContratacion,
-
                     PuestoId = empleado.PuestoId,
                     DepartamentoId = empleado.DepartamentoId,
                     JefeInmediatoId = empleado.JefeInmediatoId,
                     SalarioBase = empleado.SalarioBase,
-
-                    // Persistencia → API
                     TipoContrato = Enum.Parse<TipoContrato>(empleado.TipoContrato),
-
                     Estado = empleado.Estado,
                     FechaCreacion = empleado.FechaCreacion,
                     FechaModificacion = empleado.FechaModificacion,
-
-                    // ===== USUARIO =====
-                    IdUsuario = empleado.Usuarios?.IdUsuario ?? 0,
-                    NombreUsuario = empleado.Usuarios?.NombreUsuario ?? string.Empty,
-
-                    // ===== ROL =====
-                    NombreRol = empleado.Usuarios?.UsuariosRoles
-                        .FirstOrDefault()?.Rol?.Nombre ?? string.Empty
-                });
-            }
+                    IdUsuario = usuario?.IdUsuario ?? 0,
+                    NombreUsuario = usuario?.NombreUsuario ?? string.Empty,
+                    NombreRol = nombreRol,
+                };
+            }).ToList();
 
             return resultado;
         }

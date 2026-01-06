@@ -23,5 +23,7 @@ namespace DataAccessLayer.Interfaces
         Task<int> ContarSubordinadosAsync(int id);
 
         Task<bool> EmaillRegistrado(string email);
+
+        Task<IEnumerable<Empleados>> GetAllWithUsersAndRolesAsync();
     }
 }

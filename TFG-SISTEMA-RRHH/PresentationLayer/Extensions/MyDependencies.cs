@@ -39,8 +39,12 @@
             services.AddScoped<DataAccessLayer.Interfaces.IUsuarioRepository,
                            DataAccessLayer.Repositories.UsuarioRepository>();
 
-            //services.AddScoped<BusinessLogicLayer.Interfaces.IUsuarioManager,
-            //                           BusinessLogicLayer.Managers.UsuariosManager>();
+            // Roles
+
+            services.AddScoped<DataAccessLayer.Interfaces.IRolesRepository,
+                           DataAccessLayer.Repositories.RolesRepository>();
+            services.AddScoped<DataAccessLayer.Interfaces.IUsuariosRolesRepository,
+                           DataAccessLayer.Repositories.UsuariosRolesRepository>();
 
             return services;
         }
