@@ -71,14 +71,43 @@ namespace BusinessLogicLayer.Managers
             var jwtSettings = _config.GetSection("Jwt");
 
             var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.NameIdentifier, user.IdUsuario.ToString()),
-                new Claim(ClaimTypes.Name, user.NombreUsuario)
-            };
+    {
+        new Claim(ClaimTypes.NameIdentifier, user.IdUsuario.ToString()),
+        new Claim(ClaimTypes.Name, user.NombreUsuario),
+        new Claim("UserId", user.IdUsuario.ToString()),
+        new Claim("Username", user.NombreUsuario)
+    };
 
+            // Obtener información del empleado asociado al usuario
+            if (user.Empleado != null)
+            {
+                claims.Add(new Claim("EmployeeId", user.Empleado.IdEmpleado.ToString()));
+                claims.Add(new Claim("EmployeeCode", user.Empleado.CodigoEmpleado ?? ""));
+                claims.Add(new Claim("FullName", $"{user.Empleado.Nombre} {user.Empleado.PrimerApellido} {user.Empleado.SegundoApellido}".Trim()));
+                claims.Add(new Claim("Email", user.Empleado.Email ?? ""));
+                claims.Add(new Claim("DepartmentId", user.Empleado.DepartamentoId.ToString()));
+                claims.Add(new Claim("PositionId", user.Empleado.PuestoId.ToString()));
+
+                // Si el empleado tiene jefe inmediato
+                if (user.Empleado.JefeInmediatoId.HasValue)
+                {
+                    claims.Add(new Claim("ManagerId", user.Empleado.JefeInmediatoId.Value.ToString()));
+                }
+            }
+
+            // Agregar roles
             foreach (var role in user.UsuariosRoles)
             {
                 claims.Add(new Claim(ClaimTypes.Role, role.Rol.Nombre));
+                // También puedes agregar el ID del rol como claim personalizado
+                claims.Add(new Claim("RoleId", role.RolId.ToString()));
+            }
+
+            // Otra opción: Agregar todos los roles como una lista separada por comas
+            var rolesList = user.UsuariosRoles.Select(r => r.Rol.Nombre).ToList();
+            if (rolesList.Any())
+            {
+                claims.Add(new Claim("Roles", string.Join(",", rolesList)));
             }
 
             var key = new SymmetricSecurityKey(
@@ -104,7 +133,7 @@ namespace BusinessLogicLayer.Managers
             return new AuthResponseDTO
             {
                 Token = new JwtSecurityTokenHandler().WriteToken(token),
-                Expiration = expiration
+                Expiration = expiration,
             };
         }
     }
