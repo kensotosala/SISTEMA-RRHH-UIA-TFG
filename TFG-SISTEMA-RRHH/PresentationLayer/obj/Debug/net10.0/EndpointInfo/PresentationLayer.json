@@ -5,6 +5,49 @@
     "version": "1.0"
   },
   "paths": {
+    "/api/Auth/login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Auth/logout": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Departamentos": {
       "get": {
         "tags": [
@@ -600,6 +643,10 @@
         "additionalProperties": false
       },
       "CrearEmpleadoUsuarioDto": {
+        "required": [
+          "empleado",
+          "usuario"
+        ],
         "type": "object",
         "properties": {
           "empleado": {
@@ -644,6 +691,20 @@
         "type": "object",
         "properties": {
           "nombreUsuario": {
+            "type": "string",
+            "nullable": true
+          },
+          "password": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "LoginDTO": {
+        "type": "object",
+        "properties": {
+          "username": {
             "type": "string",
             "nullable": true
           },
@@ -703,16 +764,18 @@
       },
       "TipoContrato": {
         "enum": [
-          0,
-          1,
-          2
+          "FIJO",
+          "TEMPORAL",
+          "PRUEBA"
         ],
-        "type": "integer",
-        "format": "int32"
+        "type": "string"
       }
     }
   },
   "tags": [
+    {
+      "name": "Auth"
+    },
     {
       "name": "Departamentos"
     },

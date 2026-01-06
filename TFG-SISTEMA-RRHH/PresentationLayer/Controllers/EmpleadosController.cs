@@ -50,7 +50,7 @@ namespace PresentationLayer.Controllers
                 return BadRequest("El cuerpo de la solicitud no puede ser nulo.");
 
             if (!ModelState.IsValid)
-                return ValidationProblem(ModelState);
+                return BadRequest(ModelState);
 
             var creado = await _manager.CreateAsync(dto);
 

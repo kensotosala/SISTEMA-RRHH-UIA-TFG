@@ -1,7 +1,5 @@
-﻿using DataAccessLayer.Entities;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using BusinessLogicLayer.DTOs;
+using DataAccessLayer.Entities;
 
 namespace BusinessLogicLayer.Interfaces
 {
@@ -9,5 +7,6 @@ namespace BusinessLogicLayer.Interfaces
     {
         Task<Usuarios?> ValidarCredencialesAsync(string username, string password);
         Task<Usuarios?> RegistrarNuevoUsuario(Usuarios usuario);
+        Task<AuthResponseDTO?> LoginAsync(LoginDTO dto);
     }
 }

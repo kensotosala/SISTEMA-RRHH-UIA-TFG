@@ -23,6 +23,8 @@
 
             services.AddScoped<BusinessLogicLayer.Interfaces.IPasswordHasher,
                                        BusinessLogicLayer.Managers.PasswordHasher>();
+            services.AddScoped<BusinessLogicLayer.Interfaces.IAuthManager,
+                                       BusinessLogicLayer.Managers.AuthManager>();
 
             // Empleados
 
@@ -42,7 +44,5 @@
 
             return services;
         }
-
-
     }
 }

@@ -40,7 +40,7 @@ namespace BusinessLogicLayer.Managers
             // Validaciones de las Business Rules
 
             if (await _repoEmpleados.ExistsByCodigoAsync(dto.Empleado.CodigoEmpleado))
-                throw new InvalidOperationException(
+                throw new ArgumentException(
                     $"Ya existe un empleado con el código '{dto.Empleado.CodigoEmpleado}'.");
 
             if (await _repoUsuarios.ExistsByUsernameAsync(dto.Usuario.NombreUsuario))

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace DataAccessLayer.Entities;
+﻿namespace DataAccessLayer.Entities;
 
 public partial class Roles
 {

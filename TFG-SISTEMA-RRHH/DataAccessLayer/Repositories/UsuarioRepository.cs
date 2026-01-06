@@ -57,6 +57,15 @@ namespace DataAccessLayer.Repositories
             return await _context.Usuarios.FirstOrDefaultAsync(u => u.NombreUsuario == username);
         }
 
+        public async Task<Usuarios?> GetByUsernameWithDetailsAsync(string username)
+        {
+            return await _context.Usuarios
+                .Include(u => u.UsuariosRoles)
+                    .ThenInclude(ur => ur.Rol)
+                .Include(u => u.Empleado)
+                .FirstOrDefaultAsync(u => u.NombreUsuario == username);
+        }
+
         public async Task<bool> UpdateAsync(Usuarios usuario)
         {
             _context.Usuarios.Update(usuario);

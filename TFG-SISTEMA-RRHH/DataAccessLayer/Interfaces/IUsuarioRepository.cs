@@ -1,7 +1,4 @@
 ﻿using DataAccessLayer.Entities;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace DataAccessLayer.Interfaces
 {
@@ -12,6 +9,8 @@ namespace DataAccessLayer.Interfaces
         Task<Usuarios?> GetByIdAsync(int id);
 
         Task<Usuarios?> GetByUsernameAsync(string username);
+
+        Task<Usuarios?> GetByUsernameWithDetailsAsync(string username);
 
         Task<Usuarios?> CreateAsync(Usuarios usuario);
 

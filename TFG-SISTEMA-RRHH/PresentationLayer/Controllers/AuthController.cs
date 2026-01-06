@@ -1,6 +1,7 @@
 ﻿using BusinessLogicLayer.DTOs;
 using BusinessLogicLayer.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace PresentationLayer.Controllers
 {
@@ -15,13 +16,22 @@ namespace PresentationLayer.Controllers
             _authManager = authManager;
         }
 
-        //[HttpPost("login")]
-        //public async Task<IActionResult> Login([FromBody] LoginDTO login)
-        //{
-        //    var token = await _authManager.(login);
-        //    if (token == null) return Unauthorized("Invalid credentials");
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] LoginDTO login)
+        {
+            var result = await _authManager.LoginAsync(login);
 
-        //    return Ok(new { token });
-        //}
+            if (result == null)
+                return Unauthorized("Credenciales inválidas");
+
+            return Ok(result);
+        }
+
+        [HttpPost("logout")]
+        public IActionResult Logout()
+        {
+            // JWT puro → logout es CLIENT SIDE
+            return Ok("Logout exitoso");
+        }
     }
 }
