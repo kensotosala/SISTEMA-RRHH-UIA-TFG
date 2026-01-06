@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using PresentationLayer.Extensions;
-using System.Text.Json.Serialization;
 using System.Text;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,7 +34,6 @@ builder.Services.AddAutoMapper(cfg =>
 {
     cfg.AddProfile(new PuestosProfile());
     cfg.AddProfile(new DepartamentosProfile());
-    cfg.AddProfile(new EmpleadosProfile());
 });
 
 // JWT Authentication
@@ -77,6 +76,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.UseHttpsRedirection();
 

@@ -1,5 +1,6 @@
 ﻿using BusinessLogicLayer.DTOs;
 using BusinessLogicLayer.Interfaces;
+using BusinessLogicLayer.Shared;
 using Microsoft.AspNetCore.Mvc;
 
 namespace PresentationLayer.Controllers
@@ -44,7 +45,7 @@ namespace PresentationLayer.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] CrearEmpleadoUsuarioDto dto)
+        public async Task<IActionResult> Create([FromBody] CrearEmpleadoYUsuarioDTO dto)
         {
             if (dto is null)
                 return BadRequest("El cuerpo de la solicitud no puede ser nulo.");
@@ -52,17 +53,28 @@ namespace PresentationLayer.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var creado = await _manager.CreateAsync(dto);
+            try
+            {
+                var creado = await _manager.CreateAsync(dto);
 
-            return CreatedAtAction(
-                nameof(GetById),
-                new { id = creado.Usuario.NombreUsuario },
-                creado
-            );
+                return CreatedAtAction(
+                    nameof(GetById),
+                    new { id = creado.IdEmpleado },
+                    creado
+                );
+            }
+            catch (BusinessException ex)
+            {
+                return Conflict(new
+                {
+                    code = ex.Code,
+                    message = ex.Message
+                });
+            }
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] ActualizarEmpleadoUsuarioDto dto)
+        public async Task<IActionResult> Update(int id, [FromBody] ActualizarEmpleadoDTO dto)
         {
             if (id <= 0)
                 return BadRequest("El ID no es válido.");

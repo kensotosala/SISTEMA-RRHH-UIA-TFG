@@ -35,6 +35,11 @@ namespace DataAccessLayer.Repositories
             return true;
         }
 
+        public async Task<bool> EmaillRegistrado(string email)
+        {
+            return await _context.Empleados.AnyAsync(e => e.Email == email);
+        }
+
         public async Task<bool> ExistsAsync(int id)
         {
             return await _context.Empleados.AnyAsync(e => e.IdEmpleado == id);

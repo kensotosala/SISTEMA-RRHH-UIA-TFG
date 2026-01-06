@@ -21,5 +21,7 @@ namespace DataAccessLayer.Interfaces
         Task<bool> TieneSubordinadosAsync(int id);
 
         Task<int> ContarSubordinadosAsync(int id);
+
+        Task<bool> EmaillRegistrado(string email);
     }
 }

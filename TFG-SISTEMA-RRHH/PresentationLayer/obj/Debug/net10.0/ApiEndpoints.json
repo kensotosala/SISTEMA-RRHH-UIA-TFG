@@ -124,7 +124,7 @@
     "Parameters": [
       {
         "Name": "dto",
-        "Type": "BusinessLogicLayer.DTOs.CrearEmpleadoUsuarioDto",
+        "Type": "BusinessLogicLayer.DTOs.CrearEmpleadoYUsuarioDTO",
         "IsRequired": true
       }
     ],
@@ -161,7 +161,7 @@
       },
       {
         "Name": "dto",
-        "Type": "BusinessLogicLayer.DTOs.ActualizarEmpleadoUsuarioDto",
+        "Type": "BusinessLogicLayer.DTOs.ActualizarEmpleadoDTO",
         "IsRequired": true
       }
     ],

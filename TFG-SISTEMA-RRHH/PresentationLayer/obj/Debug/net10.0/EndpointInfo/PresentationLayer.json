@@ -192,17 +192,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CrearEmpleadoUsuarioDto"
+                "$ref": "#/components/schemas/CrearEmpleadoYUsuarioDTO"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/CrearEmpleadoUsuarioDto"
+                "$ref": "#/components/schemas/CrearEmpleadoYUsuarioDTO"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/CrearEmpleadoUsuarioDto"
+                "$ref": "#/components/schemas/CrearEmpleadoYUsuarioDTO"
               }
             }
           }
@@ -255,17 +255,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ActualizarEmpleadoUsuarioDto"
+                "$ref": "#/components/schemas/ActualizarEmpleadoDTO"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/ActualizarEmpleadoUsuarioDto"
+                "$ref": "#/components/schemas/ActualizarEmpleadoDTO"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/ActualizarEmpleadoUsuarioDto"
+                "$ref": "#/components/schemas/ActualizarEmpleadoDTO"
               }
             }
           }
@@ -492,14 +492,92 @@
         },
         "additionalProperties": false
       },
-      "ActualizarEmpleadoUsuarioDto": {
+      "ActualizarEmpleadoDTO": {
         "type": "object",
         "properties": {
-          "empleado": {
-            "$ref": "#/components/schemas/CrearEmpleadoDTO"
+          "codigoEmpleado": {
+            "maxLength": 20,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
           },
-          "usuario": {
-            "$ref": "#/components/schemas/CrearUsuarioDTO"
+          "nombre": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "primerApellido": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "segundoApellido": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "maxLength": 150,
+            "minLength": 0,
+            "type": "string",
+            "format": "email",
+            "nullable": true
+          },
+          "telefono": {
+            "maxLength": 20,
+            "minLength": 0,
+            "type": "string",
+            "format": "tel",
+            "nullable": true
+          },
+          "fechaContratacion": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
+          },
+          "puestoId": {
+            "maximum": 2147483647,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "departamentoId": {
+            "maximum": 2147483647,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "jefeInmediatoId": {
+            "maximum": 2147483647,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "salarioBase": {
+            "maximum": 1.7976931348623157E+308,
+            "minimum": 0,
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "tipoContrato": {
+            "$ref": "#/components/schemas/TipoContrato"
+          },
+          "estado": {
+            "$ref": "#/components/schemas/EstadoEmpleado"
+          },
+          "rolId": {
+            "maximum": 2147483647,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -560,15 +638,18 @@
         },
         "additionalProperties": false
       },
-      "CrearEmpleadoDTO": {
+      "CrearEmpleadoYUsuarioDTO": {
         "required": [
           "codigoEmpleado",
           "departamentoId",
           "email",
           "fechaContratacion",
           "nombre",
+          "nombreUsuario",
+          "password",
           "primerApellido",
           "puestoId",
+          "rolId",
           "tipoContrato"
         ],
         "type": "object",
@@ -601,7 +682,7 @@
             "format": "email"
           },
           "telefono": {
-            "maxLength": 20,
+            "maxLength": 8,
             "minLength": 0,
             "type": "string",
             "format": "tel",
@@ -638,22 +719,18 @@
           },
           "tipoContrato": {
             "$ref": "#/components/schemas/TipoContrato"
-          }
-        },
-        "additionalProperties": false
-      },
-      "CrearEmpleadoUsuarioDto": {
-        "required": [
-          "empleado",
-          "usuario"
-        ],
-        "type": "object",
-        "properties": {
-          "empleado": {
-            "$ref": "#/components/schemas/CrearEmpleadoDTO"
           },
-          "usuario": {
-            "$ref": "#/components/schemas/CrearUsuarioDTO"
+          "nombreUsuario": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "password": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "rolId": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -687,19 +764,13 @@
         },
         "additionalProperties": false
       },
-      "CrearUsuarioDTO": {
-        "type": "object",
-        "properties": {
-          "nombreUsuario": {
-            "type": "string",
-            "nullable": true
-          },
-          "password": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
+      "EstadoEmpleado": {
+        "enum": [
+          "ACTIVO",
+          "INACTIVO",
+          "LICENCIA"
+        ],
+        "type": "string"
       },
       "LoginDTO": {
         "type": "object",

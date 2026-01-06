@@ -1,67 +1,94 @@
 <mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36" version="29.2.9">
   <diagram name="Page-1" id="I4MXG9PJ5IaofNEimyhT">
-    <mxGraphModel dx="1489" dy="763" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1188" dy="624" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="9ZSRAJtdXUEw9_LBAxhM-3" edge="1" parent="1" source="9ZSRAJtdXUEw9_LBAxhM-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="9ZSRAJtdXUEw9_LBAxhM-2" value="">
+        <mxCell id="3D9unWaYPb0S8mVMG5AJ-19" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="110" width="555" x="155" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="3D9unWaYPb0S8mVMG5AJ-2" edge="1" parent="1" source="9ZSRAJtdXUEw9_LBAxhM-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;labelBackgroundColor=none;fontColor=default;" target="3D9unWaYPb0S8mVMG5AJ-1" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="9ZSRAJtdXUEw9_LBAxhM-1" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="Inicio" vertex="1">
-          <mxGeometry height="80" width="80" x="80" y="80" as="geometry" />
+        <mxCell id="9ZSRAJtdXUEw9_LBAxhM-1" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;labelBackgroundColor=none;" value="Inicio" vertex="1">
+          <mxGeometry height="80" width="80" x="30" y="80" as="geometry" />
         </mxCell>
-        <mxCell id="9ZSRAJtdXUEw9_LBAxhM-7" edge="1" parent="1" source="9ZSRAJtdXUEw9_LBAxhM-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="9ZSRAJtdXUEw9_LBAxhM-6" value="">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="9ZSRAJtdXUEw9_LBAxhM-2" parent="1" style="whiteSpace=wrap;html=1;" value="Realizar el registro del Empleado" vertex="1">
-          <mxGeometry height="60" width="120" x="220" y="90" as="geometry" />
-        </mxCell>
-        <mxCell id="9ZSRAJtdXUEw9_LBAxhM-4" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontFamily=Comic Sans MS;fontStyle=1" value="Flujo para la creación de un nuevo empleado" vertex="1">
-          <mxGeometry height="30" width="270" x="80" y="30" as="geometry" />
-        </mxCell>
-        <mxCell id="9ZSRAJtdXUEw9_LBAxhM-5" edge="1" parent="1" style="endArrow=none;html=1;rounded=0;" value="">
-          <mxGeometry height="50" relative="1" width="50" as="geometry">
-            <mxPoint x="80" y="60" as="sourcePoint" />
-            <mxPoint x="340" y="60" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="9ZSRAJtdXUEw9_LBAxhM-9" edge="1" parent="1" source="9ZSRAJtdXUEw9_LBAxhM-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="9ZSRAJtdXUEw9_LBAxhM-8" value="">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="9ZSRAJtdXUEw9_LBAxhM-6" parent="1" style="whiteSpace=wrap;html=1;" value="Crear el hash de la contraseña" vertex="1">
-          <mxGeometry height="60" width="120" x="420" y="90" as="geometry" />
-        </mxCell>
-        <mxCell id="9ZSRAJtdXUEw9_LBAxhM-11" edge="1" parent="1" source="9ZSRAJtdXUEw9_LBAxhM-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="9ZSRAJtdXUEw9_LBAxhM-10" value="">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="9ZSRAJtdXUEw9_LBAxhM-8" parent="1" style="whiteSpace=wrap;html=1;" value="Insertar el Usuario" vertex="1">
-          <mxGeometry height="60" width="120" x="620" y="90" as="geometry" />
-        </mxCell>
-        <mxCell id="9ZSRAJtdXUEw9_LBAxhM-13" edge="1" parent="1" source="9ZSRAJtdXUEw9_LBAxhM-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="9ZSRAJtdXUEw9_LBAxhM-12" value="">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="9ZSRAJtdXUEw9_LBAxhM-10" parent="1" style="whiteSpace=wrap;html=1;" value="Asignar Rol al Usuario" vertex="1">
-          <mxGeometry height="60" width="120" x="620" y="230" as="geometry" />
-        </mxCell>
-        <mxCell id="9ZSRAJtdXUEw9_LBAxhM-15" edge="1" parent="1" source="9ZSRAJtdXUEw9_LBAxhM-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="9ZSRAJtdXUEw9_LBAxhM-14" value="">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="9ZSRAJtdXUEw9_LBAxhM-12" parent="1" style="whiteSpace=wrap;html=1;" value="Registro del Empleado y Usuario Insertado" vertex="1">
-          <mxGeometry height="60" width="120" x="420" y="230" as="geometry" />
-        </mxCell>
-        <mxCell id="9ZSRAJtdXUEw9_LBAxhM-14" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Fin" vertex="1">
-          <mxGeometry height="80" width="80" x="240" y="220" as="geometry" />
-        </mxCell>
-        <mxCell id="9ZSRAJtdXUEw9_LBAxhM-17" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="Inicio" vertex="1">
+        <mxCell id="9ZSRAJtdXUEw9_LBAxhM-17" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;labelBackgroundColor=none;" value="Inicio" vertex="1">
           <mxGeometry height="80" width="80" x="80" y="465" as="geometry" />
         </mxCell>
-        <mxCell id="9ZSRAJtdXUEw9_LBAxhM-20" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontFamily=Comic Sans MS;fontStyle=1" value="Flujo para el cálculo del aguinaldo" vertex="1">
+        <mxCell id="9ZSRAJtdXUEw9_LBAxhM-20" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontFamily=Comic Sans MS;fontStyle=1;labelBackgroundColor=none;" value="Flujo para el cálculo del aguinaldo" vertex="1">
           <mxGeometry height="30" width="270" x="80" y="415" as="geometry" />
         </mxCell>
-        <mxCell id="9ZSRAJtdXUEw9_LBAxhM-21" edge="1" parent="1" style="endArrow=none;html=1;rounded=0;" value="">
+        <mxCell id="9ZSRAJtdXUEw9_LBAxhM-21" edge="1" parent="1" style="endArrow=none;html=1;rounded=0;labelBackgroundColor=none;fontColor=default;" value="">
           <mxGeometry height="50" relative="1" width="50" as="geometry">
             <mxPoint x="80" y="445" as="sourcePoint" />
             <mxPoint x="340" y="445" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3D9unWaYPb0S8mVMG5AJ-4" edge="1" parent="1" source="3D9unWaYPb0S8mVMG5AJ-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;labelBackgroundColor=none;fontColor=default;" target="3D9unWaYPb0S8mVMG5AJ-3" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="3D9unWaYPb0S8mVMG5AJ-1" parent="1" style="whiteSpace=wrap;html=1;labelBackgroundColor=none;" value="Recibir DTO" vertex="1">
+          <mxGeometry height="60" width="120" x="170" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="3D9unWaYPb0S8mVMG5AJ-6" edge="1" parent="1" source="3D9unWaYPb0S8mVMG5AJ-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="3D9unWaYPb0S8mVMG5AJ-5" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="3D9unWaYPb0S8mVMG5AJ-3" parent="1" style="whiteSpace=wrap;html=1;labelBackgroundColor=none;" value="Validar ModelState" vertex="1">
+          <mxGeometry height="60" width="120" x="370" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="3D9unWaYPb0S8mVMG5AJ-8" edge="1" parent="1" source="3D9unWaYPb0S8mVMG5AJ-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="3D9unWaYPb0S8mVMG5AJ-7" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="3D9unWaYPb0S8mVMG5AJ-5" parent="1" style="whiteSpace=wrap;html=1;labelBackgroundColor=none;" value="Validar DTO" vertex="1">
+          <mxGeometry height="60" width="120" x="570" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="3D9unWaYPb0S8mVMG5AJ-10" edge="1" parent="1" source="3D9unWaYPb0S8mVMG5AJ-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="3D9unWaYPb0S8mVMG5AJ-9" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="3D9unWaYPb0S8mVMG5AJ-7" parent="1" style="whiteSpace=wrap;html=1;labelBackgroundColor=none;" value="Validar Reglas del Negocio" vertex="1">
+          <mxGeometry height="60" width="120" x="770" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="3D9unWaYPb0S8mVMG5AJ-12" edge="1" parent="1" source="3D9unWaYPb0S8mVMG5AJ-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="3D9unWaYPb0S8mVMG5AJ-11" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="3D9unWaYPb0S8mVMG5AJ-9" parent="1" style="whiteSpace=wrap;html=1;labelBackgroundColor=none;" value="Datos del Empleado" vertex="1">
+          <mxGeometry height="60" width="120" x="770" y="230" as="geometry" />
+        </mxCell>
+        <mxCell id="3D9unWaYPb0S8mVMG5AJ-14" edge="1" parent="1" source="3D9unWaYPb0S8mVMG5AJ-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="3D9unWaYPb0S8mVMG5AJ-13" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="3D9unWaYPb0S8mVMG5AJ-11" parent="1" style="whiteSpace=wrap;html=1;labelBackgroundColor=none;" value="Datos del usuario" vertex="1">
+          <mxGeometry height="60" width="120" x="570" y="230" as="geometry" />
+        </mxCell>
+        <mxCell id="3D9unWaYPb0S8mVMG5AJ-16" edge="1" parent="1" source="3D9unWaYPb0S8mVMG5AJ-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="3D9unWaYPb0S8mVMG5AJ-15" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="3D9unWaYPb0S8mVMG5AJ-13" parent="1" style="whiteSpace=wrap;html=1;labelBackgroundColor=none;" value="Relacionar Empleado y Usuario" vertex="1">
+          <mxGeometry height="60" width="120" x="370" y="230" as="geometry" />
+        </mxCell>
+        <mxCell id="3D9unWaYPb0S8mVMG5AJ-18" edge="1" parent="1" source="3D9unWaYPb0S8mVMG5AJ-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="3D9unWaYPb0S8mVMG5AJ-17" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="3D9unWaYPb0S8mVMG5AJ-15" parent="1" style="whiteSpace=wrap;html=1;labelBackgroundColor=none;" value="Retornar DTO" vertex="1">
+          <mxGeometry height="60" width="120" x="170" y="230" as="geometry" />
+        </mxCell>
+        <mxCell id="3D9unWaYPb0S8mVMG5AJ-17" parent="1" style="ellipse;whiteSpace=wrap;html=1;labelBackgroundColor=none;" value="Fin" vertex="1">
+          <mxGeometry height="80" width="80" x="30" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="3D9unWaYPb0S8mVMG5AJ-20" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontStyle=1" value="Presentation Layer" vertex="1">
+          <mxGeometry height="30" width="120" x="372.5" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="3D9unWaYPb0S8mVMG5AJ-22" connectable="0" parent="1" style="group" value="" vertex="1">
+          <mxGeometry height="30" width="270" x="20" y="10" as="geometry" />
+        </mxCell>
+        <mxCell id="9ZSRAJtdXUEw9_LBAxhM-4" parent="3D9unWaYPb0S8mVMG5AJ-22" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontFamily=Comic Sans MS;fontStyle=1;labelBackgroundColor=none;" value="Flujo para la creación de un nuevo empleado" vertex="1">
+          <mxGeometry height="30" width="270" as="geometry" />
+        </mxCell>
+        <mxCell id="9ZSRAJtdXUEw9_LBAxhM-5" edge="1" parent="3D9unWaYPb0S8mVMG5AJ-22" style="endArrow=none;html=1;rounded=0;labelBackgroundColor=none;fontColor=default;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint y="30" as="sourcePoint" />
+            <mxPoint x="260" y="30" as="targetPoint" />
           </mxGeometry>
         </mxCell>
       </root>

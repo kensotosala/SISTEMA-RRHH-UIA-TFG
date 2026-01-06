@@ -4,13 +4,13 @@ namespace BusinessLogicLayer.Interfaces
 {
     public interface IEmpleadosManager
     {
-        Task<IEnumerable<ListarEmpleadoUsuarioDto>> ListAsync();
+        Task<IEnumerable<DetalleEmpleadoDTO>> ListAsync();
 
-        Task<ListarEmpleadoUsuarioDto?> GetByIdAsync(int id);
+        Task<DetalleEmpleadoDTO?> GetByIdAsync(int id);
 
-        Task<CrearEmpleadoUsuarioDto> CreateAsync(CrearEmpleadoUsuarioDto dto);
+        Task<DetalleEmpleadoDTO> CreateAsync(CrearEmpleadoYUsuarioDTO dto);
 
-        Task UpdateAsync(int id, ActualizarEmpleadoUsuarioDto dto);
+        Task UpdateAsync(int id, ActualizarEmpleadoDTO dto);
 
         Task DeleteAsync(int id);
     }

@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using BusinessLogicLayer.DTOs;
+﻿using BusinessLogicLayer.DTOs;
 using BusinessLogicLayer.Interfaces;
 using BusinessLogicLayer.Shared;
 using DataAccessLayer.Entities;
@@ -11,78 +10,150 @@ namespace BusinessLogicLayer.Managers
     {
         private readonly IEmpleadosRepository _repoEmpleados;
         private readonly IUsuarioRepository _repoUsuarios;
-        private readonly IMapper _mapper;
+        private readonly IPuestosRepository _repoPuestos;
+        private readonly IDepartamentosRepository _repoDepartamentos;
         private readonly IPasswordHasher _passwordHasher;
 
         public EmpleadosManager(
             IEmpleadosRepository repoEmpleados,
             IUsuarioRepository repoUsuarios,
-            IMapper mapper,
+            IPuestosRepository repoPuestos,
+            IDepartamentosRepository repoDepartamentos,
             IPasswordHasher passwordHasher)
         {
             _repoEmpleados = repoEmpleados;
             _repoUsuarios = repoUsuarios;
-            _mapper = mapper;
+            _repoPuestos = repoPuestos;
+            _repoDepartamentos = repoDepartamentos;
             _passwordHasher = passwordHasher;
         }
 
-        public async Task<CrearEmpleadoUsuarioDto> CreateAsync(CrearEmpleadoUsuarioDto dto)
+        public async Task<DetalleEmpleadoDTO> CreateAsync(CrearEmpleadoYUsuarioDTO dto)
         {
-            if (dto is null)
+            // ======================================================
+            // VALIDACIONES DE NEGOCIO
+            // ======================================================
+
+            if (dto == null)
                 throw new ArgumentNullException(nameof(dto));
 
-            if (dto.Empleado is null)
-                throw new ArgumentException("La información del empleado es obligatoria.");
-
-            if (dto.Usuario is null)
-                throw new ArgumentException("La información del usuario es obligatoria.");
-
-            // Validaciones de las Business Rules
-
-            if (await _repoEmpleados.ExistsByCodigoAsync(dto.Empleado.CodigoEmpleado))
+            if (await _repoEmpleados.ExistsByCodigoAsync(dto.CodigoEmpleado))
                 throw new ArgumentException(
-                    $"Ya existe un empleado con el código '{dto.Empleado.CodigoEmpleado}'.");
+                    $"Ya existe un empleado con el código '{dto.CodigoEmpleado}'.");
 
-            if (await _repoUsuarios.ExistsByUsernameAsync(dto.Usuario.NombreUsuario))
-                throw new InvalidOperationException(
-                    $"El nombre de usuario '{dto.Usuario.NombreUsuario}' ya está en uso.");
+            if (await _repoUsuarios.ExistsByUsernameAsync(dto.NombreUsuario))
+                throw new BusinessException(
+                    $"El nombre de usuario '{dto.NombreUsuario}' ya está en uso.",
+                    code: "USERNAME_DUPLICADO");
 
-            if (dto.Empleado.SalarioBase < 0)
-                throw new ArgumentException("El salario base no puede ser negativo.");
+            if (await _repoEmpleados.EmaillRegistrado(dto.Email))
+                throw new BusinessException(
+                    $"La dirección de correo '{dto.Email}' ya está en uso.",
+                    code: "EMAIL_DUPLICADO");
 
-            if (dto.Empleado.FechaContratacion > DateOnly.FromDateTime(DateTime.UtcNow))
-                throw new ArgumentException("La fecha de contratación no puede ser futura.");
+            if (await _repoPuestos.ExistsAsync(dto.PuestoId))
+                throw new BusinessException(
+                    $"El Puesto cuyo ID es '{dto.PuestoId}' no se encuentra",
+                    code: "PUESTO_NO_EXISTE");
 
-            // Creación del empleado
+            if (await _repoDepartamentos.ExistsAsync(dto.PuestoId))
+                throw new BusinessException(
+                    $"El Departamento cuyo ID es '{dto.PuestoId}' no se encuentra.",
+                    code: "DEPARTAMENTO_NO_EXISTE");
 
-            var empleado = _mapper.Map<Empleados>(dto.Empleado);
+            if (dto.SalarioBase < 0)
+                throw new BusinessException(
+                    "El salario base no puede ser negativo.",
+                    "SALARIO_INVALIDO");
 
-            empleado.Estado = "ACTIVO";
-            empleado.FechaCreacion = DateTime.UtcNow;
-            empleado.FechaModificacion = DateTime.UtcNow;
+            if (dto.FechaContratacion > DateOnly.FromDateTime(DateTime.UtcNow))
+                throw new BusinessException(
+                   $"La fecha de contratación no puede ser futura.",
+                   code: "FUTURE_DATE");
+
+            // ======================================================
+            // CREAR EMPLEADO (DTO → ENTIDAD)
+            // ======================================================
+
+            var empleado = new Empleados
+            {
+                CodigoEmpleado = dto.CodigoEmpleado,
+                Nombre = dto.Nombre,
+                PrimerApellido = dto.PrimerApellido,
+                SegundoApellido = dto.SegundoApellido,
+                Email = dto.Email,
+                Telefono = dto.Telefono,
+                FechaContratacion = dto.FechaContratacion,
+
+                PuestoId = dto.PuestoId,
+                DepartamentoId = dto.DepartamentoId,
+                JefeInmediatoId = dto.JefeInmediatoId,
+                SalarioBase = dto.SalarioBase,
+                TipoContrato = dto.TipoContrato.ToString(),
+
+                Estado = "ACTIVO",
+                FechaCreacion = DateTime.UtcNow,
+                FechaModificacion = DateTime.UtcNow
+            };
 
             var empleadoCreado = await _repoEmpleados.CreateAsync(empleado);
 
-            // Creación del usuario
+            // ======================================================
+            // CREAR USUARIO (DTO → ENTIDAD)
+            // ======================================================
 
-            var usuario = _mapper.Map<Usuarios>(dto.Usuario);
+            var usuario = new Usuarios
+            {
+                NombreUsuario = dto.NombreUsuario,
+                PasswordHash = _passwordHasher.Hash(dto.Password),
+                EmpleadoId = empleadoCreado.IdEmpleado,
 
-            usuario.PasswordHash = _passwordHasher.Hash(dto.Usuario.Password);
-            usuario.EmpleadoId = empleadoCreado.IdEmpleado;
-            usuario.FechaCreacion = DateTime.UtcNow;
-            usuario.FechaModificacion = DateTime.UtcNow;
-            usuario.Estado = EstadoEmpleado.ACTIVO.ToString();
+                Estado = "ACTIVO",
+                FechaCreacion = DateTime.UtcNow
+            };
 
             var usuarioCreado = await _repoUsuarios.CreateAsync(usuario);
 
-            // Relación y respuesta
+            // ======================================================
+            // RELACIÓN
+            // ======================================================
 
             empleadoCreado.Usuarios = usuarioCreado;
 
-            return _mapper.Map<CrearEmpleadoUsuarioDto>(empleadoCreado);
+            // ======================================================
+            // RESPUESTA (ENTIDAD → DTO)
+            // ======================================================
+
+            return new DetalleEmpleadoDTO
+            {
+                IdEmpleado = empleadoCreado.IdEmpleado,
+                CodigoEmpleado = empleadoCreado.CodigoEmpleado,
+                Nombre = empleadoCreado.Nombre,
+                PrimerApellido = empleadoCreado.PrimerApellido,
+                SegundoApellido = empleadoCreado.SegundoApellido,
+                Email = empleadoCreado.Email,
+                Telefono = empleadoCreado.Telefono,
+                FechaContratacion = empleadoCreado.FechaContratacion,
+
+                PuestoId = empleadoCreado.PuestoId,
+                DepartamentoId = empleadoCreado.DepartamentoId,
+                JefeInmediatoId = empleadoCreado.JefeInmediatoId,
+                SalarioBase = empleadoCreado.SalarioBase,
+
+                TipoContrato = Enum.Parse<TipoContrato>(empleadoCreado.TipoContrato),
+
+                Estado = empleadoCreado.Estado,
+                FechaCreacion = empleadoCreado.FechaCreacion,
+                FechaModificacion = empleadoCreado.FechaModificacion,
+
+                IdUsuario = usuarioCreado.IdUsuario,
+                NombreUsuario = usuarioCreado.NombreUsuario,
+                NombreRol = usuarioCreado.UsuariosRoles
+                    .FirstOrDefault()?.Rol?.Nombre ?? string.Empty
+            };
         }
 
-        public async Task<ListarEmpleadoUsuarioDto?> GetByIdAsync(int id)
+        public async Task<DetalleEmpleadoDTO?> GetByIdAsync(int id)
         {
             if (id <= 0)
                 throw new ArgumentException("El ID debe ser mayor a 0.", nameof(id));
@@ -92,14 +163,81 @@ namespace BusinessLogicLayer.Managers
             if (empleado == null)
                 return null;
 
-            return _mapper.Map<ListarEmpleadoUsuarioDto>(empleado);
+            return new DetalleEmpleadoDTO
+            {
+                IdEmpleado = empleado.IdEmpleado,
+                CodigoEmpleado = empleado.CodigoEmpleado,
+                Nombre = empleado.Nombre,
+                PrimerApellido = empleado.PrimerApellido,
+                SegundoApellido = empleado.SegundoApellido,
+                Email = empleado.Email,
+                Telefono = empleado.Telefono,
+                FechaContratacion = empleado.FechaContratacion,
+
+                PuestoId = empleado.PuestoId,
+                DepartamentoId = empleado.DepartamentoId,
+                JefeInmediatoId = empleado.JefeInmediatoId,
+                SalarioBase = empleado.SalarioBase,
+
+                // Persistencia (string) → API (enum)
+                TipoContrato = Enum.Parse<TipoContrato>(empleado.TipoContrato),
+
+                Estado = empleado.Estado,
+                FechaCreacion = empleado.FechaCreacion,
+                FechaModificacion = empleado.FechaModificacion,
+
+                // ===== USUARIO =====
+                IdUsuario = empleado.Usuarios?.IdUsuario ?? 0,
+                NombreUsuario = empleado.Usuarios?.NombreUsuario ?? string.Empty,
+
+                // ===== ROL =====
+                NombreRol = empleado.Usuarios?.UsuariosRoles
+                    .FirstOrDefault()?.Rol?.Nombre ?? string.Empty
+            };
         }
 
-        public async Task<IEnumerable<ListarEmpleadoUsuarioDto>> ListAsync()
+        public async Task<IEnumerable<DetalleEmpleadoDTO>> ListAsync()
         {
             var empleados = await _repoEmpleados.GetAllAsync();
 
-            return _mapper.Map<IEnumerable<ListarEmpleadoUsuarioDto>>(empleados);
+            var resultado = new List<DetalleEmpleadoDTO>();
+
+            foreach (var empleado in empleados)
+            {
+                resultado.Add(new DetalleEmpleadoDTO
+                {
+                    IdEmpleado = empleado.IdEmpleado,
+                    CodigoEmpleado = empleado.CodigoEmpleado,
+                    Nombre = empleado.Nombre,
+                    PrimerApellido = empleado.PrimerApellido,
+                    SegundoApellido = empleado.SegundoApellido,
+                    Email = empleado.Email,
+                    Telefono = empleado.Telefono,
+                    FechaContratacion = empleado.FechaContratacion,
+
+                    PuestoId = empleado.PuestoId,
+                    DepartamentoId = empleado.DepartamentoId,
+                    JefeInmediatoId = empleado.JefeInmediatoId,
+                    SalarioBase = empleado.SalarioBase,
+
+                    // Persistencia → API
+                    TipoContrato = Enum.Parse<TipoContrato>(empleado.TipoContrato),
+
+                    Estado = empleado.Estado,
+                    FechaCreacion = empleado.FechaCreacion,
+                    FechaModificacion = empleado.FechaModificacion,
+
+                    // ===== USUARIO =====
+                    IdUsuario = empleado.Usuarios?.IdUsuario ?? 0,
+                    NombreUsuario = empleado.Usuarios?.NombreUsuario ?? string.Empty,
+
+                    // ===== ROL =====
+                    NombreRol = empleado.Usuarios?.UsuariosRoles
+                        .FirstOrDefault()?.Rol?.Nombre ?? string.Empty
+                });
+            }
+
+            return resultado;
         }
 
         public async Task DeleteAsync(int id)
@@ -131,33 +269,79 @@ namespace BusinessLogicLayer.Managers
             await _repoEmpleados.DeleteAsync(id);
         }
 
-        public async Task UpdateAsync(int id, ActualizarEmpleadoUsuarioDto dto)
+        public async Task UpdateAsync(int id, ActualizarEmpleadoDTO dto)
         {
             if (dto == null)
                 throw new ArgumentNullException(nameof(dto));
 
-            var empleadoExistente = await _repoEmpleados.GetByIdAsync(id);
-            if (empleadoExistente == null)
+            if (id <= 0)
+                throw new ArgumentException("El ID debe ser mayor a 0.", nameof(id));
+
+            // ===== OBTENER EMPLEADO =====
+            var empleado = await _repoEmpleados.GetByIdAsync(id);
+            if (empleado == null)
                 throw new KeyNotFoundException($"Empleado con ID {id} no encontrado.");
 
-            var usuarioExistente = await _repoUsuarios.GetByIdAsync(id);
+            // ===== ACTUALIZAR EMPLEADO (SOLO CAMPOS INFORMADOS) =====
 
-            _mapper.Map(dto.Empleado, empleadoExistente);
-            empleadoExistente.FechaModificacion = DateTime.UtcNow;
+            if (dto.CodigoEmpleado != null)
+                empleado.CodigoEmpleado = dto.CodigoEmpleado;
 
-            await _repoEmpleados.UpdateAsync(empleadoExistente);
+            if (dto.Nombre != null)
+                empleado.Nombre = dto.Nombre;
 
-            if (usuarioExistente != null && dto.Usuario != null)
+            if (dto.PrimerApellido != null)
+                empleado.PrimerApellido = dto.PrimerApellido;
+
+            if (dto.SegundoApellido != null)
+                empleado.SegundoApellido = dto.SegundoApellido;
+
+            if (dto.Email != null)
+                empleado.Email = dto.Email;
+
+            if (dto.Telefono != null)
+                empleado.Telefono = dto.Telefono;
+
+            if (dto.FechaContratacion.HasValue)
+                empleado.FechaContratacion = dto.FechaContratacion.Value;
+
+            if (dto.PuestoId.HasValue)
+                empleado.PuestoId = dto.PuestoId.Value;
+
+            if (dto.DepartamentoId.HasValue)
+                empleado.DepartamentoId = dto.DepartamentoId.Value;
+
+            if (dto.JefeInmediatoId.HasValue)
+                empleado.JefeInmediatoId = dto.JefeInmediatoId.Value;
+
+            if (dto.SalarioBase.HasValue)
+                empleado.SalarioBase = dto.SalarioBase.Value;
+
+            if (dto.TipoContrato.HasValue)
+                empleado.TipoContrato = dto.TipoContrato.Value.ToString();
+
+            if (dto.Estado.HasValue)
+                empleado.Estado = dto.Estado.Value.ToString();
+
+            empleado.FechaModificacion = DateTime.UtcNow;
+
+            await _repoEmpleados.UpdateAsync(empleado);
+
+            // ===== ACTUALIZAR ROL DE USUARIO (SI APLICA) =====
+
+            if (dto.RolId.HasValue && dto.RolId.Value > 0 && empleado.Usuarios != null)
             {
-                _mapper.Map(dto.Usuario, usuarioExistente);
-                usuarioExistente.FechaModificacion = DateTime.UtcNow;
+                var usuario = empleado.Usuarios;
 
-                if (!string.IsNullOrWhiteSpace(dto.Usuario.Password))
+                usuario.UsuariosRoles.Clear();
+                usuario.UsuariosRoles.Add(new UsuariosRoles
                 {
-                    usuarioExistente.PasswordHash = _passwordHasher.Hash(dto.Usuario.Password);
-                }
+                    RolId = dto.RolId.Value
+                });
 
-                await _repoUsuarios.UpdateAsync(usuarioExistente);
+                usuario.FechaModificacion = DateTime.UtcNow;
+
+                await _repoUsuarios.UpdateAsync(usuario);
             }
         }
     }
