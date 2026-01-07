@@ -82,8 +82,7 @@
               "RelativeToolTip": "PresentationLayer\\Program.cs",
               "ViewState": "AgIAAE8AAAAAAAAAAAAiwGkAAAAKAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-07T02:49:44.9Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-01-07T02:49:44.9Z"
             },
             {
               "$type": "Document",
@@ -95,8 +94,7 @@
               "RelativeToolTip": "PresentationLayer\\appsettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2026-01-07T02:48:09.201Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-01-07T02:48:09.201Z"
             },
             {
               "$type": "Document",
@@ -108,8 +106,7 @@
               "RelativeToolTip": "PresentationLayer\\PresentationLayer.http",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003502|",
-              "WhenOpened": "2026-01-07T02:48:07.805Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-01-07T02:48:07.805Z"
             },
             {
               "$type": "Document",
@@ -121,8 +118,7 @@
               "RelativeToolTip": "BusinessLogicLayer\\Shared\\EstadoAsistencia.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-07T02:21:00.046Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-01-07T02:21:00.046Z"
             },
             {
               "$type": "Document",
@@ -134,8 +130,7 @@
               "RelativeToolTip": "BusinessLogicLayer\\DTOs\\AsistenciaDTO.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-07T02:10:45.452Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-01-07T02:10:45.452Z"
             },
             {
               "$type": "Document",
@@ -147,8 +142,7 @@
               "RelativeToolTip": "PresentationLayer\\Controllers\\AsistenciaController.cs",
               "ViewState": "AgIAAAEAAAAAAAAAAAAIwBgAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-07T02:10:24.394Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-01-07T02:10:24.394Z"
             },
             {
               "$type": "Document",
@@ -160,8 +154,7 @@
               "RelativeToolTip": "PresentationLayer\\Controllers\\AuthController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAvAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-07T02:09:58.169Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-01-07T02:09:58.169Z"
             },
             {
               "$type": "Document",
@@ -171,7 +164,7 @@
               "RelativeDocumentMoniker": "BusinessLogicLayer\\Managers\\AsistenciaManager.cs",
               "ToolTip": "C:\\Projects\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\Managers\\AsistenciaManager.cs",
               "RelativeToolTip": "BusinessLogicLayer\\Managers\\AsistenciaManager.cs",
-              "ViewState": "AgIAABgAAAAAAAAAAAAQwDEAAAAMAAAAAAAAAA==",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAQwB4AAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-01-07T02:08:00.59Z",
               "EditorCaption": ""
@@ -186,8 +179,7 @@
               "RelativeToolTip": "BusinessLogicLayer\\Interfaces\\IAsistenciaManager.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-07T02:07:32.771Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-01-07T02:07:32.771Z"
             },
             {
               "$type": "Document",
@@ -199,8 +191,7 @@
               "RelativeToolTip": "DataAccessLayer\\Repositories\\AsistenciasRepository.cs",
               "ViewState": "AgIAAAkAAAAAAAAAAAAcwCgAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-07T02:04:24.683Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-01-07T02:04:24.683Z"
             },
             {
               "$type": "Document",
@@ -212,8 +203,7 @@
               "RelativeToolTip": "DataAccessLayer\\Interfaces\\IAsistenciasRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-07T02:03:52.021Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-01-07T02:03:52.021Z"
             },
             {
               "$type": "Document",
@@ -225,8 +215,7 @@
               "RelativeToolTip": "DataAccessLayer\\Entities\\Asistencias.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-07T00:58:07.588Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-01-07T00:58:07.588Z"
             },
             {
               "$type": "Document",
@@ -238,8 +227,7 @@
               "RelativeToolTip": "PresentationLayer\\Extensions\\MyDependencies.cs",
               "ViewState": "AgIAAB8AAAAAAAAAAAAQwDsAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-07T02:14:42.962Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-01-07T02:14:42.962Z"
             }
           ]
         }

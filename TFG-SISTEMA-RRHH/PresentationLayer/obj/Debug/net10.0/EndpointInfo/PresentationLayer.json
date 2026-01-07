@@ -36,6 +36,29 @@
         }
       }
     },
+    "/api/Asistencia/estado/{empleadoId}": {
+      "get": {
+        "tags": [
+          "Asistencia"
+        ],
+        "parameters": [
+          {
+            "name": "empleadoId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Auth/login": {
       "post": {
         "tags": [
@@ -69,6 +92,18 @@
     },
     "/api/Auth/logout": {
       "post": {
+        "tags": [
+          "Auth"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Auth/verify": {
+      "get": {
         "tags": [
           "Auth"
         ],

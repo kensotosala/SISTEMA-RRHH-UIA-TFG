@@ -1,6 +1,22 @@
 [
   {
     "ContainingType": "PresentationLayer.Controllers.AsistenciaController",
+    "Method": "ObtenerEstado",
+    "RelativePath": "api/Asistencia/estado/{empleadoId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "empleadoId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PresentationLayer.Controllers.AsistenciaController",
     "Method": "Marcar",
     "RelativePath": "api/Asistencia/marcar",
     "HttpMethod": "POST",
@@ -36,6 +52,16 @@
     "Method": "Logout",
     "RelativePath": "api/Auth/logout",
     "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PresentationLayer.Controllers.AuthController",
+    "Method": "VerifyToken",
+    "RelativePath": "api/Auth/verify",
+    "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [],

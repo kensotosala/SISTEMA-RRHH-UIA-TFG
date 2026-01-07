@@ -1,7 +1,7 @@
 ﻿using BusinessLogicLayer.DTOs;
 using BusinessLogicLayer.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace PresentationLayer.Controllers
 {
@@ -32,6 +32,13 @@ namespace PresentationLayer.Controllers
         {
             // JWT puro → logout es CLIENT SIDE
             return Ok("Logout exitoso");
+        }
+
+        [HttpGet("verify")]
+        [Authorize]
+        public IActionResult VerifyToken()
+        {
+            return Ok(new { valid = true });
         }
     }
 }

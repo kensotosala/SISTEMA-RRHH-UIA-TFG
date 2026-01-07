@@ -62,15 +62,26 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
+// CONFIGURACIÓN CORS MEJORADA
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend",
         policy =>
         {
-            policy.WithOrigins("http://localhost:3000") // URL de tu Next.js
+            policy.WithOrigins("http://localhost:3000", "https://localhost:3000", "https://localhost:7121")
                   .AllowAnyMethod()
                   .AllowAnyHeader()
-                  .AllowCredentials();
+                  .AllowCredentials()
+                  .SetIsOriginAllowed((host) => true); // Permite cualquier origen en desarrollo
+        });
+
+    // Política más permisiva para desarrollo
+    options.AddPolicy("AllowAll",
+        policy =>
+        {
+            policy.AllowAnyOrigin()
+                  .AllowAnyMethod()
+                  .AllowAnyHeader();
         });
 });
 
@@ -87,17 +98,23 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseCors("AllowAll"); // Usar política permisiva en desarrollo
+}
+else
+{
+    app.UseCors("AllowFrontend"); // Usar política específica en producción
 }
 
+// ORDEN CORRECTO DE MIDDLEWARES
+app.UseHttpsRedirection();
+
+app.UseRouting(); // <-- AÑADIR ESTO ES CRUCIAL
+
+// CORS debe ir después de UseRouting() pero antes de UseAuthentication()
 app.UseCors("AllowFrontend");
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 
-app.UseHttpsRedirection();
-
-app.UseExceptionHandler("/error");
-
-// IMPORTANTE: Authentication antes de Authorization
 app.UseAuthentication();
 app.UseAuthorization();
 
