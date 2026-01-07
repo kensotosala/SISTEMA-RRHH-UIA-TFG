@@ -3,20 +3,56 @@
   "WorkspaceRootPath": "C:\\Projects\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|c:\\projects\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\businesslogiclayer\\managers\\asistenciamanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|solutionrelative:businesslogiclayer\\managers\\asistenciamanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{51B4CFD2-5728-0F00-60C4-E24DAE522468}|PresentationLayer\\PresentationLayer.csproj|c:\\projects\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\presentationlayer\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{51B4CFD2-5728-0F00-60C4-E24DAE522468}|PresentationLayer\\PresentationLayer.csproj|solutionrelative:presentationlayer\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{51B4CFD2-5728-0F00-60C4-E24DAE522468}|PresentationLayer\\PresentationLayer.csproj|c:\\projects\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\presentationlayer\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{51B4CFD2-5728-0F00-60C4-E24DAE522468}|PresentationLayer\\PresentationLayer.csproj|solutionrelative:presentationlayer\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{51B4CFD2-5728-0F00-60C4-E24DAE522468}|PresentationLayer\\PresentationLayer.csproj|c:\\projects\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\presentationlayer\\presentationlayer.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}",
+      "RelativeMoniker": "D:0:0:{51B4CFD2-5728-0F00-60C4-E24DAE522468}|PresentationLayer\\PresentationLayer.csproj|solutionrelative:presentationlayer\\presentationlayer.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{51B4CFD2-5728-0F00-60C4-E24DAE522468}|PresentationLayer\\PresentationLayer.csproj|c:\\projects\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\presentationlayer\\controllers\\asistenciacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{51B4CFD2-5728-0F00-60C4-E24DAE522468}|PresentationLayer\\PresentationLayer.csproj|solutionrelative:presentationlayer\\controllers\\asistenciacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A9FCCEB3-DD88-F8C0-89A3-FD31A7C54F23}|DataAccessLayer\\DataAccessLayer.csproj|c:\\projects\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\dataaccesslayer\\repositories\\asistenciasrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A9FCCEB3-DD88-F8C0-89A3-FD31A7C54F23}|DataAccessLayer\\DataAccessLayer.csproj|solutionrelative:dataaccesslayer\\repositories\\asistenciasrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A9FCCEB3-DD88-F8C0-89A3-FD31A7C54F23}|DataAccessLayer\\DataAccessLayer.csproj|c:\\projects\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\dataaccesslayer\\interfaces\\iasistenciasrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A9FCCEB3-DD88-F8C0-89A3-FD31A7C54F23}|DataAccessLayer\\DataAccessLayer.csproj|solutionrelative:dataaccesslayer\\interfaces\\iasistenciasrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|c:\\projects\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\businesslogiclayer\\interfaces\\iasistenciamanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|solutionrelative:businesslogiclayer\\interfaces\\iasistenciamanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|c:\\projects\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\businesslogiclayer\\shared\\estadoasistencia.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|solutionrelative:businesslogiclayer\\shared\\estadoasistencia.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A9FCCEB3-DD88-F8C0-89A3-FD31A7C54F23}|DataAccessLayer\\DataAccessLayer.csproj|c:\\projects\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\dataaccesslayer\\entities\\asistencias.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A9FCCEB3-DD88-F8C0-89A3-FD31A7C54F23}|DataAccessLayer\\DataAccessLayer.csproj|solutionrelative:dataaccesslayer\\entities\\asistencias.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|c:\\projects\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\businesslogiclayer\\managers\\authmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|solutionrelative:businesslogiclayer\\managers\\authmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{51B4CFD2-5728-0F00-60C4-E24DAE522468}|PresentationLayer\\PresentationLayer.csproj|c:\\projects\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\presentationlayer\\extensions\\mydependencies.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{51B4CFD2-5728-0F00-60C4-E24DAE522468}|PresentationLayer\\PresentationLayer.csproj|solutionrelative:presentationlayer\\extensions\\mydependencies.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|c:\\projects\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\businesslogiclayer\\managers\\empleadosmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|solutionrelative:businesslogiclayer\\managers\\empleadosmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{51B4CFD2-5728-0F00-60C4-E24DAE522468}|PresentationLayer\\PresentationLayer.csproj|c:\\projects\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\presentationlayer\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{51B4CFD2-5728-0F00-60C4-E24DAE522468}|PresentationLayer\\PresentationLayer.csproj|solutionrelative:presentationlayer\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|c:\\projects\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\businesslogiclayer\\dtos\\empleadodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|solutionrelative:businesslogiclayer\\dtos\\empleadodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|c:\\projects\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\businesslogiclayer\\dtos\\asistenciadto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|solutionrelative:businesslogiclayer\\dtos\\asistenciadto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,7 +62,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 9,
           "Children": [
             {
               "$type": "Bookmark",
@@ -38,7 +74,150 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Projects\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\PresentationLayer\\Program.cs",
+              "RelativeDocumentMoniker": "PresentationLayer\\Program.cs",
+              "ToolTip": "C:\\Projects\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\PresentationLayer\\Program.cs",
+              "RelativeToolTip": "PresentationLayer\\Program.cs",
+              "ViewState": "AgIAAE8AAAAAAAAAAAAiwGkAAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-07T02:49:44.9Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Projects\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\PresentationLayer\\appsettings.json",
+              "RelativeDocumentMoniker": "PresentationLayer\\appsettings.json",
+              "ToolTip": "C:\\Projects\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\PresentationLayer\\appsettings.json",
+              "RelativeToolTip": "PresentationLayer\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-01-07T02:48:09.201Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "PresentationLayer.http",
+              "DocumentMoniker": "C:\\Projects\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\PresentationLayer\\PresentationLayer.http",
+              "RelativeDocumentMoniker": "PresentationLayer\\PresentationLayer.http",
+              "ToolTip": "C:\\Projects\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\PresentationLayer\\PresentationLayer.http",
+              "RelativeToolTip": "PresentationLayer\\PresentationLayer.http",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003502|",
+              "WhenOpened": "2026-01-07T02:48:07.805Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "EstadoAsistencia.cs",
+              "DocumentMoniker": "C:\\Projects\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\Shared\\EstadoAsistencia.cs",
+              "RelativeDocumentMoniker": "BusinessLogicLayer\\Shared\\EstadoAsistencia.cs",
+              "ToolTip": "C:\\Projects\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\Shared\\EstadoAsistencia.cs",
+              "RelativeToolTip": "BusinessLogicLayer\\Shared\\EstadoAsistencia.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-07T02:21:00.046Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "AsistenciaDTO.cs",
+              "DocumentMoniker": "C:\\Projects\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\DTOs\\AsistenciaDTO.cs",
+              "RelativeDocumentMoniker": "BusinessLogicLayer\\DTOs\\AsistenciaDTO.cs",
+              "ToolTip": "C:\\Projects\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\DTOs\\AsistenciaDTO.cs",
+              "RelativeToolTip": "BusinessLogicLayer\\DTOs\\AsistenciaDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-07T02:10:45.452Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "AsistenciaController.cs",
+              "DocumentMoniker": "C:\\Projects\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\PresentationLayer\\Controllers\\AsistenciaController.cs",
+              "RelativeDocumentMoniker": "PresentationLayer\\Controllers\\AsistenciaController.cs",
+              "ToolTip": "C:\\Projects\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\PresentationLayer\\Controllers\\AsistenciaController.cs",
+              "RelativeToolTip": "PresentationLayer\\Controllers\\AsistenciaController.cs",
+              "ViewState": "AgIAAAEAAAAAAAAAAAAIwBgAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-07T02:10:24.394Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "C:\\Projects\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\PresentationLayer\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "PresentationLayer\\Controllers\\AuthController.cs",
+              "ToolTip": "C:\\Projects\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\PresentationLayer\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "PresentationLayer\\Controllers\\AuthController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-07T02:09:58.169Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "AsistenciaManager.cs",
+              "DocumentMoniker": "C:\\Projects\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\Managers\\AsistenciaManager.cs",
+              "RelativeDocumentMoniker": "BusinessLogicLayer\\Managers\\AsistenciaManager.cs",
+              "ToolTip": "C:\\Projects\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\Managers\\AsistenciaManager.cs",
+              "RelativeToolTip": "BusinessLogicLayer\\Managers\\AsistenciaManager.cs",
+              "ViewState": "AgIAABgAAAAAAAAAAAAQwDEAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-07T02:08:00.59Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "IAsistenciaManager.cs",
+              "DocumentMoniker": "C:\\Projects\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\Interfaces\\IAsistenciaManager.cs",
+              "RelativeDocumentMoniker": "BusinessLogicLayer\\Interfaces\\IAsistenciaManager.cs",
+              "ToolTip": "C:\\Projects\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\Interfaces\\IAsistenciaManager.cs",
+              "RelativeToolTip": "BusinessLogicLayer\\Interfaces\\IAsistenciaManager.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-07T02:07:32.771Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "AsistenciasRepository.cs",
+              "DocumentMoniker": "C:\\Projects\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\DataAccessLayer\\Repositories\\AsistenciasRepository.cs",
+              "RelativeDocumentMoniker": "DataAccessLayer\\Repositories\\AsistenciasRepository.cs",
+              "ToolTip": "C:\\Projects\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\DataAccessLayer\\Repositories\\AsistenciasRepository.cs",
+              "RelativeToolTip": "DataAccessLayer\\Repositories\\AsistenciasRepository.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAcwCgAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-07T02:04:24.683Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "IAsistenciasRepository.cs",
+              "DocumentMoniker": "C:\\Projects\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\DataAccessLayer\\Interfaces\\IAsistenciasRepository.cs",
+              "RelativeDocumentMoniker": "DataAccessLayer\\Interfaces\\IAsistenciasRepository.cs",
+              "ToolTip": "C:\\Projects\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\DataAccessLayer\\Interfaces\\IAsistenciasRepository.cs",
+              "RelativeToolTip": "DataAccessLayer\\Interfaces\\IAsistenciasRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-07T02:03:52.021Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
               "Title": "Asistencias.cs",
               "DocumentMoniker": "C:\\Projects\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\DataAccessLayer\\Entities\\Asistencias.cs",
               "RelativeDocumentMoniker": "DataAccessLayer\\Entities\\Asistencias.cs",
@@ -51,39 +230,15 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "EmpleadosManager.cs",
-              "DocumentMoniker": "C:\\Projects\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\Managers\\EmpleadosManager.cs",
-              "RelativeDocumentMoniker": "BusinessLogicLayer\\Managers\\EmpleadosManager.cs",
-              "ToolTip": "C:\\Projects\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\Managers\\EmpleadosManager.cs",
-              "RelativeToolTip": "BusinessLogicLayer\\Managers\\EmpleadosManager.cs",
-              "ViewState": "AgIAADUBAAAAAAAAAAAuwHgBAAAFAAAAAAAAAA==",
+              "DocumentIndex": 10,
+              "Title": "MyDependencies.cs",
+              "DocumentMoniker": "C:\\Projects\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\PresentationLayer\\Extensions\\MyDependencies.cs",
+              "RelativeDocumentMoniker": "PresentationLayer\\Extensions\\MyDependencies.cs",
+              "ToolTip": "C:\\Projects\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\PresentationLayer\\Extensions\\MyDependencies.cs",
+              "RelativeToolTip": "PresentationLayer\\Extensions\\MyDependencies.cs",
+              "ViewState": "AgIAAB8AAAAAAAAAAAAQwDsAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-06T15:53:10.908Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "EmpleadoDTO.cs",
-              "DocumentMoniker": "C:\\Projects\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\DTOs\\EmpleadoDTO.cs",
-              "RelativeDocumentMoniker": "BusinessLogicLayer\\DTOs\\EmpleadoDTO.cs",
-              "ToolTip": "C:\\Projects\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\DTOs\\EmpleadoDTO.cs",
-              "RelativeToolTip": "BusinessLogicLayer\\DTOs\\EmpleadoDTO.cs",
-              "ViewState": "AgIAAGkAAAAAAAAAAAAwwIUAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-06T15:51:34.86Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "AuthManager.cs",
-              "DocumentMoniker": "C:\\Projects\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\Managers\\AuthManager.cs",
-              "RelativeDocumentMoniker": "BusinessLogicLayer\\Managers\\AuthManager.cs",
-              "ToolTip": "C:\\Projects\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\Managers\\AuthManager.cs",
-              "RelativeToolTip": "BusinessLogicLayer\\Managers\\AuthManager.cs",
-              "ViewState": "AgIAAA4AAAAAAAAAAAAAwBsAAAA1AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-06T15:50:54.118Z",
+              "WhenOpened": "2026-01-07T02:14:42.962Z",
               "EditorCaption": ""
             }
           ]

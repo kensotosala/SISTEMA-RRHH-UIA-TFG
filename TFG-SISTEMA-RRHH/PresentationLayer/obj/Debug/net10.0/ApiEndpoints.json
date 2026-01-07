@@ -1,5 +1,21 @@
 [
   {
+    "ContainingType": "PresentationLayer.Controllers.AsistenciaController",
+    "Method": "Marcar",
+    "RelativePath": "api/Asistencia/marcar",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "BusinessLogicLayer.DTOs.MarcarAsistenciaRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "PresentationLayer.Controllers.AuthController",
     "Method": "Login",
     "RelativePath": "api/Auth/login",

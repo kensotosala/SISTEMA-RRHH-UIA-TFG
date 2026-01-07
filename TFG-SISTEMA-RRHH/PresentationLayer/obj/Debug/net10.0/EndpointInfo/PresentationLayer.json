@@ -5,6 +5,37 @@
     "version": "1.0"
   },
   "paths": {
+    "/api/Asistencia/marcar": {
+      "post": {
+        "tags": [
+          "Asistencia"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MarcarAsistenciaRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MarcarAsistenciaRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/MarcarAsistenciaRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Auth/login": {
       "post": {
         "tags": [
@@ -786,6 +817,19 @@
         },
         "additionalProperties": false
       },
+      "MarcarAsistenciaRequest": {
+        "required": [
+          "empleadoId"
+        ],
+        "type": "object",
+        "properties": {
+          "empleadoId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
       "PuestoDTO": {
         "type": "object",
         "properties": {
@@ -844,6 +888,9 @@
     }
   },
   "tags": [
+    {
+      "name": "Asistencia"
+    },
     {
       "name": "Auth"
     },
