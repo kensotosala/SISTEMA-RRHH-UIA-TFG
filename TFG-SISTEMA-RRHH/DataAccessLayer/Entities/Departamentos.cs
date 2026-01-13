@@ -18,5 +18,5 @@ public partial class Departamentos
 
     public virtual ICollection<Empleados> Empleados { get; set; } = new List<Empleados>();
 
-    public virtual Empleados? IdJefeDepartamentoNavigation { get; set; }
+    public virtual Empleados? JefeDepartamento { get; set; }
 }

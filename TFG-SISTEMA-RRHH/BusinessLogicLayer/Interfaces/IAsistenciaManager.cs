@@ -4,8 +4,19 @@ namespace BusinessLogicLayer.Interfaces
 {
     public interface IAsistenciaManager
     {
-        Task<MarcarAsistenciaResponse> MarcarAsistenciaAsync(int empleadoId);
+        // CRUD para administrador
+        Task<IEnumerable<AsistenciaDTO>> GetAllAsync();
 
-        Task<EstadoAsistenciaDTO> ObtenerEstadoAsistenciaAsync(int empleadoId);
+        Task<AsistenciaDTO?> GetByIdAsync(int id);
+
+        Task<IEnumerable<AsistenciaDTO>> GetByFiltrosAsync(FiltrosAsistenciaDTO filtros);
+
+        Task<AsistenciaDTO> CreateAsync(CrearAsistenciaDTO dto);
+
+        Task<bool> UpdateAsync(int id, ActualizarAsistenciaDTO dto);
+
+        Task<bool> DeleteAsync(int id);
+
+        Task<ReporteAsistenciaDTO> GetReporteEmpleadoAsync(int empleadoId, DateTime fechaInicio, DateTime fechaFin);
     }
 }

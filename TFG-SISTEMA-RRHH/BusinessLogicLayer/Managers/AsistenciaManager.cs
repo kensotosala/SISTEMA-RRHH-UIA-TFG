@@ -3,151 +3,313 @@ using BusinessLogicLayer.Interfaces;
 using BusinessLogicLayer.Shared;
 using DataAccessLayer.Entities;
 using DataAccessLayer.Interfaces;
-using Microsoft.Extensions.Logging;
 
 namespace BusinessLogicLayer.Managers
 {
     public class AsistenciaManager : IAsistenciaManager
     {
-        private readonly IAsistenciasRepository _repoAsistencias;
-        private readonly ILogger<AsistenciaManager> _logger;
+        private readonly IAsistenciasRepository _asistenciasRepo;
+        private readonly IEmpleadosRepository _empleadosRepo;
 
-        public AsistenciaManager(IAsistenciasRepository repoAsistencias, ILogger<AsistenciaManager> logger)
+        public AsistenciaManager(
+            IAsistenciasRepository asistenciasRepo,
+            IEmpleadosRepository empleadosRepo)
         {
-            _repoAsistencias = repoAsistencias;
-            _logger = logger;
+            _asistenciasRepo = asistenciasRepo;
+            _empleadosRepo = empleadosRepo;
         }
+
+        #region Métodos originales (Marcado de asistencia por empleado)
 
         public async Task<MarcarAsistenciaResponse> MarcarAsistenciaAsync(int empleadoId)
         {
+            var empleado = await _empleadosRepo.GetByIdAsync(empleadoId);
+            if (empleado == null)
+            {
+                throw new BusinessException("Empleado no encontrado", "EMPLEADO_NO_ENCONTRADO");
+            }
+
             var hoy = DateTime.Today;
             var ahora = DateTime.Now;
+            var registro = await _asistenciasRepo.GetByEmpleadoYFechaAsync(empleadoId, hoy);
 
-            // Buscar asistencia del día
-            var asistencia = await _repoAsistencias.GetByEmpleadoYFechaAsync(empleadoId, hoy);
-
-            // Caso: no existe registro => marcar entrada
-            if (asistencia == null)
+            if (registro == null)
             {
-                asistencia = new Asistencias
+                var nuevoRegistro = new Asistencias
                 {
                     EmpleadoId = empleadoId,
                     FechaRegistro = hoy,
                     HoraEntrada = ahora,
-                    Estado = EstadoAsistencia.PRESENTE.ToString(),
-                    FechaCreacion = ahora
+                    Estado = DeterminarEstado(ahora, null),
+                    FechaCreacion = DateTime.UtcNow
                 };
 
-                await _repoAsistencias.CreateAsync(asistencia);
-                _logger.LogInformation($"Entrada registrada para empleado {empleadoId} a las {ahora:HH:mm}");
+                await _asistenciasRepo.CreateAsync(nuevoRegistro);
 
                 return new MarcarAsistenciaResponse
                 {
                     Accion = "ENTRADA",
                     Hora = ahora,
-                    Mensaje = "Entrada registrada exitosamente",
-                    HoraEntrada = asistencia.HoraEntrada,
-                    Estado = asistencia.Estado,
+                    HoraEntrada = ahora,
+                    Estado = nuevoRegistro.Estado,
+                    Mensaje = "Entrada registrada correctamente",
                     Exito = true
                 };
             }
-
-            // Caso: tiene entrada pero no salida => marcar salida
-            if (asistencia.HoraEntrada != null && asistencia.HoraSalida == null)
+            else if (registro.HoraSalida == null)
             {
-                asistencia.HoraSalida = ahora;
-                asistencia.FechaModificacion = ahora;
-
-                await _repoAsistencias.UpdateAsync(asistencia);
-                _logger.LogInformation($"Salida registrada para empleado {empleadoId} a las {ahora:HH:mm}");
+                registro.HoraSalida = ahora;
+                registro.FechaModificacion = DateTime.UtcNow;
+                await _asistenciasRepo.UpdateAsync(registro);
 
                 return new MarcarAsistenciaResponse
                 {
                     Accion = "SALIDA",
                     Hora = ahora,
-                    Mensaje = "Salida registrada exitosamente",
-                    HoraEntrada = asistencia.HoraEntrada,
-                    HoraSalida = asistencia.HoraSalida,
-                    Estado = asistencia.Estado,
+                    HoraEntrada = registro.HoraEntrada,
+                    HoraSalida = ahora,
+                    Estado = registro.Estado,
+                    Mensaje = "Salida registrada correctamente",
                     Exito = true
                 };
             }
-
-            // Caso: ya tiene entrada y salida => devolver info sin lanzar excepción
-            if (asistencia.HoraEntrada != null && asistencia.HoraSalida != null)
+            else
             {
-                var mensaje = $"La asistencia de hoy ya fue completada. " +
-                              $"Entrada: {asistencia.HoraEntrada:HH:mm}, " +
-                              $"Salida: {asistencia.HoraSalida:HH:mm}";
-
-                _logger.LogInformation(mensaje);
-
                 return new MarcarAsistenciaResponse
                 {
-                    Accion = "YA_COMPLETADO",
+                    Accion = "NINGUNA",
                     Hora = ahora,
-                    Mensaje = mensaje,
-                    HoraEntrada = asistencia.HoraEntrada,
-                    HoraSalida = asistencia.HoraSalida,
-                    Estado = asistencia.Estado,
+                    HoraEntrada = registro.HoraEntrada,
+                    HoraSalida = registro.HoraSalida,
+                    Estado = registro.Estado,
+                    Mensaje = "Ya has registrado entrada y salida para hoy",
                     Exito = false
                 };
             }
-
-            // Caso especial: registro existe pero sin hora de entrada
-            asistencia.HoraEntrada = ahora;
-            asistencia.FechaModificacion = ahora;
-            await _repoAsistencias.UpdateAsync(asistencia);
-
-            return new MarcarAsistenciaResponse
-            {
-                Accion = "ENTRADA_CORREGIDA",
-                Hora = ahora,
-                Mensaje = "Entrada registrada (corrección)",
-                HoraEntrada = asistencia.HoraEntrada,
-                Estado = asistencia.Estado,
-                Exito = true
-            };
         }
 
         public async Task<EstadoAsistenciaDTO> ObtenerEstadoAsistenciaAsync(int empleadoId)
         {
-            var hoy = DateTime.Today;
-            var asistencia = await _repoAsistencias.GetByEmpleadoYFechaAsync(empleadoId, hoy);
+            var empleado = await _empleadosRepo.GetByIdAsync(empleadoId);
+            if (empleado == null)
+            {
+                throw new BusinessException("Empleado no encontrado", "EMPLEADO_NO_ENCONTRADO");
+            }
 
-            if (asistencia == null)
+            var hoy = DateTime.Today;
+            var registro = await _asistenciasRepo.GetByEmpleadoYFechaAsync(empleadoId, hoy);
+
+            if (registro == null)
             {
                 return new EstadoAsistenciaDTO
                 {
                     TieneRegistro = false,
+                    Estado = "SIN_REGISTRO",
                     PuedeMarcarEntrada = true,
                     PuedeMarcarSalida = false,
-                    Estado = "SIN_REGISTRO",
-                    Mensaje = "Puede marcar entrada"
+                    Mensaje = "No has registrado asistencia hoy"
                 };
             }
-
-            var puedeMarcarEntrada = asistencia.HoraEntrada == null;
-            var puedeMarcarSalida = asistencia.HoraEntrada != null && asistencia.HoraSalida == null;
-            var estado = puedeMarcarSalida ? "ENTRADA_REGISTRADA" :
-                         puedeMarcarEntrada ? "SIN_ENTRADA" :
-                         "COMPLETO";
 
             return new EstadoAsistenciaDTO
             {
                 TieneRegistro = true,
-                HoraEntrada = asistencia.HoraEntrada,
-                HoraSalida = asistencia.HoraSalida,
-                PuedeMarcarEntrada = puedeMarcarEntrada,
-                PuedeMarcarSalida = puedeMarcarSalida,
-                Estado = estado,
-                Mensaje = estado switch
-                {
-                    "ENTRADA_REGISTRADA" => $"Entrada registrada a las {asistencia.HoraEntrada:HH:mm}. Puede marcar salida.",
-                    "COMPLETO" => $"Asistencia completa. Entrada: {asistencia.HoraEntrada:HH:mm}, Salida: {asistencia.HoraSalida:HH:mm}",
-                    _ => "Puede marcar entrada"
-                }
+                HoraEntrada = registro.HoraEntrada,
+                HoraSalida = registro.HoraSalida,
+                Estado = registro.Estado ?? "DESCONOCIDO",
+                PuedeMarcarEntrada = false,
+                PuedeMarcarSalida = registro.HoraSalida == null,
+                Mensaje = registro.HoraSalida == null
+                    ? "Puedes registrar tu salida"
+                    : "Asistencia completa para hoy"
             };
         }
+
+        #endregion
+
+        #region CRUD para Administrador
+
+        public async Task<IEnumerable<AsistenciaDTO>> GetAllAsync()
+        {
+            var asistencias = await _asistenciasRepo.GetAllAsync();
+            return asistencias.Select(MapToDTO);
+        }
+
+        public async Task<AsistenciaDTO?> GetByIdAsync(int id)
+        {
+            var asistencia = await _asistenciasRepo.GetByIdAsync(id);
+            return asistencia != null ? MapToDTO(asistencia) : null;
+        }
+
+        public async Task<IEnumerable<AsistenciaDTO>> GetByFiltrosAsync(FiltrosAsistenciaDTO filtros)
+        {
+            var asistencias = await _asistenciasRepo.GetByFiltrosAsync(
+                filtros.EmpleadoId,
+                filtros.FechaInicio,
+                filtros.FechaFin,
+                filtros.Estado,
+                filtros.DepartamentoId
+            );
+
+            return asistencias.Select(MapToDTO);
+        }
+
+        public async Task<AsistenciaDTO> CreateAsync(CrearAsistenciaDTO dto)
+        {
+            var empleado = await _empleadosRepo.GetByIdAsync(dto.EmpleadoId);
+            if (empleado == null)
+            {
+                throw new BusinessException("Empleado no encontrado", "EMPLEADO_NO_ENCONTRADO");
+            }
+
+            var existe = await _asistenciasRepo.ExisteRegistroAsync(
+                dto.EmpleadoId,
+                dto.FechaRegistro.Date);
+
+            if (existe)
+            {
+                throw new BusinessException(
+                    "Ya existe un registro de asistencia para este empleado en esta fecha",
+                    "REGISTRO_DUPLICADO");
+            }
+
+            var asistencia = new Asistencias
+            {
+                EmpleadoId = dto.EmpleadoId,
+                FechaRegistro = dto.FechaRegistro.Date,
+                HoraEntrada = dto.HoraEntrada,
+                HoraSalida = dto.HoraSalida,
+                Estado = dto.Estado,
+                FechaCreacion = DateTime.UtcNow
+            };
+
+            await _asistenciasRepo.CreateAsync(asistencia);
+
+            var registroCreado = await _asistenciasRepo.GetByIdAsync(asistencia.IdAsistencia);
+            return MapToDTO(registroCreado!);
+        }
+
+        public async Task<bool> UpdateAsync(int id, ActualizarAsistenciaDTO dto)
+        {
+            var asistencia = await _asistenciasRepo.GetByIdAsync(id);
+            if (asistencia == null)
+            {
+                throw new BusinessException("Registro de asistencia no encontrado", "ASISTENCIA_NO_ENCONTRADA");
+            }
+
+            var empleado = await _empleadosRepo.GetByIdAsync(dto.EmpleadoId);
+            if (empleado == null)
+            {
+                throw new BusinessException("Empleado no encontrado", "EMPLEADO_NO_ENCONTRADO");
+            }
+
+            if (asistencia.EmpleadoId != dto.EmpleadoId ||
+                asistencia.FechaRegistro.Date != dto.FechaRegistro.Date)
+            {
+                var existe = await _asistenciasRepo.ExisteRegistroAsync(
+                    dto.EmpleadoId,
+                    dto.FechaRegistro.Date);
+
+                if (existe)
+                {
+                    throw new BusinessException(
+                        "Ya existe un registro de asistencia para este empleado en esta fecha",
+                        "REGISTRO_DUPLICADO");
+                }
+            }
+
+            asistencia.EmpleadoId = dto.EmpleadoId;
+            asistencia.FechaRegistro = dto.FechaRegistro.Date;
+            asistencia.HoraEntrada = dto.HoraEntrada;
+            asistencia.HoraSalida = dto.HoraSalida;
+            asistencia.Estado = dto.Estado;
+            asistencia.FechaModificacion = DateTime.UtcNow;
+
+            return await _asistenciasRepo.UpdateAsync(asistencia);
+        }
+
+        public async Task<bool> DeleteAsync(int id)
+        {
+            var existe = await _asistenciasRepo.ExistsAsync(id);
+            if (!existe)
+            {
+                throw new BusinessException("Registro de asistencia no encontrado", "ASISTENCIA_NO_ENCONTRADA");
+            }
+
+            return await _asistenciasRepo.DeleteAsync(id);
+        }
+
+        public async Task<ReporteAsistenciaDTO> GetReporteEmpleadoAsync(
+            int empleadoId,
+            DateTime fechaInicio,
+            DateTime fechaFin)
+        {
+            var empleado = await _empleadosRepo.GetByIdAsync(empleadoId);
+            if (empleado == null)
+            {
+                throw new BusinessException("Empleado no encontrado", "EMPLEADO_NO_ENCONTRADO");
+            }
+
+            var asistencias = await _asistenciasRepo.GetByFiltrosAsync(
+                empleadoId, fechaInicio, fechaFin, null, null);
+
+            var lista = asistencias.ToList();
+            var totalDias = lista.Count;
+            var presente = lista.Count(a => a.Estado == "PRESENTE");
+            var ausente = lista.Count(a => a.Estado == "AUSENTE");
+            var tardanza = lista.Count(a => a.Estado == "TARDANZA");
+            var permiso = lista.Count(a => a.Estado == "PERMISO");
+
+            return new ReporteAsistenciaDTO
+            {
+                EmpleadoId = empleadoId,
+                NombreCompleto = $"{empleado.Nombre} {empleado.PrimerApellido}",
+                Departamento = empleado.Departamento?.NombreDepartamento ?? "N/A",
+                TotalDias = totalDias,
+                DiasPresente = presente,
+                DiasAusente = ausente,
+                DiasTardanza = tardanza,
+                DiasPermiso = permiso,
+                PorcentajeAsistencia = totalDias > 0
+                    ? Math.Round((decimal)presente / totalDias * 100, 2)
+                    : 0
+            };
+        }
+
+        #endregion
+
+        #region Métodos privados
+
+        private string DeterminarEstado(DateTime horaEntrada, DateTime? horaSalida)
+        {
+            var horaTrabajo = new TimeSpan(8, 0, 0);
+            return horaEntrada.TimeOfDay > horaTrabajo
+                ? EstadoAsistencia.TARDANZA.ToString()
+                : EstadoAsistencia.PRESENTE.ToString();
+        }
+
+        private AsistenciaDTO MapToDTO(Asistencias asistencia)
+        {
+            TimeSpan? horasTrabajadas = null;
+            if (asistencia.HoraEntrada.HasValue && asistencia.HoraSalida.HasValue)
+            {
+                horasTrabajadas = asistencia.HoraSalida.Value - asistencia.HoraEntrada.Value;
+            }
+
+            return new AsistenciaDTO
+            {
+                IdAsistencia = asistencia.IdAsistencia,
+                EmpleadoId = asistencia.EmpleadoId,
+                NombreEmpleado = $"{asistencia.Empleado.Nombre} {asistencia.Empleado.PrimerApellido}",
+                CodigoEmpleado = asistencia.Empleado.CodigoEmpleado,
+                FechaRegistro = asistencia.FechaRegistro,
+                HoraEntrada = asistencia.HoraEntrada,
+                HoraSalida = asistencia.HoraSalida,
+                Estado = asistencia.Estado ?? "DESCONOCIDO",
+                HorasTrabajadas = horasTrabajadas
+            };
+        }
+
+        #endregion
     }
 }

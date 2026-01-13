@@ -14,28 +14,107 @@ namespace DataAccessLayer.Repositories
             _context = context;
         }
 
-        public async Task CreateAsync(Asistencias asistencia)
+        public async Task<IEnumerable<Asistencias>> GetAllAsync()
         {
-            _context.Asistencias.Add(asistencia);
-            await _context.SaveChangesAsync();
+            return await _context.Asistencias
+                .Include(a => a.Empleado)
+                .ThenInclude(e => e.IdPuestoNavigation)
+                .Include(a => a.Empleado.IdDepartamentoNavigation)
+                .OrderByDescending(a => a.FechaRegistro)
+                .ToListAsync();
+        }
+
+        public async Task<Asistencias?> GetByIdAsync(int id)
+        {
+            return await _context.Asistencias
+                .Include(a => a.Empleado)
+                .FirstOrDefaultAsync(a => a.IdAsistencia == id);
         }
 
         public async Task<Asistencias?> GetByEmpleadoYFechaAsync(int empleadoId, DateTime fecha)
         {
-            var inicio = fecha.Date;
-            var fin = inicio.AddDays(1);
-
+            var fechaSolo = fecha.Date;
             return await _context.Asistencias
                 .FirstOrDefaultAsync(a =>
                     a.EmpleadoId == empleadoId &&
-                    a.FechaRegistro >= inicio &&
-                    a.FechaRegistro < fin);
+                    a.FechaRegistro.Date == fechaSolo);
         }
 
-        public async Task UpdateAsync(Asistencias asistencia)
+        public async Task<IEnumerable<Asistencias>> GetByFiltrosAsync(
+            int? empleadoId,
+            DateTime? fechaInicio,
+            DateTime? fechaFin,
+            string? estado,
+            int? departamentoId)
         {
+            var query = _context.Asistencias
+                .Include(a => a.Empleado)
+                .ThenInclude(e => e.IdDepartamentoNavigation)
+                .AsQueryable();
+
+            if (empleadoId.HasValue)
+                query = query.Where(a => a.EmpleadoId == empleadoId.Value);
+
+            if (fechaInicio.HasValue)
+                query = query.Where(a => a.FechaRegistro.Date >= fechaInicio.Value.Date);
+
+            if (fechaFin.HasValue)
+                query = query.Where(a => a.FechaRegistro.Date <= fechaFin.Value.Date);
+
+            if (!string.IsNullOrEmpty(estado))
+                query = query.Where(a => a.Estado == estado);
+
+            if (departamentoId.HasValue)
+                query = query.Where(a => a.Empleado.IdDepartamento == departamentoId.Value);
+
+            return await query
+                .OrderByDescending(a => a.FechaRegistro)
+                .ToListAsync();
+        }
+
+        public async Task CreateAsync(Asistencias asistencia)
+        {
+            asistencia.FechaCreacion = DateTime.UtcNow;
+            await _context.Asistencias.AddAsync(asistencia);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<bool> UpdateAsync(Asistencias asistencia)
+        {
+            var existe = await _context.Asistencias
+                .AnyAsync(a => a.IdAsistencia == asistencia.IdAsistencia);
+
+            if (!existe)
+                return false;
+
+            asistencia.FechaModificacion = DateTime.UtcNow;
             _context.Asistencias.Update(asistencia);
             await _context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> DeleteAsync(int id)
+        {
+            var asistencia = await _context.Asistencias.FindAsync(id);
+            if (asistencia == null)
+                return false;
+
+            _context.Asistencias.Remove(asistencia);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> ExistsAsync(int id)
+        {
+            return await _context.Asistencias.AnyAsync(a => a.IdAsistencia == id);
+        }
+
+        public async Task<bool> ExisteRegistroAsync(int empleadoId, DateTime fecha)
+        {
+            var fechaSolo = fecha.Date;
+            return await _context.Asistencias
+                .AnyAsync(a => a.EmpleadoId == empleadoId &&
+                              a.FechaRegistro.Date == fechaSolo);
         }
     }
 }
