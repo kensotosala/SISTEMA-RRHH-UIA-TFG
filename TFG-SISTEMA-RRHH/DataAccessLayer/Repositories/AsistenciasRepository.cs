@@ -18,8 +18,8 @@ namespace DataAccessLayer.Repositories
         {
             return await _context.Asistencias
                 .Include(a => a.Empleado)
-                .ThenInclude(e => e.IdPuestoNavigation)
-                .Include(a => a.Empleado.IdDepartamentoNavigation)
+                    .ThenInclude(e => e.Puesto)  // ✅ CORREGIDO: era IdPuestoNavigation
+                .Include(a => a.Empleado.Departamento)  // ✅ CORREGIDO: era IdDepartamentoNavigation
                 .OrderByDescending(a => a.FechaRegistro)
                 .ToListAsync();
         }
@@ -28,6 +28,8 @@ namespace DataAccessLayer.Repositories
         {
             return await _context.Asistencias
                 .Include(a => a.Empleado)
+                    .ThenInclude(e => e.Departamento)  // ✅ CORREGIDO
+                .Include(a => a.Empleado.Puesto)  // ✅ CORREGIDO
                 .FirstOrDefaultAsync(a => a.IdAsistencia == id);
         }
 
@@ -35,6 +37,7 @@ namespace DataAccessLayer.Repositories
         {
             var fechaSolo = fecha.Date;
             return await _context.Asistencias
+                .Include(a => a.Empleado)
                 .FirstOrDefaultAsync(a =>
                     a.EmpleadoId == empleadoId &&
                     a.FechaRegistro.Date == fechaSolo);
@@ -49,7 +52,8 @@ namespace DataAccessLayer.Repositories
         {
             var query = _context.Asistencias
                 .Include(a => a.Empleado)
-                .ThenInclude(e => e.IdDepartamentoNavigation)
+                    .ThenInclude(e => e.Departamento)
+                .Include(a => a.Empleado.Puesto)
                 .AsQueryable();
 
             if (empleadoId.HasValue)
@@ -65,7 +69,7 @@ namespace DataAccessLayer.Repositories
                 query = query.Where(a => a.Estado == estado);
 
             if (departamentoId.HasValue)
-                query = query.Where(a => a.Empleado.IdDepartamento == departamentoId.Value);
+                query = query.Where(a => a.Empleado.DepartamentoId == departamentoId.Value);
 
             return await query
                 .OrderByDescending(a => a.FechaRegistro)

@@ -8,7 +8,7 @@ namespace PresentationLayer.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize]
+    //[Authorize]
     public class AsistenciasController : ControllerBase
     {
         private readonly IAsistenciaManager _asistenciaManager;
@@ -26,7 +26,7 @@ namespace PresentationLayer.Controllers
         /// Obtiene todas las asistencias (Administrador)
         /// </summary>
         [HttpGet]
-        [Authorize(Roles = "Administrador")]
+        //[Authorize(Roles = "Administrador")]
         public async Task<ActionResult<IEnumerable<AsistenciaDTO>>> GetAll()
         {
             try
@@ -45,7 +45,7 @@ namespace PresentationLayer.Controllers
         /// Obtiene una asistencia por ID (Administrador)
         /// </summary>
         [HttpGet("{id}")]
-        [Authorize(Roles = "Administrador")]
+        //[Authorize(Roles = "Administrador")]
         public async Task<ActionResult<AsistenciaDTO>> GetById(int id)
         {
             try
@@ -69,7 +69,7 @@ namespace PresentationLayer.Controllers
         /// Busca asistencias con filtros (Administrador)
         /// </summary>
         [HttpPost("buscar")]
-        [Authorize(Roles = "Administrador")]
+        //[Authorize(Roles = "Administrador")]
         public async Task<ActionResult<IEnumerable<AsistenciaDTO>>> BuscarPorFiltros(
             [FromBody] FiltrosAsistenciaDTO filtros)
         {
@@ -89,7 +89,7 @@ namespace PresentationLayer.Controllers
         /// Crea un nuevo registro de asistencia (Administrador)
         /// </summary>
         [HttpPost]
-        [Authorize(Roles = "Administrador")]
+        //[Authorize(Roles = "Administrador")]
         public async Task<ActionResult<AsistenciaDTO>> Create(
             [FromBody] CrearAsistenciaDTO dto)
         {
@@ -122,7 +122,7 @@ namespace PresentationLayer.Controllers
         /// Actualiza un registro de asistencia (Administrador)
         /// </summary>
         [HttpPut("{id}")]
-        [Authorize(Roles = "Administrador")]
+        //[Authorize(Roles = "Administrador")]
         public async Task<ActionResult> Update(
             int id,
             [FromBody] ActualizarAsistenciaDTO dto)
@@ -158,7 +158,7 @@ namespace PresentationLayer.Controllers
         /// Elimina un registro de asistencia (Administrador)
         /// </summary>
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Administrador")]
+        //[Authorize(Roles = "Administrador")]
         public async Task<ActionResult> Delete(int id)
         {
             try
@@ -187,7 +187,7 @@ namespace PresentationLayer.Controllers
         /// Obtiene el reporte de asistencia de un empleado (Administrador)
         /// </summary>
         [HttpGet("reporte/{empleadoId}")]
-        [Authorize(Roles = "Administrador")]
+        //[Authorize(Roles = "Administrador")]
         public async Task<ActionResult<ReporteAsistenciaDTO>> GetReporte(
             int empleadoId,
             [FromQuery] DateTime fechaInicio,

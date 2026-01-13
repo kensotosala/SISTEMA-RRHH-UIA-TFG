@@ -5,10 +5,308 @@
     "version": "1.0"
   },
   "paths": {
-    "/api/Asistencia/marcar": {
+    "/api/Asistencias": {
+      "get": {
+        "tags": [
+          "Asistencias"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AsistenciaDTO"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AsistenciaDTO"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AsistenciaDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
       "post": {
         "tags": [
-          "Asistencia"
+          "Asistencias"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CrearAsistenciaDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CrearAsistenciaDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CrearAsistenciaDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/AsistenciaDTO"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AsistenciaDTO"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AsistenciaDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Asistencias/{id}": {
+      "get": {
+        "tags": [
+          "Asistencias"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/AsistenciaDTO"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AsistenciaDTO"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AsistenciaDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Asistencias"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ActualizarAsistenciaDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ActualizarAsistenciaDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ActualizarAsistenciaDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Asistencias"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Asistencias/buscar": {
+      "post": {
+        "tags": [
+          "Asistencias"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FiltrosAsistenciaDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FiltrosAsistenciaDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/FiltrosAsistenciaDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AsistenciaDTO"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AsistenciaDTO"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AsistenciaDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Asistencias/reporte/{empleadoId}": {
+      "get": {
+        "tags": [
+          "Asistencias"
+        ],
+        "parameters": [
+          {
+            "name": "empleadoId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "fechaInicio",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "fechaFin",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReporteAsistenciaDTO"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReporteAsistenciaDTO"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReporteAsistenciaDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Asistencias/marcar": {
+      "post": {
+        "tags": [
+          "Asistencias"
         ],
         "requestBody": {
           "content": {
@@ -31,15 +329,32 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/MarcarAsistenciaResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MarcarAsistenciaResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MarcarAsistenciaResponse"
+                }
+              }
+            }
           }
         }
       }
     },
-    "/api/Asistencia/estado/{empleadoId}": {
+    "/api/Asistencias/estado/{empleadoId}": {
       "get": {
         "tags": [
-          "Asistencia"
+          "Asistencias"
         ],
         "parameters": [
           {
@@ -54,7 +369,24 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/EstadoAsistenciaDTO"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EstadoAsistenciaDTO"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EstadoAsistenciaDTO"
+                }
+              }
+            }
           }
         }
       }
@@ -558,6 +890,40 @@
   },
   "components": {
     "schemas": {
+      "ActualizarAsistenciaDTO": {
+        "required": [
+          "empleadoId",
+          "estado",
+          "fechaRegistro"
+        ],
+        "type": "object",
+        "properties": {
+          "empleadoId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "estado": {
+            "minLength": 1,
+            "pattern": "^(PRESENTE|AUSENTE|TARDANZA|PERMISO)$",
+            "type": "string"
+          },
+          "fechaRegistro": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "horaEntrada": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "horaSalida": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "ActualizarDepartamentoDTO": {
         "type": "object",
         "properties": {
@@ -708,6 +1074,85 @@
         },
         "additionalProperties": false
       },
+      "AsistenciaDTO": {
+        "type": "object",
+        "properties": {
+          "codigoEmpleado": {
+            "type": "string",
+            "nullable": true
+          },
+          "empleadoId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "estado": {
+            "type": "string",
+            "nullable": true
+          },
+          "fechaRegistro": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "horaEntrada": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "horaSalida": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "horasTrabajadas": {
+            "type": "string",
+            "format": "date-span",
+            "nullable": true
+          },
+          "idAsistencia": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nombreEmpleado": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CrearAsistenciaDTO": {
+        "required": [
+          "empleadoId",
+          "estado",
+          "fechaRegistro"
+        ],
+        "type": "object",
+        "properties": {
+          "empleadoId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "estado": {
+            "minLength": 1,
+            "pattern": "^(PRESENTE|AUSENTE|TARDANZA|PERMISO)$",
+            "type": "string"
+          },
+          "fechaRegistro": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "horaEntrada": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "horaSalida": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "CrearDepartamentoDTO": {
         "type": "object",
         "properties": {
@@ -853,6 +1298,39 @@
         },
         "additionalProperties": false
       },
+      "EstadoAsistenciaDTO": {
+        "type": "object",
+        "properties": {
+          "estado": {
+            "type": "string",
+            "nullable": true
+          },
+          "horaEntrada": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "horaSalida": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "mensaje": {
+            "type": "string",
+            "nullable": true
+          },
+          "puedeMarcarEntrada": {
+            "type": "boolean"
+          },
+          "puedeMarcarSalida": {
+            "type": "boolean"
+          },
+          "tieneRegistro": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
       "EstadoEmpleado": {
         "enum": [
           "ACTIVO",
@@ -860,6 +1338,36 @@
           "LICENCIA"
         ],
         "type": "string"
+      },
+      "FiltrosAsistenciaDTO": {
+        "type": "object",
+        "properties": {
+          "departamentoId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "empleadoId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "estado": {
+            "type": "string",
+            "nullable": true
+          },
+          "fechaFin": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "fechaInicio": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
       },
       "LoginDTO": {
         "type": "object",
@@ -884,6 +1392,41 @@
           "empleadoId": {
             "type": "integer",
             "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "MarcarAsistenciaResponse": {
+        "type": "object",
+        "properties": {
+          "accion": {
+            "type": "string",
+            "nullable": true
+          },
+          "estado": {
+            "type": "string",
+            "nullable": true
+          },
+          "exito": {
+            "type": "boolean"
+          },
+          "hora": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "horaEntrada": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "horaSalida": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "mensaje": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -935,6 +1478,48 @@
         },
         "additionalProperties": false
       },
+      "ReporteAsistenciaDTO": {
+        "type": "object",
+        "properties": {
+          "departamento": {
+            "type": "string",
+            "nullable": true
+          },
+          "diasAusente": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "diasPermiso": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "diasPresente": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "diasTardanza": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "empleadoId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nombreCompleto": {
+            "type": "string",
+            "nullable": true
+          },
+          "porcentajeAsistencia": {
+            "type": "number",
+            "format": "double"
+          },
+          "totalDias": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
       "TipoContrato": {
         "enum": [
           "FIJO",
@@ -947,7 +1532,7 @@
   },
   "tags": [
     {
-      "name": "Asistencia"
+      "name": "Asistencias"
     },
     {
       "name": "Auth"

@@ -125,7 +125,7 @@ namespace BusinessLogicLayer.Managers
             };
         }
 
-        #endregion
+        #endregion Métodos originales (Marcado de asistencia por empleado)
 
         #region CRUD para Administrador
 
@@ -276,7 +276,7 @@ namespace BusinessLogicLayer.Managers
             };
         }
 
-        #endregion
+        #endregion CRUD para Administrador
 
         #region Métodos privados
 
@@ -290,6 +290,11 @@ namespace BusinessLogicLayer.Managers
 
         private AsistenciaDTO MapToDTO(Asistencias asistencia)
         {
+            if (asistencia.Empleado == null)
+            {
+                throw new BusinessException("Los datos del empleado no están cargados", "DATOS_INCOMPLETOS");
+            }
+
             TimeSpan? horasTrabajadas = null;
             if (asistencia.HoraEntrada.HasValue && asistencia.HoraSalida.HasValue)
             {

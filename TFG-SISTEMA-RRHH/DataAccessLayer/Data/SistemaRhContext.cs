@@ -211,7 +211,8 @@ public partial class SistemaRhContext : DbContext
                 .HasMaxLength(100)
                 .HasColumnName("nombre_departamento");
 
-            entity.HasOne(d => d.IdJefeDepartamentoNavigation).WithMany(p => p.Departamentos)
+            entity.HasOne(d => d.JefeDepartamento)
+                .WithMany(p => p.Departamentos)
                 .HasForeignKey(d => d.IdJefeDepartamento)
                 .HasConstraintName("departamentos_ibfk_1");
         });
