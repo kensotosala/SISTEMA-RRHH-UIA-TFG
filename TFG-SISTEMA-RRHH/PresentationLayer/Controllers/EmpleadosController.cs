@@ -119,5 +119,12 @@ namespace PresentationLayer.Controllers
                 });
             }
         }
+
+        [HttpPatch("{id}/reactivar")]
+        public async Task<IActionResult> Reactivar(int id)
+        {
+            await _manager.ReactivarAsync(id);
+            return NoContent();
+        }
     }
 }

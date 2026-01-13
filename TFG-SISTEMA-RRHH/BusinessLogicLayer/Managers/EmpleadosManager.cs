@@ -270,33 +270,54 @@ namespace BusinessLogicLayer.Managers
             return resultado;
         }
 
+        // BusinessLogicLayer/Managers/EmpleadosManager.cs
         public async Task DeleteAsync(int id)
         {
-            if (id <= 0)
+            // Verificar que el empleado existe
+            var empleado = await _repoEmpleados.GetByIdAsync(id);
+
+            if (empleado == null)
             {
-                throw new ArgumentException("El ID debe ser mayor a 0.", nameof(id));
+                throw new KeyNotFoundException($"Empleado con ID {id} no encontrado.");
             }
 
-            if (!await _repoEmpleados.ExistsAsync(id))
-                throw new ArgumentException("El ID no se ha encontrado", nameof(id)); ;
-
-            var tieneSubordinados = await _repoEmpleados.TieneSubordinadosAsync(id);
-            if (tieneSubordinados)
+            // Verificar si tiene subordinados ACTIVOS
+            if (await _repoEmpleados.TieneSubordinadosAsync(id))
             {
-                var subordinadosCount = await _repoEmpleados.ContarSubordinadosAsync(id);
                 throw new InvalidOperationException(
-                    $"No se puede eliminar el empleado porque es jefe inmediato de {subordinadosCount} empleado(s). " +
-                    "Primero debe reasignar sus subordinados a otro jefe.");
+                    "No se puede eliminar el empleado porque tiene subordinados asignados. " +
+                    "Por favor, reasigne los subordinados antes de continuar."
+                );
             }
 
-            var usuarioExistente = await _repoUsuarios.GetByIdAsync(id);
+            // Inactivar el empleado - Soft Delete
+            empleado.Estado = "INACTIVO";
+            empleado.FechaModificacion = DateTime.UtcNow;
 
-            if (usuarioExistente != null)
+            var empleadoActualizado = await _repoEmpleados.UpdateAsync(empleado);
+
+            if (!empleadoActualizado)
             {
-                await _repoUsuarios.DeleteAsync(usuarioExistente.IdUsuario);
+                throw new InvalidOperationException("No se pudo inactivar el empleado.");
             }
 
-            await _repoEmpleados.DeleteAsync(id);
+            // Inactivar también el usuario asociado
+            var usuario = await _repoUsuarios.GetByEmpleadoIdAsync(id);
+
+            if (usuario != null)
+            {
+                usuario.Estado = "INACTIVO";
+                usuario.FechaModificacion = DateTime.UtcNow;
+
+                var usuarioActualizado = await _repoUsuarios.UpdateAsync(usuario);
+
+                if (!usuarioActualizado)
+                {
+                    throw new InvalidOperationException(
+                        "El empleado fue inactivado, pero no se pudo inactivar el usuario asociado."
+                    );
+                }
+            }
         }
 
         public async Task UpdateAsync(int id, ActualizarEmpleadoDTO dto)
@@ -369,6 +390,38 @@ namespace BusinessLogicLayer.Managers
                     RolId = dto.RolId.Value
                 });
 
+                usuario.FechaModificacion = DateTime.UtcNow;
+
+                await _repoUsuarios.UpdateAsync(usuario);
+            }
+        }
+
+        public async Task ReactivarAsync(int id)
+        {
+            var empleado = await _repoEmpleados.GetByIdAsync(id);
+
+            if (empleado == null)
+            {
+                throw new KeyNotFoundException($"Empleado con ID {id} no encontrado.");
+            }
+
+            if (empleado.Estado == "ACTIVO")
+            {
+                throw new InvalidOperationException("El empleado ya está activo.");
+            }
+
+            // Reactivar el empleado
+            empleado.Estado = "ACTIVO";
+            empleado.FechaModificacion = DateTime.UtcNow;
+
+            await _repoEmpleados.UpdateAsync(empleado);
+
+            // Reactivar el usuario asociado
+            var usuario = await _repoUsuarios.GetByEmpleadoIdAsync(id);
+
+            if (usuario != null)
+            {
+                usuario.Estado = "ACTIVO";
                 usuario.FechaModificacion = DateTime.UtcNow;
 
                 await _repoUsuarios.UpdateAsync(usuario);

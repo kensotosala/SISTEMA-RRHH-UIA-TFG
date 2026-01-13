@@ -226,6 +226,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "PresentationLayer.Controllers.EmpleadosController",
+    "Method": "Reactivar",
+    "RelativePath": "api/Empleados/{id}/reactivar",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "PresentationLayer.Controllers.PuestosController",
     "Method": "GetAll",
     "RelativePath": "api/Puestos",

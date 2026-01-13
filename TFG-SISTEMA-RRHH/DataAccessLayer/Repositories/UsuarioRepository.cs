@@ -23,12 +23,25 @@ namespace DataAccessLayer.Repositories
 
         public async Task<bool> DeleteAsync(int id)
         {
-            var usuario = await GetByIdAsync(id);
-            if (usuario is null)
+            var usuario = await _context.Usuarios
+                .Include(u => u.UsuariosRoles)
+                .Include(u => u.AuditoriaCambios)
+                .FirstOrDefaultAsync(u => u.IdUsuario == id);
+
+            if (usuario == null)
+            {
                 return false;
+            }
+
+            // Eliminar primero las relaciones en UsuariosRoles
+            if (usuario.UsuariosRoles.Any())
+            {
+                _context.UsuariosRoles.RemoveRange(usuario.UsuariosRoles);
+            }
 
             _context.Usuarios.Remove(usuario);
             await _context.SaveChangesAsync();
+
             return true;
         }
 
@@ -45,6 +58,14 @@ namespace DataAccessLayer.Repositories
         public async Task<IEnumerable<Usuarios>> GetAllAsync()
         {
             return await _context.Usuarios.ToListAsync();
+        }
+
+        public async Task<Usuarios?> GetByEmpleadoIdAsync(int empleadoId)
+        {
+            return await _context.Usuarios
+                .Include(u => u.UsuariosRoles)
+                    .ThenInclude(ur => ur.Rol)
+                .FirstOrDefaultAsync(u => u.EmpleadoId == empleadoId);
         }
 
         public async Task<Usuarios?> GetByIdAsync(int id)
@@ -71,14 +92,6 @@ namespace DataAccessLayer.Repositories
             _context.Usuarios.Update(usuario);
             var result = await _context.SaveChangesAsync();
             return result > 0;
-        }
-
-        public async Task<Usuarios?> GetByEmpleadoIdAsync(int empleadoId)
-        {
-            return await _context.Usuarios
-                .Include(u => u.UsuariosRoles)
-                    .ThenInclude(ur => ur.Rol)
-                .FirstOrDefaultAsync(u => u.EmpleadoId == empleadoId);
         }
     }
 }

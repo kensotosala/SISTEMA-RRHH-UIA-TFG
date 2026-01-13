@@ -55,15 +55,34 @@ namespace BusinessLogicLayer.Managers
             return await _repo.CreateAsync(usuario);
         }
 
+        // BusinessLogicLayer/Managers/AuthManager.cs
         public async Task<Usuarios?> ValidarCredencialesAsync(string username, string password)
         {
-            var user = await _repo.GetByUsernameAsync(username);
-            if (user == null)
+            var usuario = await _repo.GetByUsernameWithDetailsAsync(username);
+
+            if (usuario == null)
                 return null;
 
-            return _passwordHasher.Verify(password, user.PasswordHash)
-                ? user
-                : null;
+            // Verificar que el usuario esté activo
+            if (usuario.Estado != "ACTIVO")
+            {
+                throw new InvalidOperationException(
+                    "El usuario está inactivo. Contacte al administrador."
+                );
+            }
+
+            // Verificar que el empleado asociado esté activo
+            if (usuario.Empleado?.Estado != "ACTIVO")
+            {
+                throw new InvalidOperationException(
+                    "Su cuenta de empleado está inactiva. Contacte al administrador."
+                );
+            }
+
+            if (!_passwordHasher.Verify(password, usuario.PasswordHash))
+                return null;
+
+            return usuario;
         }
 
         private AuthResponseDTO GenerateJwt(Usuarios user)

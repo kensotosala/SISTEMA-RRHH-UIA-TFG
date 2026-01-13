@@ -13,5 +13,7 @@ namespace BusinessLogicLayer.Interfaces
         Task UpdateAsync(int id, ActualizarEmpleadoDTO dto);
 
         Task DeleteAsync(int id);
+
+        Task ReactivarAsync(int id);
     }
 }
