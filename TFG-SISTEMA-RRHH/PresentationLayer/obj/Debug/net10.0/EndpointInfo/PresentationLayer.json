@@ -719,6 +719,444 @@
         }
       }
     },
+    "/api/HorasExtras": {
+      "get": {
+        "tags": [
+          "HorasExtras"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/HoraExtraDTO"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/HoraExtraDTO"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/HoraExtraDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "HorasExtras"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CrearHoraExtraDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CrearHoraExtraDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CrearHoraExtraDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/HoraExtraDTO"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HoraExtraDTO"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HoraExtraDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/HorasExtras/{id}": {
+      "get": {
+        "tags": [
+          "HorasExtras"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/HoraExtraDTO"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HoraExtraDTO"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HoraExtraDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "HorasExtras"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ActualizarHoraExtraDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ActualizarHoraExtraDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ActualizarHoraExtraDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "HorasExtras"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/HorasExtras/buscar": {
+      "post": {
+        "tags": [
+          "HorasExtras"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FiltrosHorasExtrasDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FiltrosHorasExtrasDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/FiltrosHorasExtrasDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/HoraExtraDTO"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/HoraExtraDTO"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/HoraExtraDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/HorasExtras/empleado/{empleadoId}": {
+      "get": {
+        "tags": [
+          "HorasExtras"
+        ],
+        "parameters": [
+          {
+            "name": "empleadoId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/HoraExtraDTO"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/HoraExtraDTO"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/HoraExtraDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/HorasExtras/pendientes/jefe/{jefeId}": {
+      "get": {
+        "tags": [
+          "HorasExtras"
+        ],
+        "parameters": [
+          {
+            "name": "jefeId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/HoraExtraDTO"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/HoraExtraDTO"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/HoraExtraDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/HorasExtras/{id}/aprobar-rechazar": {
+      "patch": {
+        "tags": [
+          "HorasExtras"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AprobarRechazarHoraExtraDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AprobarRechazarHoraExtraDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AprobarRechazarHoraExtraDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/HorasExtras/reporte/{empleadoId}": {
+      "get": {
+        "tags": [
+          "HorasExtras"
+        ],
+        "parameters": [
+          {
+            "name": "empleadoId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "fechaInicio",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "fechaFin",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReporteHorasExtrasDTO"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReporteHorasExtrasDTO"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReporteHorasExtrasDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Puestos": {
       "get": {
         "tags": [
@@ -1037,6 +1475,49 @@
         },
         "additionalProperties": false
       },
+      "ActualizarHoraExtraDTO": {
+        "required": [
+          "empleadoId",
+          "fechaFin",
+          "fechaInicio",
+          "motivo"
+        ],
+        "type": "object",
+        "properties": {
+          "empleadoId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "fechaInicio": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "fechaFin": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "tipoHoraExtra": {
+            "type": "string",
+            "nullable": true
+          },
+          "motivo": {
+            "maxLength": 255,
+            "minLength": 0,
+            "type": "string"
+          },
+          "estadoSolicitud": {
+            "pattern": "^(PENDIENTE|APROBADA|RECHAZADA)$",
+            "type": "string",
+            "nullable": true
+          },
+          "jefeApruebaId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "ActualizarPuestoDTO": {
         "type": "object",
         "properties": {
@@ -1070,6 +1551,25 @@
           "estado": {
             "type": "boolean",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AprobarRechazarHoraExtraDTO": {
+        "required": [
+          "estadoSolicitud",
+          "jefeApruebaId"
+        ],
+        "type": "object",
+        "properties": {
+          "jefeApruebaId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "estadoSolicitud": {
+            "minLength": 1,
+            "pattern": "^(APROBADA|RECHAZADA)$",
+            "type": "string"
           }
         },
         "additionalProperties": false
@@ -1269,6 +1769,44 @@
         },
         "additionalProperties": false
       },
+      "CrearHoraExtraDTO": {
+        "required": [
+          "empleadoId",
+          "fechaFin",
+          "fechaInicio",
+          "motivo"
+        ],
+        "type": "object",
+        "properties": {
+          "empleadoId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "fechaInicio": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "fechaFin": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "tipoHoraExtra": {
+            "type": "string",
+            "nullable": true
+          },
+          "motivo": {
+            "maxLength": 255,
+            "minLength": 0,
+            "type": "string"
+          },
+          "jefeApruebaId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "CrearPuestoDTO": {
         "type": "object",
         "properties": {
@@ -1362,6 +1900,110 @@
             "nullable": true
           },
           "fechaInicio": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FiltrosHorasExtrasDTO": {
+        "type": "object",
+        "properties": {
+          "empleadoId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "departamentoId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "fechaInicio": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "fechaFin": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "estadoSolicitud": {
+            "type": "string",
+            "nullable": true
+          },
+          "jefeApruebaId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "HoraExtraDTO": {
+        "type": "object",
+        "properties": {
+          "idHoraExtra": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "empleadoId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "codigoEmpleado": {
+            "type": "string",
+            "nullable": true
+          },
+          "nombreEmpleado": {
+            "type": "string",
+            "nullable": true
+          },
+          "fechaSolicitud": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "fechaInicio": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "fechaFin": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "horasTotales": {
+            "type": "string",
+            "format": "date-span"
+          },
+          "tipoHoraExtra": {
+            "type": "string",
+            "nullable": true
+          },
+          "motivo": {
+            "type": "string",
+            "nullable": true
+          },
+          "estadoSolicitud": {
+            "type": "string",
+            "nullable": true
+          },
+          "jefeApruebaId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "nombreJefe": {
+            "type": "string",
+            "nullable": true
+          },
+          "fechaAprobacion": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "fechaCreacion": {
             "type": "string",
             "format": "date-time",
             "nullable": true
@@ -1520,6 +2162,48 @@
         },
         "additionalProperties": false
       },
+      "ReporteHorasExtrasDTO": {
+        "type": "object",
+        "properties": {
+          "empleadoId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nombreCompleto": {
+            "type": "string",
+            "nullable": true
+          },
+          "departamento": {
+            "type": "string",
+            "nullable": true
+          },
+          "totalSolicitudes": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "solicitudesPendientes": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "solicitudesAprobadas": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "solicitudesRechazadas": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalHorasAprobadas": {
+            "type": "string",
+            "format": "date-span"
+          },
+          "totalHorasSolicitadas": {
+            "type": "string",
+            "format": "date-span"
+          }
+        },
+        "additionalProperties": false
+      },
       "TipoContrato": {
         "enum": [
           "FIJO",
@@ -1542,6 +2226,9 @@
     },
     {
       "name": "Empleados"
+    },
+    {
+      "name": "HorasExtras"
     },
     {
       "name": "Puestos"

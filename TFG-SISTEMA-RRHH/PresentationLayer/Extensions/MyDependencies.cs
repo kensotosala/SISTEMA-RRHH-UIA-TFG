@@ -54,6 +54,14 @@
             services.AddScoped<BusinessLogicLayer.Interfaces.IAsistenciaManager,
                                        BusinessLogicLayer.Managers.AsistenciaManager>();
 
+            // Horas Extra
+
+            services.AddScoped<DataAccessLayer.Interfaces.IHorasExtrasRepository,
+                           DataAccessLayer.Repositories.HorasExtrasRepository>();
+
+            services.AddScoped<BusinessLogicLayer.Interfaces.IHorasExtrasManager,
+                                       BusinessLogicLayer.Managers.HorasExtrasManager>();
+
             return services;
         }
     }
