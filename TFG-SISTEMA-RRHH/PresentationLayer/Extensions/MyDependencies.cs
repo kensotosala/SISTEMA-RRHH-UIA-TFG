@@ -62,6 +62,14 @@
             services.AddScoped<BusinessLogicLayer.Interfaces.IHorasExtrasManager,
                                        BusinessLogicLayer.Managers.HorasExtrasManager>();
 
+            // Permisos
+
+            services.AddScoped<DataAccessLayer.Interfaces.IPermisosRepository,
+                           DataAccessLayer.Repositories.PermisosRepository>();
+
+            services.AddScoped<BusinessLogicLayer.Interfaces.IPermisosManager,
+                                       BusinessLogicLayer.Managers.PermisosManager>();
+
             return services;
         }
     }

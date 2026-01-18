@@ -129,31 +129,6 @@ namespace BusinessLogicLayer.Managers
 
         #region CRUD para Administrador
 
-        public async Task<IEnumerable<AsistenciaDTO>> GetAllAsync()
-        {
-            var asistencias = await _asistenciasRepo.GetAllAsync();
-            return asistencias.Select(MapToDTO);
-        }
-
-        public async Task<AsistenciaDTO?> GetByIdAsync(int id)
-        {
-            var asistencia = await _asistenciasRepo.GetByIdAsync(id);
-            return asistencia != null ? MapToDTO(asistencia) : null;
-        }
-
-        public async Task<IEnumerable<AsistenciaDTO>> GetByFiltrosAsync(FiltrosAsistenciaDTO filtros)
-        {
-            var asistencias = await _asistenciasRepo.GetByFiltrosAsync(
-                filtros.EmpleadoId,
-                filtros.FechaInicio,
-                filtros.FechaFin,
-                filtros.Estado,
-                filtros.DepartamentoId
-            );
-
-            return asistencias.Select(MapToDTO);
-        }
-
         public async Task<AsistenciaDTO> CreateAsync(CrearAsistenciaDTO dto)
         {
             var empleado = await _empleadosRepo.GetByIdAsync(dto.EmpleadoId);
@@ -187,6 +162,78 @@ namespace BusinessLogicLayer.Managers
 
             var registroCreado = await _asistenciasRepo.GetByIdAsync(asistencia.IdAsistencia);
             return MapToDTO(registroCreado!);
+        }
+
+        public async Task<bool> DeleteAsync(int id)
+        {
+            var existe = await _asistenciasRepo.ExistsAsync(id);
+            if (!existe)
+            {
+                throw new BusinessException("Registro de asistencia no encontrado", "ASISTENCIA_NO_ENCONTRADA");
+            }
+
+            return await _asistenciasRepo.DeleteAsync(id);
+        }
+
+        public async Task<IEnumerable<AsistenciaDTO>> GetAllAsync()
+        {
+            var asistencias = await _asistenciasRepo.GetAllAsync();
+            return asistencias.Select(MapToDTO);
+        }
+
+        public async Task<IEnumerable<AsistenciaDTO>> GetByFiltrosAsync(FiltrosAsistenciaDTO filtros)
+        {
+            var asistencias = await _asistenciasRepo.GetByFiltrosAsync(
+                filtros.EmpleadoId,
+                filtros.FechaInicio,
+                filtros.FechaFin,
+                filtros.Estado,
+                filtros.DepartamentoId
+            );
+
+            return asistencias.Select(MapToDTO);
+        }
+
+        public async Task<AsistenciaDTO?> GetByIdAsync(int id)
+        {
+            var asistencia = await _asistenciasRepo.GetByIdAsync(id);
+            return asistencia != null ? MapToDTO(asistencia) : null;
+        }
+        public async Task<ReporteAsistenciaDTO> GetReporteEmpleadoAsync(
+            int empleadoId,
+            DateTime fechaInicio,
+            DateTime fechaFin)
+        {
+            var empleado = await _empleadosRepo.GetByIdAsync(empleadoId);
+            if (empleado == null)
+            {
+                throw new BusinessException("Empleado no encontrado", "EMPLEADO_NO_ENCONTRADO");
+            }
+
+            var asistencias = await _asistenciasRepo.GetByFiltrosAsync(
+                empleadoId, fechaInicio, fechaFin, null, null);
+
+            var lista = asistencias.ToList();
+            var totalDias = lista.Count;
+            var presente = lista.Count(a => a.Estado == "PRESENTE");
+            var ausente = lista.Count(a => a.Estado == "AUSENTE");
+            var tardanza = lista.Count(a => a.Estado == "TARDANZA");
+            var permiso = lista.Count(a => a.Estado == "PERMISO");
+
+            return new ReporteAsistenciaDTO
+            {
+                EmpleadoId = empleadoId,
+                NombreCompleto = $"{empleado.Nombre} {empleado.PrimerApellido}",
+                Departamento = empleado.Departamento?.NombreDepartamento ?? "N/A",
+                TotalDias = totalDias,
+                DiasPresente = presente,
+                DiasAusente = ausente,
+                DiasTardanza = tardanza,
+                DiasPermiso = permiso,
+                PorcentajeAsistencia = totalDias > 0
+                    ? Math.Round((decimal)presente / totalDias * 100, 2)
+                    : 0
+            };
         }
 
         public async Task<bool> UpdateAsync(int id, ActualizarAsistenciaDTO dto)
@@ -227,55 +274,6 @@ namespace BusinessLogicLayer.Managers
 
             return await _asistenciasRepo.UpdateAsync(asistencia);
         }
-
-        public async Task<bool> DeleteAsync(int id)
-        {
-            var existe = await _asistenciasRepo.ExistsAsync(id);
-            if (!existe)
-            {
-                throw new BusinessException("Registro de asistencia no encontrado", "ASISTENCIA_NO_ENCONTRADA");
-            }
-
-            return await _asistenciasRepo.DeleteAsync(id);
-        }
-
-        public async Task<ReporteAsistenciaDTO> GetReporteEmpleadoAsync(
-            int empleadoId,
-            DateTime fechaInicio,
-            DateTime fechaFin)
-        {
-            var empleado = await _empleadosRepo.GetByIdAsync(empleadoId);
-            if (empleado == null)
-            {
-                throw new BusinessException("Empleado no encontrado", "EMPLEADO_NO_ENCONTRADO");
-            }
-
-            var asistencias = await _asistenciasRepo.GetByFiltrosAsync(
-                empleadoId, fechaInicio, fechaFin, null, null);
-
-            var lista = asistencias.ToList();
-            var totalDias = lista.Count;
-            var presente = lista.Count(a => a.Estado == "PRESENTE");
-            var ausente = lista.Count(a => a.Estado == "AUSENTE");
-            var tardanza = lista.Count(a => a.Estado == "TARDANZA");
-            var permiso = lista.Count(a => a.Estado == "PERMISO");
-
-            return new ReporteAsistenciaDTO
-            {
-                EmpleadoId = empleadoId,
-                NombreCompleto = $"{empleado.Nombre} {empleado.PrimerApellido}",
-                Departamento = empleado.Departamento?.NombreDepartamento ?? "N/A",
-                TotalDias = totalDias,
-                DiasPresente = presente,
-                DiasAusente = ausente,
-                DiasTardanza = tardanza,
-                DiasPermiso = permiso,
-                PorcentajeAsistencia = totalDias > 0
-                    ? Math.Round((decimal)presente / totalDias * 100, 2)
-                    : 0
-            };
-        }
-
         #endregion CRUD para Administrador
 
         #region Métodos privados

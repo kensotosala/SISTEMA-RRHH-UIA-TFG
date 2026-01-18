@@ -14,23 +14,45 @@ namespace DataAccessLayer.Repositories
             _context = context;
         }
 
+        public async Task CreateAsync(Asistencias asistencia)
+        {
+            asistencia.FechaCreacion = DateTime.UtcNow;
+            await _context.Asistencias.AddAsync(asistencia);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<bool> DeleteAsync(int id)
+        {
+            var asistencia = await _context.Asistencias.FindAsync(id);
+            if (asistencia == null)
+                return false;
+
+            _context.Asistencias.Remove(asistencia);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> ExisteRegistroAsync(int empleadoId, DateTime fecha)
+        {
+            var fechaSolo = fecha.Date;
+            return await _context.Asistencias
+                .AnyAsync(a => a.EmpleadoId == empleadoId &&
+                              a.FechaRegistro.Date == fechaSolo);
+        }
+
+        public async Task<bool> ExistsAsync(int id)
+        {
+            return await _context.Asistencias.AnyAsync(a => a.IdAsistencia == id);
+        }
+
         public async Task<IEnumerable<Asistencias>> GetAllAsync()
         {
             return await _context.Asistencias
                 .Include(a => a.Empleado)
-                    .ThenInclude(e => e.Puesto)  // ✅ CORREGIDO: era IdPuestoNavigation
-                .Include(a => a.Empleado.Departamento)  // ✅ CORREGIDO: era IdDepartamentoNavigation
+                    .ThenInclude(e => e.Puesto)  
+                .Include(a => a.Empleado.Departamento) 
                 .OrderByDescending(a => a.FechaRegistro)
                 .ToListAsync();
-        }
-
-        public async Task<Asistencias?> GetByIdAsync(int id)
-        {
-            return await _context.Asistencias
-                .Include(a => a.Empleado)
-                    .ThenInclude(e => e.Departamento)  // ✅ CORREGIDO
-                .Include(a => a.Empleado.Puesto)  // ✅ CORREGIDO
-                .FirstOrDefaultAsync(a => a.IdAsistencia == id);
         }
 
         public async Task<Asistencias?> GetByEmpleadoYFechaAsync(int empleadoId, DateTime fecha)
@@ -76,13 +98,14 @@ namespace DataAccessLayer.Repositories
                 .ToListAsync();
         }
 
-        public async Task CreateAsync(Asistencias asistencia)
+        public async Task<Asistencias?> GetByIdAsync(int id)
         {
-            asistencia.FechaCreacion = DateTime.UtcNow;
-            await _context.Asistencias.AddAsync(asistencia);
-            await _context.SaveChangesAsync();
+            return await _context.Asistencias
+                .Include(a => a.Empleado)
+                    .ThenInclude(e => e.Departamento)
+                .Include(a => a.Empleado.Puesto)  
+                .FirstOrDefaultAsync(a => a.IdAsistencia == id);
         }
-
         public async Task<bool> UpdateAsync(Asistencias asistencia)
         {
             var existe = await _context.Asistencias
@@ -95,30 +118,6 @@ namespace DataAccessLayer.Repositories
             _context.Asistencias.Update(asistencia);
             await _context.SaveChangesAsync();
             return true;
-        }
-
-        public async Task<bool> DeleteAsync(int id)
-        {
-            var asistencia = await _context.Asistencias.FindAsync(id);
-            if (asistencia == null)
-                return false;
-
-            _context.Asistencias.Remove(asistencia);
-            await _context.SaveChangesAsync();
-            return true;
-        }
-
-        public async Task<bool> ExistsAsync(int id)
-        {
-            return await _context.Asistencias.AnyAsync(a => a.IdAsistencia == id);
-        }
-
-        public async Task<bool> ExisteRegistroAsync(int empleadoId, DateTime fecha)
-        {
-            var fechaSolo = fecha.Date;
-            return await _context.Asistencias
-                .AnyAsync(a => a.EmpleadoId == empleadoId &&
-                              a.FechaRegistro.Date == fechaSolo);
         }
     }
 }

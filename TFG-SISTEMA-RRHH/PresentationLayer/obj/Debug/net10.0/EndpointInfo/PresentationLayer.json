@@ -1157,6 +1157,213 @@
         }
       }
     },
+    "/api/v1/Permisos/{id}": {
+      "put": {
+        "tags": [
+          "Permisos"
+        ],
+        "operationId": "ActualizarPermiso",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ActualizarPermisoDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ActualizarPermisoDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ActualizarPermisoDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Permisos"
+        ],
+        "operationId": "EliminarPermiso",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListarPermisoByIdDTO"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListarPermisoByIdDTO"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListarPermisoByIdDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Permisos"
+        ],
+        "operationId": "ObtenerPermisoPorId",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListarPermisoByIdDTO"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListarPermisoByIdDTO"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListarPermisoByIdDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/Permisos": {
+      "post": {
+        "tags": [
+          "Permisos"
+        ],
+        "operationId": "CrearPermiso",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CrearPermisoDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CrearPermisoDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CrearPermisoDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CrearPermisoDTO"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CrearPermisoDTO"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CrearPermisoDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Permisos"
+        ],
+        "operationId": "ListarTodosLosPermisos",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ListarPermisosDTO"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ListarPermisosDTO"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ListarPermisosDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Puestos": {
       "get": {
         "tags": [
@@ -1518,6 +1725,41 @@
         },
         "additionalProperties": false
       },
+      "ActualizarPermisoDTO": {
+        "type": "object",
+        "properties": {
+          "idPermiso": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "conGoceSalario": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "empleadoId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "estadoSolicitud": {
+            "type": "string",
+            "nullable": true
+          },
+          "fechaPermiso": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "fechaAprobacion": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "motivo": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "ActualizarPuestoDTO": {
         "type": "object",
         "properties": {
@@ -1807,6 +2049,28 @@
         },
         "additionalProperties": false
       },
+      "CrearPermisoDTO": {
+        "type": "object",
+        "properties": {
+          "conGoceSalario": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "empleadoId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "fechaPermiso": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "motivo": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "CrearPuestoDTO": {
         "type": "object",
         "properties": {
@@ -2006,6 +2270,122 @@
           "fechaCreacion": {
             "type": "string",
             "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ListarPermisoByIdDTO": {
+        "type": "object",
+        "properties": {
+          "comentariosRechazo": {
+            "type": "string",
+            "nullable": true
+          },
+          "conGoceSalario": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "empleadoId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "estadoSolicitud": {
+            "type": "string",
+            "nullable": true
+          },
+          "fechaAprobacion": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "fechaCreacion": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "fechaModificacion": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "fechaPermiso": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "fechaSolicitud": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "idPermiso": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "jefeApruebaId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "motivo": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ListarPermisosDTO": {
+        "type": "object",
+        "properties": {
+          "comentariosRechazo": {
+            "type": "string",
+            "nullable": true
+          },
+          "conGoceSalario": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "empleadoId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "estadoSolicitud": {
+            "type": "string",
+            "nullable": true
+          },
+          "fechaAprobacion": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "fechaCreacion": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "fechaModificacion": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "fechaPermiso": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "fechaSolicitud": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "idPermiso": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "jefeApruebaId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "motivo": {
+            "type": "string",
             "nullable": true
           }
         },
@@ -2229,6 +2609,9 @@
     },
     {
       "name": "HorasExtras"
+    },
+    {
+      "name": "Permisos"
     },
     {
       "name": "Puestos"

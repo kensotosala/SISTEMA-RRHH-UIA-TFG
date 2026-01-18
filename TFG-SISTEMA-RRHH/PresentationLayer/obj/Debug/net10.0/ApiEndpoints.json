@@ -774,5 +774,129 @@
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PresentationLayer.Controllers.PermisosController",
+    "Method": "CrearPermiso",
+    "RelativePath": "api/v1/Permisos",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "BusinessLogicLayer.DTOs.CrearPermisoDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "BusinessLogicLayer.DTOs.CrearPermisoDTO",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ],
+    "EndpointName": "CrearPermiso"
+  },
+  {
+    "ContainingType": "PresentationLayer.Controllers.PermisosController",
+    "Method": "ListarTodosLosPermisos",
+    "RelativePath": "api/v1/Permisos",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[BusinessLogicLayer.DTOs.ListarPermisosDTO, BusinessLogicLayer, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ],
+    "EndpointName": "ListarTodosLosPermisos"
+  },
+  {
+    "ContainingType": "PresentationLayer.Controllers.PermisosController",
+    "Method": "ActualizarPermiso",
+    "RelativePath": "api/v1/Permisos/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "dto",
+        "Type": "BusinessLogicLayer.DTOs.ActualizarPermisoDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [],
+    "EndpointName": "ActualizarPermiso"
+  },
+  {
+    "ContainingType": "PresentationLayer.Controllers.PermisosController",
+    "Method": "EliminarPermiso",
+    "RelativePath": "api/v1/Permisos/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "BusinessLogicLayer.DTOs.ListarPermisoByIdDTO",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ],
+    "EndpointName": "EliminarPermiso"
+  },
+  {
+    "ContainingType": "PresentationLayer.Controllers.PermisosController",
+    "Method": "ObtenerPermisoPorId",
+    "RelativePath": "api/v1/Permisos/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "BusinessLogicLayer.DTOs.ListarPermisoByIdDTO",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ],
+    "EndpointName": "ObtenerPermisoPorId"
   }
 ]
