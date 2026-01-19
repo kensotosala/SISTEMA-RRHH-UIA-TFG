@@ -18,9 +18,6 @@ namespace PresentationLayer.Controllers
         [HttpPut("{id}", Name = "ActualizarPermiso")]
         public async Task<IActionResult> ActualizarPermiso(int id, [FromBody] ActualizarPermisoDTO dto)
         {
-            if (id != dto.IdPermiso)
-                return BadRequest("El ID de la URL no coincide con el ID del permiso");
-
             var existePermiso = await _permisosManager.ListarPermisoByIdAsync(id);
             if (existePermiso == null)
                 return NotFound();
@@ -31,7 +28,7 @@ namespace PresentationLayer.Controllers
         }
 
         [HttpPost(Name = "CrearPermiso")]
-        public async Task<ActionResult<CrearPermisoDTO>> CrearPermiso([FromBody] CrearPermisoDTO dto)
+        public async Task<ActionResult<CrearPermisoDto>> CrearPermiso([FromBody] CrearPermisoDto dto)
         {
             var permiso = await _permisosManager.CrearPermisoAsync(dto);
             return Ok(permiso);

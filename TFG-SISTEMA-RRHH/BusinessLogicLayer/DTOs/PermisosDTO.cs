@@ -1,8 +1,9 @@
-﻿namespace BusinessLogicLayer.DTOs
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace BusinessLogicLayer.DTOs
 {
     public class ActualizarPermisoDTO
     {
-        public int IdPermiso { get; set; }
         public bool? ConGoceSalario { get; set; }
         public int EmpleadoId { get; set; }
         public string? EstadoSolicitud { get; set; }
@@ -13,14 +14,19 @@
         public string Motivo { get; set; } = null!;
     }
 
-    public class CrearPermisoDTO
+    public class CrearPermisoDto
     {
-        public bool? ConGoceSalario { get; set; }
+        [Required(ErrorMessage = "El ID del empleado es requerido")]
         public int EmpleadoId { get; set; }
 
+        [Required(ErrorMessage = "La fecha del permiso es requerida")]
         public DateTime FechaPermiso { get; set; }
 
+        [Required(ErrorMessage = "El motivo es requerido")]
+        [MaxLength(500, ErrorMessage = "El motivo no puede exceder 500 caracteres")]
         public string Motivo { get; set; } = null!;
+
+        public bool? ConGoceSalario { get; set; }
     }
 
     public class ListarPermisoByIdDTO

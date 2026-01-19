@@ -70,6 +70,14 @@
             services.AddScoped<BusinessLogicLayer.Interfaces.IPermisosManager,
                                        BusinessLogicLayer.Managers.PermisosManager>();
 
+            // Incapacidades
+
+            services.AddScoped<DataAccessLayer.Interfaces.IIncapacidadesRepository,
+                           DataAccessLayer.Repositories.IncapacidadesRepository>();
+
+            services.AddScoped<BusinessLogicLayer.Interfaces.IIncapacidadesManager,
+                                       BusinessLogicLayer.Managers.IncapacidadesManager>();
+
             return services;
         }
     }

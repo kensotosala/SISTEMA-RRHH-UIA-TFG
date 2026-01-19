@@ -36,7 +36,7 @@ namespace BusinessLogicLayer.Managers
             return await _repo.ActualizarPermisoAsync(permiso);
         }
 
-        public async Task<CrearPermisoDTO> CrearPermisoAsync(CrearPermisoDTO dto)
+        public async Task<CrearPermisoDto> CrearPermisoAsync(CrearPermisoDto dto)
         {
             var permiso = new Permisos
             {
@@ -55,7 +55,7 @@ namespace BusinessLogicLayer.Managers
             if (registroCreado == null)
                 throw new BusinessException("Error al crear el permiso", "PERMISO_NO_CREADO");
 
-            return new CrearPermisoDTO
+            return new CrearPermisoDto
             {
                 ConGoceSalario = registroCreado.ConGoceSalario,
                 EmpleadoId = registroCreado.EmpleadoId,

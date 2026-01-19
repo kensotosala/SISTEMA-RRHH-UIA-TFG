@@ -6,7 +6,7 @@ namespace BusinessLogicLayer.Interfaces
     {
         Task<bool> ActualizarPermisoAsync(int id, ActualizarPermisoDTO dto);
 
-        Task<CrearPermisoDTO> CrearPermisoAsync(CrearPermisoDTO dto);
+        Task<CrearPermisoDto> CrearPermisoAsync(CrearPermisoDto dto);
 
         Task<bool> EliminarPermisoAsync(int id);
 
