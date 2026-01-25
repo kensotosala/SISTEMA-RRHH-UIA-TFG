@@ -881,7 +881,7 @@ public partial class SistemaRhContext : DbContext
             entity.Property(e => e.EmpleadoId).HasColumnName("empleado_id");
             entity.Property(e => e.EstadoSolicitud)
                 .HasDefaultValueSql("'PENDIENTE'")
-                .HasColumnType("enum('PENDIENTE','APROBADA','RECHAZADA','DISFRUTANDO','COMPLETADA')")
+                .HasColumnType("enum('PENDIENTE','APROBADA','RECHAZADA','DISFRUTANDO','COMPLETADA', 'CANCELADA')")
                 .HasColumnName("estado_solicitud");
             entity.Property(e => e.FechaAprobacion)
                 .HasColumnType("datetime")

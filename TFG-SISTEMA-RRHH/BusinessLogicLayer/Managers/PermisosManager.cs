@@ -31,7 +31,7 @@ namespace BusinessLogicLayer.Managers
             permiso.FechaPermiso = dto.FechaPermiso;
             permiso.FechaAprobacion = dto.FechaAprobacion;
             permiso.Motivo = dto.Motivo;
-            permiso.FechaModificacion = DateTime.UtcNow;
+            permiso.FechaModificacion = DateTime.Now;
 
             return await _repo.ActualizarPermisoAsync(permiso);
         }
@@ -44,8 +44,9 @@ namespace BusinessLogicLayer.Managers
                 EmpleadoId = dto.EmpleadoId,
                 EstadoSolicitud = EstadoSolicitud.PENDIENTE.ToString(),
                 FechaPermiso = dto.FechaPermiso,
+                FechaSolicitud = DateTime.Now,
                 Motivo = dto.Motivo,
-                FechaCreacion = DateTime.UtcNow
+                FechaCreacion = DateTime.Now
             };
 
             await _repo.CreatePermisoAsync(permiso);

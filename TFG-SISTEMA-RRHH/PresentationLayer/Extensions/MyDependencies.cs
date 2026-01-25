@@ -78,6 +78,14 @@
             services.AddScoped<BusinessLogicLayer.Interfaces.IIncapacidadesManager,
                                        BusinessLogicLayer.Managers.IncapacidadesManager>();
 
+            // Vacaciones
+
+            services.AddScoped<DataAccessLayer.Interfaces.IVacacionesRepository,
+                           DataAccessLayer.Repositories.VacacionesRepository>();
+
+            services.AddScoped<BusinessLogicLayer.Interfaces.IVacacionesManager,
+                                       BusinessLogicLayer.Managers.VacacionesManager>();
+
             return services;
         }
     }
