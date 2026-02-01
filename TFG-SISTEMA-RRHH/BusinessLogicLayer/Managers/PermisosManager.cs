@@ -11,11 +11,13 @@ namespace BusinessLogicLayer.Managers
     {
         private readonly SistemaRhContext _context;
         private readonly IPermisosRepository _repo;
+        private readonly NotificacionesManager _notificacionesManager;
 
-        public PermisosManager(IPermisosRepository repo, SistemaRhContext context)
+        public PermisosManager(IPermisosRepository repo, SistemaRhContext context, NotificacionesManager notificacionesManager)
         {
             _repo = repo;
             _context = context;
+            _notificacionesManager = notificacionesManager;
         }
 
         public async Task<bool> ActualizarPermisoAsync(int id, ActualizarPermisoDTO dto)
@@ -55,6 +57,21 @@ namespace BusinessLogicLayer.Managers
 
             if (registroCreado == null)
                 throw new BusinessException("Error al crear el permiso", "PERMISO_NO_CREADO");
+
+            // Detalles de la notificacion
+            var detalles = $@"
+                <p><strong>Fecha del Permiso:</strong> {dto.FechaPermiso:dd/MM/yyyy}</p>
+                <p><strong>Motivo:</strong> {dto.Motivo}</p>
+                <p><strong>Con Goce de Salario:</strong> {(dto.ConGoceSalario ?? false ? "Sí" : "No")}</p>
+                <p><strong>Estado:</strong> PENDIENTE</p>
+            ";
+
+            // Notificar al empleado
+            await _notificacionesManager.NotificarSolicitudCreadaAsync(
+                dto.EmpleadoId,
+                "Permiso",
+                detalles
+            );
 
             return new CrearPermisoDto
             {
@@ -122,6 +139,50 @@ namespace BusinessLogicLayer.Managers
                 JefeApruebaId = p.JefeApruebaId,
                 Motivo = p.Motivo
             }).ToList();
+        }
+
+        public async Task AprobarPermisoASync(int id, int jefeId)
+        {
+            var permiso = await _repo.GetPermisoByIdAsync(id);
+            if (permiso == null) throw new Exception("Permios no encontrado");
+
+            permiso.EstadoSolicitud = "APROBADA";
+            permiso.JefeApruebaId = jefeId;
+            permiso.FechaAprobacion = DateTime.Now;
+
+            await _repo.ActualizarPermisoAsync(permiso);
+
+            // Enviar notificación
+            var detalles = $@"
+                <p><strong>Fecha del Permiso:</strong> {permiso.FechaPermiso:dd/MM/yyyy}</p>
+                <p><strong>Motivo:</strong> {permiso.Motivo}</p>
+                <p><strong>Fecha de Aprobación:</strong> {permiso.FechaAprobacion:dd/MM/yyyy HH:mm}</p>
+            ";
+
+            await _notificacionesManager.NotificarSolicitudAprobadaAsync(
+                permiso.EmpleadoId,
+                "Permiso",
+                detalles
+            );
+        }
+
+        public async Task CancelarPermisoAsync(int id)
+        {
+            var permiso = await _repo.GetPermisoByIdAsync(id);
+
+            if (permiso == null)
+                throw new Exception("Permiso no encontrado");
+
+            await _repo.DeletePermisoAsync(id);
+
+            // Enviar notificacion
+            var detalles = $@"
+                <p><strong>Fecha del Permiso:</strong> {permiso.FechaPermiso:dd/MM/yyyy}</p>
+                <p><strong>Motivo:</strong> {permiso.Motivo}</p>
+                <p><strong>Fecha de Cancelación:</strong> {DateTime.Now:dd/MM/yyyy HH:mm}</p>
+            ";
+
+            await _notificacionesManager.NotificarSolicitudCanceladaAsync(permiso.EmpleadoId, "Permiso", detalles);
         }
     }
 }

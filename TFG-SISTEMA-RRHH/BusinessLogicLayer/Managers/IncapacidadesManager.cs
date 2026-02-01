@@ -9,11 +9,13 @@ namespace BusinessLogicLayer.Managers
     public class IncapacidadesManager : IIncapacidadesManager
     {
         private readonly IIncapacidadesRepository _repoIncapacidades;
+        private readonly NotificacionesManager _notificacionesManager;
 
-        public IncapacidadesManager(IIncapacidadesRepository repoIncapacidades)
+        public IncapacidadesManager(IIncapacidadesRepository repoIncapacidades, NotificacionesManager notificacionesManager)
         {
             _repoIncapacidades = repoIncapacidades ??
                 throw new ArgumentNullException(nameof(repoIncapacidades));
+            _notificacionesManager = notificacionesManager;
         }
 
         public async Task<IncapacidadDto> ActualizarIncapacidadAsync(ActualizarIncapacidadDto dto)
@@ -57,7 +59,25 @@ namespace BusinessLogicLayer.Managers
             incapacidadExistente.FechaModificacion = DateTime.UtcNow;
 
             // 5. Persistir cambios
-            await _repoIncapacidades.ActualizarIncapacidadAsync(incapacidadExistente);
+            var resultado = await _repoIncapacidades.ActualizarIncapacidadAsync(incapacidadExistente);
+
+            var dias = (dto.FechaFin - dto.FechaInicio).Days + 1;
+            var tipoLabel = ObtenerLabelTipo(dto.TipoIncapacidad);
+
+            var detalles = $@"
+                <p><strong>Tipo:</strong> {tipoLabel}</p>
+                <p><strong>Diagnóstico:</strong> {dto.Diagnostico}</p>
+                <p><strong>Fecha de Inicio:</strong> {dto.FechaInicio:dd/MM/yyyy}</p>
+                <p><strong>Fecha de Fin:</strong> {dto.FechaFin:dd/MM/yyyy}</p>
+                <p><strong>Total de Días:</strong> {dias} día(s)</p>
+                <p><strong>Estado:</strong> ACTIVA</p>
+            ";
+
+            await _notificacionesManager.NotificarSolicitudCreadaAsync(
+                dto.EmpleadoId,
+                "Incapacidad",
+                detalles
+            );
 
             // 6. Retornar DTO actualizado
             return new IncapacidadDto
@@ -80,12 +100,31 @@ namespace BusinessLogicLayer.Managers
             if (id <= 0)
                 throw new ArgumentException("El ID debe ser mayor a 0", nameof(id));
 
-            var existe = await _repoIncapacidades.ListarIncapacidadPorId(id);
+            var incapacidadExistente = await _repoIncapacidades.ListarIncapacidadPorId(id);
 
-            if (existe == null)
+            if (incapacidadExistente == null)
                 return false;
 
+            var dias = (incapacidadExistente.FechaFin - incapacidadExistente.FechaInicio).Days + 1;
+            var tipoLabel = ObtenerLabelTipo(incapacidadExistente.TipoIncapacidad);
+
+            var detalles = $@"
+                <p><strong>Tipo:</strong> {tipoLabel}</p>
+                <p><strong>Diagnóstico:</strong> {incapacidadExistente.Diagnostico}</p>
+                <p><strong>Fecha de Inicio:</strong> {incapacidadExistente.FechaInicio:dd/MM/yyyy}</p>
+                <p><strong>Fecha de Fin:</strong> {incapacidadExistente.FechaFin:dd/MM/yyyy}</p>
+                <p><strong>Total de Días:</strong> {dias} día(s)</p>
+                <p><strong>Fecha de Cancelación:</strong> {DateTime.Now:dd/MM/yyyy HH:mm}</p>
+            ";
+
+            await _notificacionesManager.NotificarSolicitudCanceladaAsync(
+                incapacidadExistente.EmpleadoId,
+                "Incapacidad",
+                detalles
+            );
+
             await _repoIncapacidades.EliminarIncapacidadAsync(id);
+
             return true;
         }
 
@@ -177,6 +216,25 @@ namespace BusinessLogicLayer.Managers
             if (incapacidadGuardada == null)
                 throw new InvalidOperationException("Error al registrar la incapacidad");
 
+            // Enviar notificacion
+            var dias = (dto.FechaFin - dto.FechaInicio).Days + 1;
+            var tipoLabel = ObtenerLabelTipo(dto.TipoIncapacidad);
+
+            var detalles = $@"
+                <p><strong>Tipo:</strong> {tipoLabel}</p>
+                <p><strong>Diagnóstico:</strong> {dto.Diagnostico}</p>
+                <p><strong>Fecha de Inicio:</strong> {dto.FechaInicio:dd/MM/yyyy}</p>
+                <p><strong>Fecha de Fin:</strong> {dto.FechaFin:dd/MM/yyyy}</p>
+                <p><strong>Total de Días:</strong> {dias} día(s)</p>
+                <p><strong>Estado:</strong> ACTIVA</p>
+            ";
+
+            await _notificacionesManager.NotificarSolicitudCreadaAsync(
+                dto.EmpleadoId,
+                "Incapacidad",
+                detalles
+            );
+
             // 4. Retornar DTO
             return new IncapacidadDto
             {
@@ -190,6 +248,18 @@ namespace BusinessLogicLayer.Managers
                 Estado = incapacidadGuardada.Estado ?? EstadoIncapacidad.ACTIVA.ToString(),
                 FechaCreacion = incapacidadGuardada.FechaCreacion ?? DateTime.UtcNow,
                 FechaModificacion = incapacidadGuardada.FechaModificacion
+            };
+        }
+
+        private string ObtenerLabelTipo(string tipo)
+        {
+            return tipo switch
+            {
+                "ENFERMEDAD" => "Enfermedad",
+                "ACCIDENTE" => "Accidente",
+                "MATERNIDAD" => "Maternidad",
+                "PATERNIDAD" => "Paternidad",
+                _ => tipo
             };
         }
     }

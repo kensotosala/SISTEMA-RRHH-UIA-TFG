@@ -1,4 +1,6 @@
-﻿namespace PresentationLayer.Extensions
+﻿using BusinessLogicLayer.Managers;
+
+namespace PresentationLayer.Extensions
 {
     public static class MyDependencies
     {
@@ -85,6 +87,12 @@
 
             services.AddScoped<BusinessLogicLayer.Interfaces.IVacacionesManager,
                                        BusinessLogicLayer.Managers.VacacionesManager>();
+
+            // Email
+            services.AddScoped<BusinessLogicLayer.Interfaces.IEmailService,
+                                       BusinessLogicLayer.Services.EmailService>();
+
+            services.AddScoped<NotificacionesManager>();
 
             return services;
         }

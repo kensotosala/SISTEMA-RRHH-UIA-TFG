@@ -8,6 +8,7 @@ namespace BusinessLogicLayer.Managers
     public class VacacionesManager : IVacacionesManager
     {
         private readonly IVacacionesRepository _vacacionesRepo;
+        private readonly NotificacionesManager _notificacionesManager;
 
         // Constantes según la ley de Costa Rica
         private const int DIAS_MINIMOS_SOLICITUD = 1;
@@ -15,9 +16,10 @@ namespace BusinessLogicLayer.Managers
         private const int DIAS_MAXIMOS_CONSECUTIVOS = 14;
         private const int DIAS_ANTICIPACION_MINIMA = 15;
 
-        public VacacionesManager(IVacacionesRepository vacacionesRepo)
+        public VacacionesManager(IVacacionesRepository vacacionesRepo, NotificacionesManager notificacionesManager)
         {
             _vacacionesRepo = vacacionesRepo ?? throw new ArgumentNullException(nameof(vacacionesRepo));
+            _notificacionesManager = notificacionesManager;
         }
 
         // ========================================
@@ -56,6 +58,16 @@ namespace BusinessLogicLayer.Managers
 
                 // Mapear manualmente a DTO
                 var resultado = MapearAVacacionByIdDTO(vacacionCreada);
+
+                var dias = (dto.FechaFin - dto.FechaInicio).Days + 1;
+
+                var detalles = $@"
+                <p><strong>Fecha de Inicio:</strong> {dto.FechaInicio:dd/MM/yyyy}</p>
+                <p><strong>Fecha de Fin:</strong> {dto.FechaFin:dd/MM/yyyy}</p>
+                <p><strong>Total de Días:</strong> {dias} día(s)</p>
+                <p><strong>Estado:</strong> PENDIENTE</p>";
+
+                await _notificacionesManager.NotificarSolicitudCreadaAsync(dto.EmpleadoId, "Vacaciones", detalles);
 
                 return ResultDTO<ListarVacacionByIdDTO>.Success(
                     resultado,
@@ -113,6 +125,20 @@ namespace BusinessLogicLayer.Managers
                 // Guardar
                 var resultado = await _vacacionesRepo.ActualizarAsync(vacacionExistente);
 
+                var dias = (vacacionExistente.FechaFin - vacacionExistente.FechaInicio).Days + 1;
+                var detalles = $@"
+                <p><strong>Fecha de Inicio:</strong> {vacacionExistente.FechaInicio:dd/MM/yyyy}</p>
+                <p><strong>Fecha de Fin:</strong> {vacacionExistente.FechaFin:dd/MM/yyyy}</p>
+                <p><strong>Total de Días:</strong> {dias} día(s)</p>
+                <p><strong>Fecha de Aprobación:</strong> {vacacionExistente.FechaAprobacion:dd/MM/yyyy HH:mm}</p>
+            ";
+
+                await _notificacionesManager.NotificarSolicitudAprobadaAsync(
+                    vacacionExistente.EmpleadoId,
+                    "Vacaciones",
+                    detalles
+                );
+
                 return resultado
                     ? ResultDTO<bool>.Success(true, "Solicitud actualizada exitosamente")
                     : ResultDTO<bool>.Failure("No se pudo actualizar");
@@ -142,6 +168,20 @@ namespace BusinessLogicLayer.Managers
                 }
 
                 var resultado = await _vacacionesRepo.EliminarAsync(id);
+
+                var dias = (vacacion.FechaFin - vacacion.FechaInicio).Days + 1;
+                var detalles = $@"
+                <p><strong>Fecha de Inicio:</strong> {vacacion.FechaInicio:dd/MM/yyyy}</p>
+                <p><strong>Fecha de Fin:</strong> {vacacion.FechaFin:dd/MM/yyyy}</p>
+                <p><strong>Total de Días:</strong> {dias} día(s)</p>
+                <p><strong>Fecha de Cancelación:</strong> {DateTime.Now:dd/MM/yyyy HH:mm}</p>
+            ";
+
+                await _notificacionesManager.NotificarSolicitudCanceladaAsync(
+                    vacacion.EmpleadoId,
+                    "Vacaciones",
+                    detalles
+                );
 
                 return resultado
                     ? ResultDTO<bool>.Success(true, "Solicitud cancelada")
@@ -309,6 +349,19 @@ namespace BusinessLogicLayer.Managers
                 vacacion.ComentariosRechazo = comentarios;
 
                 var resultado = await _vacacionesRepo.ActualizarAsync(vacacion);
+
+                var dias = (vacacion.FechaFin - vacacion.FechaInicio).Days + 1;
+                var detalles = $@"
+                <p><strong>Fecha de Inicio:</strong> {vacacion.FechaInicio:dd/MM/yyyy}</p>
+                <p><strong>Fecha de Fin:</strong> {vacacion.FechaFin:dd/MM/yyyy}</p>
+                <p><strong>Total de Días:</strong> {dias} día(s)</p>";
+
+                await _notificacionesManager.NotificarSolicitudRechazadaAsync(
+                    vacacion.EmpleadoId,
+                    "Vacaciones",
+                    comentarios,
+                    detalles
+                );
 
                 return resultado
                     ? ResultDTO<bool>.Success(true, "Solicitud rechazada")
