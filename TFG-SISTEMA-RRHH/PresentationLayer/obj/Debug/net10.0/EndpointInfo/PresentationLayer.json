@@ -422,8 +422,39 @@
         }
       }
     },
-    "/api/Auth/logout": {
+    "/api/Auth/registro": {
       "post": {
+        "tags": [
+          "Auth"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegistroUsuarioDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegistroUsuarioDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegistroUsuarioDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Auth/perfil": {
+      "get": {
         "tags": [
           "Auth"
         ],
@@ -434,8 +465,101 @@
         }
       }
     },
-    "/api/Auth/verify": {
-      "get": {
+    "/api/Auth/validar": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Auth/cambiar-password": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CambiarPasswordDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CambiarPasswordDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CambiarPasswordDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Auth/validar-token": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ValidarTokenRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ValidarTokenRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ValidarTokenRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Auth/logout": {
+      "post": {
         "tags": [
           "Auth"
         ],
@@ -1459,6 +1583,482 @@
         }
       }
     },
+    "/api/v1/Nomina/generar": {
+      "post": {
+        "tags": [
+          "Nomina"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GenerarNominaQuincenalDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GenerarNominaQuincenalDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GenerarNominaQuincenalDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DetalleNominaDTO"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DetalleNominaDTO"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DetalleNominaDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/Nomina/{id}": {
+      "get": {
+        "tags": [
+          "Nomina"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/NominaDTO"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NominaDTO"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NominaDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/Nomina": {
+      "get": {
+        "tags": [
+          "Nomina"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/NominaDTO"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/NominaDTO"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/NominaDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/Nomina/empleado/{empleadoId}": {
+      "get": {
+        "tags": [
+          "Nomina"
+        ],
+        "parameters": [
+          {
+            "name": "empleadoId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/NominaDTO"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/NominaDTO"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/NominaDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/Nomina/quincena/{quincena}/mes/{mes}/anio/{anio}": {
+      "get": {
+        "tags": [
+          "Nomina"
+        ],
+        "parameters": [
+          {
+            "name": "quincena",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "mes",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "anio",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/NominaDTO"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/NominaDTO"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/NominaDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/Nomina/{id}/aprobar": {
+      "put": {
+        "tags": [
+          "Nomina"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/Nomina/{id}/pagar": {
+      "put": {
+        "tags": [
+          "Nomina"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/Nomina/{id}/anular": {
+      "put": {
+        "tags": [
+          "Nomina"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/Nomina/resumen/quincena/{quincena}/mes/{mes}/anio/{anio}": {
+      "get": {
+        "tags": [
+          "Nomina"
+        ],
+        "parameters": [
+          {
+            "name": "quincena",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "mes",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "anio",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResumenNominaQuincenalDTO"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResumenNominaQuincenalDTO"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResumenNominaQuincenalDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/Nomina/reportes/ccss/mes/{mes}/anio/{anio}": {
+      "get": {
+        "tags": [
+          "Nomina"
+        ],
+        "parameters": [
+          {
+            "name": "mes",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "anio",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlanillaCCSSDTO"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlanillaCCSSDTO"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlanillaCCSSDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/Nomina/reportes/d151/mes/{mes}/anio/{anio}": {
+      "get": {
+        "tags": [
+          "Nomina"
+        ],
+        "parameters": [
+          {
+            "name": "mes",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "anio",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeclaracionD151DTO"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeclaracionD151DTO"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeclaracionD151DTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/Permisos/{id}": {
       "put": {
         "tags": [
@@ -1827,6 +2427,204 @@
             }
           }
         ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Usuarios": {
+      "get": {
+        "tags": [
+          "Usuarios"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Usuarios"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CrearUsuarioDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CrearUsuarioDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CrearUsuarioDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Usuarios/{id}": {
+      "get": {
+        "tags": [
+          "Usuarios"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Usuarios"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ActualizarUsuarioDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ActualizarUsuarioDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ActualizarUsuarioDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Usuarios"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Usuarios/login": {
+      "post": {
+        "tags": [
+          "Usuarios"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Usuarios/{id}/estado": {
+      "patch": {
+        "tags": [
+          "Usuarios"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CambiarEstadoRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CambiarEstadoRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CambiarEstadoRequest"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "OK"
@@ -2947,6 +3745,28 @@
         },
         "additionalProperties": false
       },
+      "ActualizarUsuarioDTO": {
+        "type": "object",
+        "properties": {
+          "idUsuario": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nombreUsuario": {
+            "type": "string",
+            "nullable": true
+          },
+          "password": {
+            "type": "string",
+            "nullable": true
+          },
+          "estado": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "ActualizarVacacionDTO": {
         "type": "object",
         "properties": {
@@ -2975,6 +3795,40 @@
             "maxLength": 1000,
             "type": "string",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AjustesAusenciasDTO": {
+        "type": "object",
+        "properties": {
+          "diasIncapacidad": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "montoIncapacidad": {
+            "type": "number",
+            "format": "double"
+          },
+          "diasPermisoSinGoce": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "montoPermisoSinGoce": {
+            "type": "number",
+            "format": "double"
+          },
+          "diasVacaciones": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "montoVacaciones": {
+            "type": "number",
+            "format": "double"
+          },
+          "totalAjustes": {
+            "type": "number",
+            "format": "double"
           }
         },
         "additionalProperties": false
@@ -3061,6 +3915,39 @@
             "items": {
               "type": "string"
             },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CambiarEstadoRequest": {
+        "type": "object",
+        "properties": {
+          "nuevoEstado": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CambiarPasswordDTO": {
+        "required": [
+          "nuevaPassword",
+          "passwordActual"
+        ],
+        "type": "object",
+        "properties": {
+          "passwordActual": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "nuevaPassword": {
+            "maxLength": 100,
+            "minLength": 6,
+            "type": "string"
+          },
+          "confirmarNuevaPassword": {
+            "type": "string",
             "nullable": true
           }
         },
@@ -3311,6 +4198,24 @@
         },
         "additionalProperties": false
       },
+      "CrearUsuarioDTO": {
+        "type": "object",
+        "properties": {
+          "empleadoId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nombreUsuario": {
+            "type": "string",
+            "nullable": true
+          },
+          "password": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "CrearVacacionDTO": {
         "required": [
           "empleadoId",
@@ -3330,6 +4235,204 @@
           "fechaFin": {
             "type": "string",
             "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DeclaracionD151DTO": {
+        "type": "object",
+        "properties": {
+          "mes": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "anio": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "empleados": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DetalleImpuestoEmpleadoDTO"
+            },
+            "nullable": true
+          },
+          "totalRetenido": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DeduccionesCCSSDTO": {
+        "type": "object",
+        "properties": {
+          "sem": {
+            "type": "number",
+            "format": "double"
+          },
+          "ivm": {
+            "type": "number",
+            "format": "double"
+          },
+          "bancoPopular": {
+            "type": "number",
+            "format": "double"
+          },
+          "anp": {
+            "type": "number",
+            "format": "double"
+          },
+          "total": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DetalleCCSSEmpleadoDTO": {
+        "type": "object",
+        "properties": {
+          "cedula": {
+            "type": "string",
+            "nullable": true
+          },
+          "nombreCompleto": {
+            "type": "string",
+            "nullable": true
+          },
+          "salarioReportado": {
+            "type": "number",
+            "format": "double"
+          },
+          "cuotaObrera": {
+            "type": "number",
+            "format": "double"
+          },
+          "cuotaPatronal": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DetalleImpuestoEmpleadoDTO": {
+        "type": "object",
+        "properties": {
+          "cedula": {
+            "type": "string",
+            "nullable": true
+          },
+          "nombreCompleto": {
+            "type": "string",
+            "nullable": true
+          },
+          "salarioBruto": {
+            "type": "number",
+            "format": "double"
+          },
+          "deduccionCCSS": {
+            "type": "number",
+            "format": "double"
+          },
+          "baseImponible": {
+            "type": "number",
+            "format": "double"
+          },
+          "impuestoRetenido": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DetalleNominaDTO": {
+        "type": "object",
+        "properties": {
+          "empleadoId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "codigoEmpleado": {
+            "type": "string",
+            "nullable": true
+          },
+          "nombreCompleto": {
+            "type": "string",
+            "nullable": true
+          },
+          "puesto": {
+            "type": "string",
+            "nullable": true
+          },
+          "departamento": {
+            "type": "string",
+            "nullable": true
+          },
+          "salarioBaseQuincenal": {
+            "type": "number",
+            "format": "double"
+          },
+          "horasExtraDiurnas": {
+            "type": "number",
+            "format": "double"
+          },
+          "horasExtraNocturnas": {
+            "type": "number",
+            "format": "double"
+          },
+          "horasExtraFeriados": {
+            "type": "number",
+            "format": "double"
+          },
+          "totalHorasExtra": {
+            "type": "number",
+            "format": "double"
+          },
+          "bonificaciones": {
+            "type": "number",
+            "format": "double"
+          },
+          "totalBruto": {
+            "type": "number",
+            "format": "double"
+          },
+          "deduccionesCCSS": {
+            "$ref": "#/components/schemas/DeduccionesCCSSDTO"
+          },
+          "totalCCSS": {
+            "type": "number",
+            "format": "double"
+          },
+          "impuestoRenta": {
+            "$ref": "#/components/schemas/ImpuestoRentaDTO"
+          },
+          "pensionAlimenticia": {
+            "type": "number",
+            "format": "double"
+          },
+          "prestamos": {
+            "type": "number",
+            "format": "double"
+          },
+          "embargos": {
+            "type": "number",
+            "format": "double"
+          },
+          "otrasDeducciones": {
+            "type": "number",
+            "format": "double"
+          },
+          "totalDeducciones": {
+            "type": "number",
+            "format": "double"
+          },
+          "ajustesAusencias": {
+            "$ref": "#/components/schemas/AjustesAusenciasDTO"
+          },
+          "totalNeto": {
+            "type": "number",
+            "format": "double"
           }
         },
         "additionalProperties": false
@@ -3440,6 +4543,36 @@
         },
         "additionalProperties": false
       },
+      "GenerarNominaQuincenalDTO": {
+        "type": "object",
+        "properties": {
+          "quincena": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "mes": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "anio": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "fechaPago": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "empleadosIds": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "HoraExtraDTO": {
         "type": "object",
         "properties": {
@@ -3504,6 +4637,32 @@
           "fechaCreacion": {
             "type": "string",
             "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ImpuestoRentaDTO": {
+        "type": "object",
+        "properties": {
+          "baseImponible": {
+            "type": "number",
+            "format": "double"
+          },
+          "proyeccionMensual": {
+            "type": "number",
+            "format": "double"
+          },
+          "impuestoMensual": {
+            "type": "number",
+            "format": "double"
+          },
+          "impuestoQuincenal": {
+            "type": "number",
+            "format": "double"
+          },
+          "tramoAplicado": {
+            "type": "string",
             "nullable": true
           }
         },
@@ -3836,15 +4995,21 @@
         "additionalProperties": false
       },
       "LoginDTO": {
+        "required": [
+          "password",
+          "username"
+        ],
         "type": "object",
         "properties": {
           "username": {
-            "type": "string",
-            "nullable": true
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string"
           },
           "password": {
-            "type": "string",
-            "nullable": true
+            "maxLength": 100,
+            "minLength": 6,
+            "type": "string"
           }
         },
         "additionalProperties": false
@@ -3893,6 +5058,123 @@
           "mensaje": {
             "type": "string",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "NominaDTO": {
+        "type": "object",
+        "properties": {
+          "idNomina": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "empleadoId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "periodoNomina": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "fechaPago": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "salarioBase": {
+            "type": "number",
+            "format": "double"
+          },
+          "horasExtras": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "montoHorasExtra": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "bonificaciones": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "deducciones": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "totalBruto": {
+            "type": "number",
+            "format": "double"
+          },
+          "totalNeto": {
+            "type": "number",
+            "format": "double"
+          },
+          "estado": {
+            "type": "string",
+            "nullable": true
+          },
+          "fechaCreacion": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "fechaActualizacion": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "nombreEmpleado": {
+            "type": "string",
+            "nullable": true
+          },
+          "codigoEmpleado": {
+            "type": "string",
+            "nullable": true
+          },
+          "puesto": {
+            "type": "string",
+            "nullable": true
+          },
+          "departamento": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PlanillaCCSSDTO": {
+        "type": "object",
+        "properties": {
+          "mes": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "anio": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "empleados": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DetalleCCSSEmpleadoDTO"
+            },
+            "nullable": true
+          },
+          "totalSalariosReportados": {
+            "type": "number",
+            "format": "double"
+          },
+          "totalCuotaObrera": {
+            "type": "number",
+            "format": "double"
+          },
+          "totalCuotaPatronal": {
+            "type": "number",
+            "format": "double"
           }
         },
         "additionalProperties": false
@@ -4032,6 +5314,35 @@
         },
         "additionalProperties": false
       },
+      "RegistroUsuarioDTO": {
+        "required": [
+          "empleadoId",
+          "nombreUsuario",
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "empleadoId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nombreUsuario": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string"
+          },
+          "password": {
+            "maxLength": 100,
+            "minLength": 6,
+            "type": "string"
+          },
+          "confirmPassword": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "ReporteAsistenciaDTO": {
         "type": "object",
         "properties": {
@@ -4112,6 +5423,56 @@
           "totalHorasSolicitadas": {
             "type": "string",
             "format": "date-span"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ResumenNominaQuincenalDTO": {
+        "type": "object",
+        "properties": {
+          "quincena": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "mes": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "anio": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalEmpleados": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalBruto": {
+            "type": "number",
+            "format": "double"
+          },
+          "totalCCSS": {
+            "type": "number",
+            "format": "double"
+          },
+          "totalImpuestoRenta": {
+            "type": "number",
+            "format": "double"
+          },
+          "totalDeducciones": {
+            "type": "number",
+            "format": "double"
+          },
+          "totalNeto": {
+            "type": "number",
+            "format": "double"
+          },
+          "fechaGeneracion": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "estado": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -4267,6 +5628,16 @@
         },
         "additionalProperties": false
       },
+      "ValidarTokenRequest": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "ValidarVacacionRequest": {
         "required": [
           "empleadoId",
@@ -4312,10 +5683,16 @@
       "name": "Incapacidad"
     },
     {
+      "name": "Nomina"
+    },
+    {
       "name": "Permisos"
     },
     {
       "name": "Puestos"
+    },
+    {
+      "name": "Usuarios"
     },
     {
       "name": "Vacaciones"

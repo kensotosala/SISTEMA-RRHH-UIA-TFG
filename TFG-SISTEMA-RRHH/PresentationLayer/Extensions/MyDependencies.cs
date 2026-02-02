@@ -38,8 +38,10 @@ namespace PresentationLayer.Extensions
 
             // Usuarios
 
-            services.AddScoped<DataAccessLayer.Interfaces.IUsuarioRepository,
-                           DataAccessLayer.Repositories.UsuarioRepository>();
+            services.AddScoped<DataAccessLayer.Interfaces.IUsuariosRepository,
+                           DataAccessLayer.Repositories.UsuariosRepository>();
+            services.AddScoped<BusinessLogicLayer.Interfaces.IUsuariosManager,
+                                       BusinessLogicLayer.Managers.UsuariosManager>();
 
             // Roles
 
@@ -93,6 +95,13 @@ namespace PresentationLayer.Extensions
                                        BusinessLogicLayer.Services.EmailService>();
 
             services.AddScoped<NotificacionesManager>();
+
+            // Nomina
+            services.AddScoped<DataAccessLayer.Interfaces.INominaRepository,
+                           DataAccessLayer.Repositories.NominaRepository>();
+
+            services.AddScoped<BusinessLogicLayer.Interfaces.INominaManager,
+                                       BusinessLogicLayer.Managers.NominaManager>();
 
             return services;
         }

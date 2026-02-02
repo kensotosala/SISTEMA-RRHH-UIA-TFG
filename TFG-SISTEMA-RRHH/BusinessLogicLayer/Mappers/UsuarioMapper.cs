@@ -6,7 +6,7 @@ namespace BusinessLogicLayer.Mappers
 {
     public static class UsuarioMapper
     {
-        public static Usuarios ToEntity(CrearUsuarioDTO dto, int empleadoId, IPasswordHasher hasher)
+        public static Usuarios ToEntity(CrearEmpleadoYUsuarioDTO dto, int empleadoId, IPasswordHasher hasher)
         {
             return new Usuarios
             {

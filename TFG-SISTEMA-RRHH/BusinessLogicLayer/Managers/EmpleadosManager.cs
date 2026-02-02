@@ -9,7 +9,7 @@ namespace BusinessLogicLayer.Managers
     public class EmpleadosManager : IEmpleadosManager
     {
         private readonly IEmpleadosRepository _repoEmpleados;
-        private readonly IUsuarioRepository _repoUsuarios;
+        private readonly IUsuariosRepository _repoUsuarios;
         private readonly IPuestosRepository _repoPuestos;
         private readonly IDepartamentosRepository _repoDepartamentos;
         private readonly IRolesRepository _repoRoles;
@@ -17,7 +17,7 @@ namespace BusinessLogicLayer.Managers
 
         public EmpleadosManager(
             IEmpleadosRepository repoEmpleados,
-            IUsuarioRepository repoUsuarios,
+            IUsuariosRepository repoUsuarios,
             IPuestosRepository repoPuestos,
             IDepartamentosRepository repoDepartamentos,
             IRolesRepository repoRoles,
@@ -175,7 +175,7 @@ namespace BusinessLogicLayer.Managers
             var empleado = await _repoEmpleados.GetByIdAsync(id);
             if (empleado == null) return null;
 
-            var usuario = await _repoUsuarios.GetByEmpleadoIdAsync(empleado.IdEmpleado);
+            var usuario = await _repoUsuarios.GetByIdAsync(empleado.IdEmpleado);
 
             return new DetalleEmpleadoDTO
             {
@@ -302,7 +302,7 @@ namespace BusinessLogicLayer.Managers
             }
 
             // Inactivar también el usuario asociado
-            var usuario = await _repoUsuarios.GetByEmpleadoIdAsync(id);
+            var usuario = await _repoUsuarios.GetByIdAsync(id);
 
             if (usuario != null)
             {
@@ -417,7 +417,7 @@ namespace BusinessLogicLayer.Managers
             await _repoEmpleados.UpdateAsync(empleado);
 
             // Reactivar el usuario asociado
-            var usuario = await _repoUsuarios.GetByEmpleadoIdAsync(id);
+            var usuario = await _repoUsuarios.GetByIdAsync(id);
 
             if (usuario != null)
             {

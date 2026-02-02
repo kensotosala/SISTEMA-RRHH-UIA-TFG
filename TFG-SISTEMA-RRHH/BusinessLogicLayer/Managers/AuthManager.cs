@@ -1,5 +1,6 @@
 ﻿using BusinessLogicLayer.DTOs;
 using BusinessLogicLayer.Interfaces;
+using BusinessLogicLayer.Services;
 using DataAccessLayer.Entities;
 using DataAccessLayer.Interfaces;
 using Microsoft.Extensions.Configuration;
@@ -10,99 +11,238 @@ using System.Text;
 
 namespace BusinessLogicLayer.Managers
 {
+    /// <summary>
+    /// Manager de autenticación con JWT incluyendo roles completos
+    /// </summary>
     public class AuthManager : IAuthManager
     {
-        private readonly IUsuarioRepository _repo;
+        private readonly IUsuariosRepository _repo;
         private readonly IPasswordHasher _passwordHasher;
         private readonly IConfiguration _config;
 
-        public AuthManager(IUsuarioRepository repo, IPasswordHasher passwordHasher, IConfiguration config)
+        public AuthManager(IUsuariosRepository repo, IPasswordHasher passwordHasher, IConfiguration config)
         {
-            _repo = repo;
-            _passwordHasher = passwordHasher;
-            _config = config;
+            _repo = repo ?? throw new ArgumentNullException(nameof(repo));
+            _passwordHasher = passwordHasher ?? throw new ArgumentNullException(nameof(passwordHasher));
+            _config = config ?? throw new ArgumentNullException(nameof(config));
         }
 
+        /// <summary>
+        /// Login de usuario con migración automática de hash
+        /// </summary>
         public async Task<AuthResponseDTO?> LoginAsync(LoginDTO dto)
         {
-            var user = await _repo.GetByUsernameWithDetailsAsync(dto.Username);
+            if (dto == null)
+                throw new ArgumentNullException(nameof(dto));
 
-            if (user == null)
-                return null;
+            try
+            {
+                // Obtener usuario con todos sus detalles INCLUYENDO ROLES
+                var user = await _repo.GetByUsernameWithDetailsAsync(dto.Username);
 
-            if (user.Estado != "ACTIVO")
-                return null;
+                if (user == null)
+                    return null;
 
-            if (!_passwordHasher.Verify(dto.Password, user.PasswordHash))
-                return null;
+                // Verificar que el usuario esté activo
+                if (user.Estado != "ACTIVO")
+                    throw new InvalidOperationException("El usuario está inactivo. Contacte al administrador.");
 
-            user.UltimoAcceso = DateTime.UtcNow;
-            await _repo.UpdateAsync(user);
+                // Verificar que el empleado asociado esté activo
+                if (user.Empleado?.Estado != "ACTIVO")
+                    throw new InvalidOperationException("Su cuenta de empleado está inactiva. Contacte al administrador.");
 
-            return GenerateJwt(user);
+                // Verificar contraseña (funciona con SHA256 y BCrypt)
+                if (!_passwordHasher.Verify(dto.Password, user.PasswordHash))
+                    return null;
+
+                // Actualizar último acceso
+                user.UltimoAcceso = DateTime.UtcNow;
+                await _repo.UpdateAsync(user);
+
+                // Generar JWT y retornar respuesta completa
+                return GenerateJwt(user);
+            }
+            catch (InvalidOperationException)
+            {
+                throw; // Re-lanzar excepciones de validación de estado
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error durante el login: {ex.Message}", ex);
+            }
         }
 
+        /// <summary>
+        /// Registra un nuevo usuario (siempre usa BCrypt)
+        /// </summary>
         public async Task<Usuarios?> RegistrarNuevoUsuario(Usuarios usuario)
         {
-            var exists = await _repo.ExistsByUsernameAsync(usuario.NombreUsuario);
-            if (exists)
-                return null;
+            if (usuario == null)
+                throw new ArgumentNullException(nameof(usuario));
 
-            usuario.PasswordHash = _passwordHasher.Hash(usuario.PasswordHash);
-            usuario.Estado = "Activo";
-            usuario.FechaCreacion = DateTime.UtcNow;
+            try
+            {
+                // Verificar si el nombre de usuario ya existe
+                var exists = await _repo.ExistsByUsernameAsync(usuario.NombreUsuario);
+                if (exists)
+                    return null;
 
-            return await _repo.CreateAsync(usuario);
+                // Hash de la contraseña con BCrypt
+                usuario.PasswordHash = _passwordHasher.Hash(usuario.PasswordHash);
+                usuario.Estado = "ACTIVO";
+                usuario.FechaCreacion = DateTime.UtcNow;
+
+                return await _repo.CreateAsync(usuario);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error al registrar usuario: {ex.Message}", ex);
+            }
         }
 
-        // BusinessLogicLayer/Managers/AuthManager.cs
+        /// <summary>
+        /// Valida las credenciales de un usuario
+        /// </summary>
         public async Task<Usuarios?> ValidarCredencialesAsync(string username, string password)
         {
-            var usuario = await _repo.GetByUsernameWithDetailsAsync(username);
+            if (string.IsNullOrWhiteSpace(username))
+                throw new ArgumentException("El nombre de usuario no puede estar vacío", nameof(username));
 
-            if (usuario == null)
-                return null;
+            if (string.IsNullOrWhiteSpace(password))
+                throw new ArgumentException("La contraseña no puede estar vacía", nameof(password));
 
-            // Verificar que el usuario esté activo
-            if (usuario.Estado != "ACTIVO")
+            try
             {
-                throw new InvalidOperationException(
-                    "El usuario está inactivo. Contacte al administrador."
-                );
-            }
+                var usuario = await _repo.GetByUsernameWithDetailsAsync(username);
 
-            // Verificar que el empleado asociado esté activo
-            if (usuario.Empleado?.Estado != "ACTIVO")
+                if (usuario == null)
+                    return null;
+
+                // Verificar que el usuario esté activo
+                if (usuario.Estado != "ACTIVO")
+                {
+                    throw new InvalidOperationException(
+                        "El usuario está inactivo. Contacte al administrador."
+                    );
+                }
+
+                // Verificar que el empleado asociado esté activo
+                if (usuario.Empleado?.Estado != "ACTIVO")
+                {
+                    throw new InvalidOperationException(
+                        "Su cuenta de empleado está inactiva. Contacte al administrador."
+                    );
+                }
+
+                // Verificar contraseña
+                if (!_passwordHasher.Verify(password, usuario.PasswordHash))
+                    return null;
+
+                return usuario;
+            }
+            catch (InvalidOperationException)
             {
-                throw new InvalidOperationException(
-                    "Su cuenta de empleado está inactiva. Contacte al administrador."
-                );
+                throw;
             }
-
-            if (!_passwordHasher.Verify(password, usuario.PasswordHash))
-                return null;
-
-            return usuario;
+            catch (Exception ex)
+            {
+                throw new Exception($"Error al validar credenciales: {ex.Message}", ex);
+            }
         }
 
+        /// <summary>
+        /// Cambia la contraseña de un usuario
+        /// </summary>
+        public async Task<bool> CambiarPasswordAsync(int userId, CambiarPasswordDTO dto)
+        {
+            if (dto == null)
+                throw new ArgumentNullException(nameof(dto));
+
+            try
+            {
+                var usuario = await _repo.GetByIdAsync(userId);
+                if (usuario == null)
+                    return false;
+
+                // Verificar contraseña actual
+                if (!_passwordHasher.Verify(dto.PasswordActual, usuario.PasswordHash))
+                    return false;
+
+                // Establecer nueva contraseña (siempre con BCrypt)
+                usuario.PasswordHash = _passwordHasher.Hash(dto.NuevaPassword);
+                usuario.FechaModificacion = DateTime.UtcNow;
+
+                return await _repo.UpdateAsync(usuario);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error al cambiar contraseña: {ex.Message}", ex);
+            }
+        }
+
+        /// <summary>
+        /// Valida un token JWT
+        /// </summary>
+        public async Task<bool> ValidarTokenAsync(string token)
+        {
+            if (string.IsNullOrWhiteSpace(token))
+                return false;
+
+            try
+            {
+                var jwtSettings = _config.GetSection("Jwt");
+                var key = new SymmetricSecurityKey(
+                    Encoding.UTF8.GetBytes(jwtSettings["Key"]!)
+                );
+
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var validationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = jwtSettings["Issuer"],
+                    ValidAudience = jwtSettings["Audience"],
+                    IssuerSigningKey = key
+                };
+
+                tokenHandler.ValidateToken(token, validationParameters, out _);
+                return await Task.FromResult(true);
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        #region Métodos Privados
+
+        /// <summary>
+        /// Genera un JWT con toda la información del usuario INCLUYENDO ROLES
+        /// </summary>
         private AuthResponseDTO GenerateJwt(Usuarios user)
         {
             var jwtSettings = _config.GetSection("Jwt");
 
+            // Claims básicos del usuario
             var claims = new List<Claim>
-    {
-        new Claim(ClaimTypes.NameIdentifier, user.IdUsuario.ToString()),
-        new Claim(ClaimTypes.Name, user.NombreUsuario),
-        new Claim("UserId", user.IdUsuario.ToString()),
-        new Claim("Username", user.NombreUsuario)
-    };
+            {
+                new Claim(ClaimTypes.NameIdentifier, user.IdUsuario.ToString()),
+                new Claim(ClaimTypes.Name, user.NombreUsuario),
+                new Claim("UserId", user.IdUsuario.ToString()),
+                new Claim("Username", user.NombreUsuario)
+            };
 
-            // Obtener información del empleado asociado al usuario
+            // Información del empleado
+            UsuarioInfoDTO? usuarioInfo = null;
             if (user.Empleado != null)
             {
+                var nombreCompleto = $"{user.Empleado.Nombre} {user.Empleado.PrimerApellido} {user.Empleado.SegundoApellido}".Trim();
+
                 claims.Add(new Claim("EmployeeId", user.Empleado.IdEmpleado.ToString()));
                 claims.Add(new Claim("EmployeeCode", user.Empleado.CodigoEmpleado ?? ""));
-                claims.Add(new Claim("FullName", $"{user.Empleado.Nombre} {user.Empleado.PrimerApellido} {user.Empleado.SegundoApellido}".Trim()));
+                claims.Add(new Claim("FullName", nombreCompleto));
                 claims.Add(new Claim("Email", user.Empleado.Email ?? ""));
                 claims.Add(new Claim("DepartmentId", user.Empleado.DepartamentoId.ToString()));
                 claims.Add(new Claim("PositionId", user.Empleado.PuestoId.ToString()));
@@ -112,35 +252,74 @@ namespace BusinessLogicLayer.Managers
                 {
                     claims.Add(new Claim("ManagerId", user.Empleado.JefeInmediatoId.Value.ToString()));
                 }
+
+                usuarioInfo = new UsuarioInfoDTO
+                {
+                    IdUsuario = user.IdUsuario,
+                    NombreUsuario = user.NombreUsuario,
+                    NombreCompleto = nombreCompleto,
+                    Email = user.Empleado.Email,
+                    EmpleadoId = user.Empleado.IdEmpleado,
+                    CodigoEmpleado = user.Empleado.CodigoEmpleado,
+                    DepartamentoId = user.Empleado.DepartamentoId,
+                    NombreDepartamento = user.Empleado.Departamento?.NombreDepartamento,
+                    PuestoId = user.Empleado.PuestoId,
+                    NombrePuesto = user.Empleado.Puesto?.NombrePuesto
+                };
             }
 
-            // Agregar roles
-            foreach (var role in user.UsuariosRoles)
+            // ============================================
+            // AGREGAR ROLES - ESTA ES LA PARTE IMPORTANTE
+            // ============================================
+            var rolesList = new List<string>();
+
+            // Verificar que UsuariosRoles no sea null y tenga elementos
+            if (user.UsuariosRoles != null && user.UsuariosRoles.Any())
             {
-                claims.Add(new Claim(ClaimTypes.Role, role.Rol.Nombre));
-                // También puedes agregar el ID del rol como claim personalizado
-                claims.Add(new Claim("RoleId", role.RolId.ToString()));
+                foreach (var usuarioRol in user.UsuariosRoles)
+                {
+                    // Verificar que el rol no sea null
+                    if (usuarioRol?.Rol != null && !string.IsNullOrWhiteSpace(usuarioRol.Rol.Nombre))
+                    {
+                        // Agregar como ClaimTypes.Role (estándar de .NET)
+                        claims.Add(new Claim(ClaimTypes.Role, usuarioRol.Rol.Nombre));
+
+                        // Agregar ID del rol también
+                        claims.Add(new Claim("RoleId", usuarioRol.RolId.ToString()));
+
+                        // Agregar a la lista para el claim "Roles"
+                        rolesList.Add(usuarioRol.Rol.Nombre);
+                    }
+                }
             }
 
-            // Otra opción: Agregar todos los roles como una lista separada por comas
-            var rolesList = user.UsuariosRoles.Select(r => r.Rol.Nombre).ToList();
+            // Agregar todos los roles como una lista separada por comas
             if (rolesList.Any())
             {
                 claims.Add(new Claim("Roles", string.Join(",", rolesList)));
             }
 
+            // Agregar roles al UsuarioInfo
+            if (usuarioInfo != null)
+            {
+                usuarioInfo.Roles = rolesList;
+            }
+
+            // Crear clave de seguridad
             var key = new SymmetricSecurityKey(
                 Encoding.UTF8.GetBytes(jwtSettings["Key"]!)
             );
 
             var creds = new SigningCredentials(
-                key, SecurityAlgorithms.HmacSha256
+                key,
+                SecurityAlgorithms.HmacSha256
             );
 
             var expiration = DateTime.UtcNow.AddMinutes(
                 double.Parse(jwtSettings["ExpireMinutes"]!)
             );
 
+            // Crear token
             var token = new JwtSecurityToken(
                 issuer: jwtSettings["Issuer"],
                 audience: jwtSettings["Audience"],
@@ -153,7 +332,10 @@ namespace BusinessLogicLayer.Managers
             {
                 Token = new JwtSecurityTokenHandler().WriteToken(token),
                 Expiration = expiration,
+                UsuarioInfo = usuarioInfo
             };
         }
+
+        #endregion
     }
 }
