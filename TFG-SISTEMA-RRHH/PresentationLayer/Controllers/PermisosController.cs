@@ -64,5 +64,17 @@ namespace PresentationLayer.Controllers
 
             return Ok(permiso);
         }
+
+        [HttpPut("{id}/aprobar-rechazar", Name = "AprobarRechazarPermiso")]
+        public async Task<IActionResult> AprobarRechazarPermiso(int id, [FromBody] AprobarRechazarPermisoDTO dto)
+        {
+            var existePermiso = await _permisosManager.ListarPermisoByIdAsync(id);
+            if (existePermiso == null)
+                return NotFound();
+
+            await _permisosManager.AprobarRechazarPermisoAsync(id, dto);
+
+            return NoContent();
+        }
     }
 }

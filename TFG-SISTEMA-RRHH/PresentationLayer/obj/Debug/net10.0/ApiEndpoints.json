@@ -956,6 +956,181 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "PresentationLayer.Controllers.AguinaldoController",
+    "Method": "ObtenerTodos",
+    "RelativePath": "api/v1/Aguinaldo",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PresentationLayer.Controllers.AguinaldoController",
+    "Method": "ObtenerPorId",
+    "RelativePath": "api/v1/Aguinaldo/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PresentationLayer.Controllers.AguinaldoController",
+    "Method": "AnularAguinaldo",
+    "RelativePath": "api/v1/Aguinaldo/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PresentationLayer.Controllers.AguinaldoController",
+    "Method": "PagarAguinaldo",
+    "RelativePath": "api/v1/Aguinaldo/{id}/pagar",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "dto",
+        "Type": "BusinessLogicLayer.DTOs.PagarAguinaldoDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PresentationLayer.Controllers.AguinaldoController",
+    "Method": "ObtenerPorAnio",
+    "RelativePath": "api/v1/Aguinaldo/anio/{anio}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "anio",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PresentationLayer.Controllers.AguinaldoController",
+    "Method": "CalcularAguinaldo",
+    "RelativePath": "api/v1/Aguinaldo/calcular",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "BusinessLogicLayer.DTOs.CalcularAguinaldoDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PresentationLayer.Controllers.AguinaldoController",
+    "Method": "CalcularAguinaldoMasivo",
+    "RelativePath": "api/v1/Aguinaldo/calcular-masivo",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "BusinessLogicLayer.DTOs.CalcularAguinaldoMasivoDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PresentationLayer.Controllers.AguinaldoController",
+    "Method": "ObtenerPorEmpleado",
+    "RelativePath": "api/v1/Aguinaldo/empleado/{empleadoId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "empleadoId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PresentationLayer.Controllers.AguinaldoController",
+    "Method": "PagarAguinaldosMasivo",
+    "RelativePath": "api/v1/Aguinaldo/pagar-masivo",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "PresentationLayer.Controllers.PagarAguinaldosMasivoRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PresentationLayer.Controllers.AguinaldoController",
+    "Method": "RegistrarAguinaldos",
+    "RelativePath": "api/v1/Aguinaldo/registrar",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "PresentationLayer.Controllers.RegistrarAguinaldosRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PresentationLayer.Controllers.AguinaldoController",
+    "Method": "ObtenerResumen",
+    "RelativePath": "api/v1/Aguinaldo/resumen/{anio}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "anio",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "PresentationLayer.Controllers.IncapacidadController",
     "Method": "ListarIncapacidades",
     "RelativePath": "api/v1/Incapacidad",
@@ -1528,6 +1703,28 @@
       }
     ],
     "EndpointName": "ObtenerPermisoPorId"
+  },
+  {
+    "ContainingType": "PresentationLayer.Controllers.PermisosController",
+    "Method": "AprobarRechazarPermiso",
+    "RelativePath": "api/v1/Permisos/{id}/aprobar-rechazar",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "dto",
+        "Type": "BusinessLogicLayer.DTOs.AprobarRechazarPermisoDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [],
+    "EndpointName": "AprobarRechazarPermiso"
   },
   {
     "ContainingType": "PresentationLayer.Controllers.VacacionesController",

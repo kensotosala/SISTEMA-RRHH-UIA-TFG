@@ -60,4 +60,11 @@ namespace BusinessLogicLayer.DTOs
         public int? JefeApruebaId { get; set; }
         public string Motivo { get; set; } = null!;
     }
+
+    public class AprobarRechazarPermisoDTO
+    {
+        public int? JefeApruebaId { get; set; }
+        public string? EstadoSolicitud { get; set; }
+        public string? ComentariosRechazo { get; set; }
+    }
 }

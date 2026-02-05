@@ -76,7 +76,7 @@ public partial class SistemaRhContext : DbContext
             entity.Property(e => e.EmpleadoId).HasColumnName("empleado_id");
             entity.Property(e => e.Estado)
                 .HasDefaultValueSql("'CALCULADO'")
-                .HasColumnType("enum('CALCULADO','PAGADO')")
+                .HasColumnType("enum('PENDIENTE','CALCULADO','PAGADO')")
                 .HasColumnName("estado");
             entity.Property(e => e.FechaCalculo)
                 .HasColumnType("datetime")

@@ -13,5 +13,6 @@ namespace BusinessLogicLayer.Interfaces
         Task<bool> UpdatePuestoAsync(ActualizarPuestoDTO dto);
 
         Task<bool> DeletePuestoAsync(int id);
+
     }
 }

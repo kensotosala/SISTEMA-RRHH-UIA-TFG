@@ -103,6 +103,13 @@ namespace PresentationLayer.Extensions
             services.AddScoped<BusinessLogicLayer.Interfaces.INominaManager,
                                        BusinessLogicLayer.Managers.NominaManager>();
 
+            // Aguinaldo
+            services.AddScoped<DataAccessLayer.Interfaces.IAguinaldoRepository,
+                           DataAccessLayer.Repositories.AguinaldoRepository>();
+
+            services.AddScoped<BusinessLogicLayer.Interfaces.IAguinaldoManager,
+                                       BusinessLogicLayer.Managers.AguinaldoManager>();
+
             return services;
         }
     }

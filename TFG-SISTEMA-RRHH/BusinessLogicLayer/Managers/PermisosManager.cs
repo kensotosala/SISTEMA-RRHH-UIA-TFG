@@ -184,5 +184,72 @@ namespace BusinessLogicLayer.Managers
 
             await _notificacionesManager.NotificarSolicitudCanceladaAsync(permiso.EmpleadoId, "Permiso", detalles);
         }
+
+        public async Task<bool> AprobarRechazarPermisoAsync(int id, AprobarRechazarPermisoDTO dto)
+        {
+            var permiso = await _repo.GetPermisoByIdAsync(id);
+            if (permiso == null)
+                throw new BusinessException("Permiso no encontrado", "PERMISO_NO_ENCONTRADO");
+
+            // Validate current state
+            if (permiso.EstadoSolicitud != EstadoSolicitud.PENDIENTE.ToString())
+                throw new BusinessException("Solo se pueden aprobar o rechazar permisos pendientes", "ESTADO_INVALIDO");
+
+            // Validate new state
+            if (dto.EstadoSolicitud != EstadoSolicitud.APROBADA.ToString() &&
+                dto.EstadoSolicitud != EstadoSolicitud.RECHAZADA.ToString())
+                throw new BusinessException("Estado inválido. Use APROBADA o RECHAZADA", "ESTADO_INVALIDO");
+
+            // Validate rejection comments
+            if (dto.EstadoSolicitud == EstadoSolicitud.RECHAZADA.ToString() &&
+                string.IsNullOrWhiteSpace(dto.ComentariosRechazo))
+                throw new BusinessException("Los comentarios son requeridos al rechazar", "COMENTARIOS_REQUERIDOS");
+
+            // Validate approver
+            if (!dto.JefeApruebaId.HasValue)
+                throw new BusinessException("El ID del jefe aprobador es requerido", "JEFE_REQUERIDO");
+
+            // Update permission
+            permiso.JefeApruebaId = dto.JefeApruebaId;
+            permiso.EstadoSolicitud = dto.EstadoSolicitud;
+            permiso.FechaAprobacion = DateTime.Now;
+            permiso.FechaModificacion = DateTime.Now;
+            permiso.ComentariosRechazo = dto.ComentariosRechazo;
+
+            var result = await _repo.ActualizarPermisoAsync(permiso);
+
+            // Send appropriate notification
+            if (dto.EstadoSolicitud == EstadoSolicitud.APROBADA.ToString())
+            {
+                var detallesAprobacion = $@"
+            <p><strong>Fecha del Permiso:</strong> {permiso.FechaPermiso:dd/MM/yyyy}</p>
+            <p><strong>Motivo:</strong> {permiso.Motivo}</p>
+            <p><strong>Fecha de Aprobación:</strong> {permiso.FechaAprobacion:dd/MM/yyyy HH:mm}</p>
+        ";
+
+                await _notificacionesManager.NotificarSolicitudAprobadaAsync(
+                    permiso.EmpleadoId,
+                    "Permiso",
+                    detallesAprobacion
+                );
+            }
+            else if (dto.EstadoSolicitud == EstadoSolicitud.RECHAZADA.ToString())
+            {
+                var detallesRechazo = $@"
+            <p><strong>Fecha del Permiso:</strong> {permiso.FechaPermiso:dd/MM/yyyy}</p>
+            <p><strong>Motivo:</strong> {permiso.Motivo}</p>
+            <p><strong>Comentarios:</strong> {permiso.ComentariosRechazo}</p>
+            <p><strong>Fecha de Rechazo:</strong> {permiso.FechaAprobacion:dd/MM/yyyy HH:mm}</p>
+        ";
+
+                await _notificacionesManager.NotificarSolicitudCanceladaAsync(
+                    permiso.EmpleadoId,
+                    "Permiso",
+                    detallesRechazo
+                );
+            }
+
+            return result;
+        }
     }
 }

@@ -5,6 +5,297 @@
     "version": "1.0"
   },
   "paths": {
+    "/api/v1/Aguinaldo": {
+      "get": {
+        "tags": [
+          "Aguinaldo"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/Aguinaldo/{id}": {
+      "get": {
+        "tags": [
+          "Aguinaldo"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Aguinaldo"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/Aguinaldo/anio/{anio}": {
+      "get": {
+        "tags": [
+          "Aguinaldo"
+        ],
+        "parameters": [
+          {
+            "name": "anio",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/Aguinaldo/empleado/{empleadoId}": {
+      "get": {
+        "tags": [
+          "Aguinaldo"
+        ],
+        "parameters": [
+          {
+            "name": "empleadoId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/Aguinaldo/resumen/{anio}": {
+      "get": {
+        "tags": [
+          "Aguinaldo"
+        ],
+        "parameters": [
+          {
+            "name": "anio",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/Aguinaldo/calcular": {
+      "post": {
+        "tags": [
+          "Aguinaldo"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CalcularAguinaldoDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CalcularAguinaldoDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CalcularAguinaldoDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/Aguinaldo/calcular-masivo": {
+      "post": {
+        "tags": [
+          "Aguinaldo"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CalcularAguinaldoMasivoDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CalcularAguinaldoMasivoDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CalcularAguinaldoMasivoDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/Aguinaldo/registrar": {
+      "post": {
+        "tags": [
+          "Aguinaldo"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegistrarAguinaldosRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegistrarAguinaldosRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegistrarAguinaldosRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/Aguinaldo/{id}/pagar": {
+      "put": {
+        "tags": [
+          "Aguinaldo"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PagarAguinaldoDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PagarAguinaldoDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PagarAguinaldoDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/Aguinaldo/pagar-masivo": {
+      "post": {
+        "tags": [
+          "Aguinaldo"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PagarAguinaldosMasivoRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PagarAguinaldosMasivoRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PagarAguinaldosMasivoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Asistencias": {
       "get": {
         "tags": [
@@ -2266,6 +2557,49 @@
         }
       }
     },
+    "/api/v1/Permisos/{id}/aprobar-rechazar": {
+      "put": {
+        "tags": [
+          "Permisos"
+        ],
+        "operationId": "AprobarRechazarPermiso",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AprobarRechazarPermisoDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AprobarRechazarPermisoDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AprobarRechazarPermisoDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Puestos": {
       "get": {
         "tags": [
@@ -3852,6 +4186,25 @@
         },
         "additionalProperties": false
       },
+      "AprobarRechazarPermisoDTO": {
+        "type": "object",
+        "properties": {
+          "jefeApruebaId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "estadoSolicitud": {
+            "type": "string",
+            "nullable": true
+          },
+          "comentariosRechazo": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "AsistenciaDTO": {
         "type": "object",
         "properties": {
@@ -3915,6 +4268,45 @@
             "items": {
               "type": "string"
             },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CalcularAguinaldoDTO": {
+        "type": "object",
+        "properties": {
+          "empleadoId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "anio": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "fechaCorte": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CalcularAguinaldoMasivoDTO": {
+        "type": "object",
+        "properties": {
+          "anio": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "fechaCorte": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "departamentoId": {
+            "type": "integer",
+            "format": "int32",
             "nullable": true
           }
         },
@@ -5146,6 +5538,38 @@
         },
         "additionalProperties": false
       },
+      "PagarAguinaldoDTO": {
+        "type": "object",
+        "properties": {
+          "idAguinaldo": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "fechaPago": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PagarAguinaldosMasivoRequest": {
+        "type": "object",
+        "properties": {
+          "idsAguinaldos": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "nullable": true
+          },
+          "fechaPago": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
       "PlanillaCCSSDTO": {
         "type": "object",
         "properties": {
@@ -5268,6 +5692,23 @@
             "maxLength": 1000,
             "minLength": 1,
             "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "RegistrarAguinaldosRequest": {
+        "type": "object",
+        "properties": {
+          "anio": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "calculos": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResultadoCalculoAguinaldoDTO"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -5423,6 +5864,48 @@
           "totalHorasSolicitadas": {
             "type": "string",
             "format": "date-span"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ResultadoCalculoAguinaldoDTO": {
+        "type": "object",
+        "properties": {
+          "empleadoId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nombreEmpleado": {
+            "type": "string",
+            "nullable": true
+          },
+          "fechaContratacion": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "fechaInicio": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "fechaFin": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "diasTrabajados": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "salarioPromedio": {
+            "type": "number",
+            "format": "double"
+          },
+          "montoAguinaldo": {
+            "type": "number",
+            "format": "double"
+          },
+          "detalle": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -5664,6 +6147,9 @@
     }
   },
   "tags": [
+    {
+      "name": "Aguinaldo"
+    },
     {
       "name": "Asistencias"
     },
