@@ -60,9 +60,9 @@ namespace BusinessLogicLayer.Managers
                     $"El Puesto cuyo ID es '{dto.PuestoId}' no se encuentra",
                     code: "PUESTO_NO_EXISTE");
 
-            if (!await _repoDepartamentos.ExistsAsync(dto.PuestoId))
+            if (!await _repoDepartamentos.ExistsAsync(dto.DepartamentoId))
                 throw new BusinessException(
-                    $"El Departamento cuyo ID es '{dto.PuestoId}' no se encuentra.",
+                    $"El Departamento cuyo ID es '{dto.DepartamentoId}' no se encuentra.",
                     code: "DEPARTAMENTO_NO_EXISTE");
 
             if (dto.SalarioBase < 0)
@@ -270,18 +270,14 @@ namespace BusinessLogicLayer.Managers
             return resultado;
         }
 
-        // BusinessLogicLayer/Managers/EmpleadosManager.cs
         public async Task DeleteAsync(int id)
         {
-            // Verificar que el empleado existe
             var empleado = await _repoEmpleados.GetByIdAsync(id);
 
             if (empleado == null)
             {
                 throw new KeyNotFoundException($"Empleado con ID {id} no encontrado.");
             }
-
-            // Verificar si tiene subordinados ACTIVOS
             if (await _repoEmpleados.TieneSubordinadosAsync(id))
             {
                 throw new InvalidOperationException(
@@ -290,7 +286,6 @@ namespace BusinessLogicLayer.Managers
                 );
             }
 
-            // Inactivar el empleado - Soft Delete
             empleado.Estado = "INACTIVO";
             empleado.FechaModificacion = DateTime.UtcNow;
 
@@ -301,7 +296,6 @@ namespace BusinessLogicLayer.Managers
                 throw new InvalidOperationException("No se pudo inactivar el empleado.");
             }
 
-            // Inactivar también el usuario asociado
             var usuario = await _repoUsuarios.GetByIdAsync(id);
 
             if (usuario != null)
@@ -328,12 +322,9 @@ namespace BusinessLogicLayer.Managers
             if (id <= 0)
                 throw new ArgumentException("El ID debe ser mayor a 0.", nameof(id));
 
-            // ===== OBTENER EMPLEADO =====
             var empleado = await _repoEmpleados.GetByIdAsync(id);
             if (empleado == null)
                 throw new KeyNotFoundException($"Empleado con ID {id} no encontrado.");
-
-            // ===== ACTUALIZAR EMPLEADO (SOLO CAMPOS INFORMADOS) =====
 
             if (dto.CodigoEmpleado != null)
                 empleado.CodigoEmpleado = dto.CodigoEmpleado;
@@ -377,8 +368,6 @@ namespace BusinessLogicLayer.Managers
             empleado.FechaModificacion = DateTime.UtcNow;
 
             await _repoEmpleados.UpdateAsync(empleado);
-
-            // ===== ACTUALIZAR ROL DE USUARIO (SI APLICA) =====
 
             if (dto.RolId.HasValue && dto.RolId.Value > 0 && empleado.Usuarios != null)
             {

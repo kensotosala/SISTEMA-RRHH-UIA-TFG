@@ -50,7 +50,8 @@ namespace PresentationLayer.Controllers
             }
             catch (InvalidOperationException ex)
             {
-                return BadRequest(new { mensaje = ex.Message });
+                // Por ejemplo: "El usuario está inactivo"
+                return Unauthorized(new { mensaje = ex.Message }); // Cambiar de BadRequest a Unauthorized
             }
             catch (Exception ex)
             {

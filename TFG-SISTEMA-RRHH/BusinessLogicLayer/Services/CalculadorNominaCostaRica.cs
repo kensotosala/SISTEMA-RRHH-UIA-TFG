@@ -3,11 +3,10 @@ using DataAccessLayer.Entities;
 
 namespace BusinessLogicLayer.Services
 {
-
     public class CalculadorNominaCostaRica
     {
         // CONSTANTES CCSS 2026
-        private const decimal CCSS_TOTAL_EMPLEADO = 0.1667m;    // 16.67%
+        private const decimal CCSS_TOTAL_EMPLEADO = 0.1667m;
 
         private const decimal CCSS_SEM_EMPLEADO = 0.1050m;
         private const decimal CCSS_IVM_EMPLEADO = 0.0417m;
@@ -46,10 +45,8 @@ namespace BusinessLogicLayer.Services
                 Departamento = empleado.Departamento?.NombreDepartamento ?? ""
             };
 
-            // 1. SALARIO BASE QUINCENAL
             detalle.SalarioBaseQuincenal = empleado.SalarioBase / 2;
 
-            // 2. HORAS EXTRA
             var (totalHorasExtra, diurnas, nocturnas, feriados) = CalcularHorasExtra(
                 empleado.SalarioBase, horasExtras, quincena, mes, anio);
 
@@ -58,34 +55,26 @@ namespace BusinessLogicLayer.Services
             detalle.HorasExtraFeriados = feriados;
             detalle.TotalHorasExtra = totalHorasExtra;
 
-            // 3. BONIFICACIONES
             detalle.Bonificaciones = 0;
 
-            // 4. TOTAL BRUTO
             detalle.TotalBruto = detalle.SalarioBaseQuincenal + detalle.TotalHorasExtra + detalle.Bonificaciones;
 
-            // 5. AJUSTES POR AUSENCIAS
             detalle.AjustesAusencias = CalcularAjustesAusencias(
                 empleado.SalarioBase, quincena, mes, anio, incapacidades, permisos);
 
-            // Ajustar total bruto
             detalle.TotalBruto -= detalle.AjustesAusencias.TotalAjustes;
 
-            // 6. DEDUCCIONES CCSS
             detalle.DeduccionesCCSS = CalcularDeduccionesCCSS(detalle.TotalBruto);
             detalle.TotalCCSS = detalle.DeduccionesCCSS.Total;
 
-            // 7. IMPUESTO SOBRE LA RENTA
             var baseImponible = detalle.TotalBruto - detalle.TotalCCSS;
             detalle.ImpuestoRenta = CalcularImpuestoRenta(baseImponible);
 
-            // 8. OTRAS DEDUCCIONES
             detalle.PensionAlimenticia = 0;
             detalle.Prestamos = 0;
             detalle.Embargos = 0;
             detalle.OtrasDeducciones = 0;
 
-            // 9. TOTAL DEDUCCIONES
             detalle.TotalDeducciones = detalle.TotalCCSS +
                                       detalle.ImpuestoRenta.ImpuestoQuincenal +
                                       detalle.PensionAlimenticia +
@@ -93,7 +82,6 @@ namespace BusinessLogicLayer.Services
                                       detalle.Embargos +
                                       detalle.OtrasDeducciones;
 
-            // 10. TOTAL NETO
             detalle.TotalNeto = detalle.TotalBruto - detalle.TotalDeducciones;
 
             return detalle;
@@ -201,7 +189,6 @@ namespace BusinessLogicLayer.Services
                 ? new DateTime(anio, mes, 15)
                 : new DateTime(anio, mes, DateTime.DaysInMonth(anio, mes));
 
-            // INCAPACIDADES
             if (incapacidades != null)
             {
                 foreach (var inc in incapacidades.Where(i => i.Estado == "ACTIVA"))
@@ -213,13 +200,11 @@ namespace BusinessLogicLayer.Services
                     {
                         var dias = (fin - inicio).Days + 1;
                         ajustes.DiasIncapacidad += dias;
-                        // Días 1-3: 50%, día 4+: 60% (paga CCSS)
                         ajustes.MontoIncapacidad += dias * salarioDiario * 0.5m;
                     }
                 }
             }
 
-            // PERMISOS SIN GOCE
             if (permisos != null)
             {
                 foreach (var per in permisos.Where(p =>

@@ -58,7 +58,6 @@ namespace BusinessLogicLayer.Managers
             if (registroCreado == null)
                 throw new BusinessException("Error al crear el permiso", "PERMISO_NO_CREADO");
 
-            // Detalles de la notificacion
             var detalles = $@"
                 <p><strong>Fecha del Permiso:</strong> {dto.FechaPermiso:dd/MM/yyyy}</p>
                 <p><strong>Motivo:</strong> {dto.Motivo}</p>
@@ -66,7 +65,6 @@ namespace BusinessLogicLayer.Managers
                 <p><strong>Estado:</strong> PENDIENTE</p>
             ";
 
-            // Notificar al empleado
             await _notificacionesManager.NotificarSolicitudCreadaAsync(
                 dto.EmpleadoId,
                 "Permiso",

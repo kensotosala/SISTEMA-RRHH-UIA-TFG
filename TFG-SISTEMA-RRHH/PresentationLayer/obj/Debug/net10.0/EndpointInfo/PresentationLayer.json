@@ -2768,6 +2768,18 @@
         }
       }
     },
+    "/api/v1/Rol": {
+      "get": {
+        "tags": [
+          "Rol"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Usuarios": {
       "get": {
         "tags": [
@@ -6176,6 +6188,9 @@
     },
     {
       "name": "Puestos"
+    },
+    {
+      "name": "Rol"
     },
     {
       "name": "Usuarios"

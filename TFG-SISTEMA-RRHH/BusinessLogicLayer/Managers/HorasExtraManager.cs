@@ -72,12 +72,10 @@ namespace BusinessLogicLayer.Managers
 
         public async Task<HoraExtraDTO> CreateAsync(CrearHoraExtraDTO dto)
         {
-            // 1. PARSEAR FECHAS DESDE STRING
             DateTime fechaInicio, fechaFin;
 
             try
             {
-                // Intentar parsear las fechas desde el formato ISO 8601
                 if (!DateTime.TryParse(dto.FechaInicio, CultureInfo.InvariantCulture,
                     DateTimeStyles.AdjustToUniversal | DateTimeStyles.AssumeUniversal, out fechaInicio))
                 {
@@ -94,7 +92,6 @@ namespace BusinessLogicLayer.Managers
                         "FORMATO_FECHA_INVALIDO");
                 }
 
-                // Asegurar que estén en UTC
                 fechaInicio = DateTime.SpecifyKind(fechaInicio, DateTimeKind.Utc);
                 fechaFin = DateTime.SpecifyKind(fechaFin, DateTimeKind.Utc);
             }
@@ -109,7 +106,6 @@ namespace BusinessLogicLayer.Managers
                     "ERROR_PARSEO_FECHAS");
             }
 
-            // 2. VALIDACIONES DE FECHAS
             if (fechaFin <= fechaInicio)
             {
                 throw new BusinessException(
@@ -127,7 +123,6 @@ namespace BusinessLogicLayer.Managers
                     "FECHA_FUERA_LIMITE");
             }
 
-            // 3. VALIDAR EXISTENCIA DEL EMPLEADO
             var empleado = await _empleadosRepo.GetByIdAsync(dto.EmpleadoId);
             if (empleado == null)
             {
@@ -136,7 +131,6 @@ namespace BusinessLogicLayer.Managers
                     "EMPLEADO_NO_ENCONTRADO");
             }
 
-            // 4. VALIDAR JEFE SI SE PROPORCIONÓ
             if (dto.JefeApruebaId.HasValue)
             {
                 var jefe = await _empleadosRepo.GetByIdAsync(dto.JefeApruebaId.Value);
@@ -148,7 +142,6 @@ namespace BusinessLogicLayer.Managers
                 }
             }
 
-            // 5. VALIDAR SOLAPAMIENTO
             var tieneSolapamiento = await _horasExtrasRepo.TieneSolapamientoAsync(
                 dto.EmpleadoId,
                 fechaInicio,
@@ -161,15 +154,12 @@ namespace BusinessLogicLayer.Managers
                     "SOLAPAMIENTO_FECHAS");
             }
 
-            // 6. CREAR LA ENTIDAD
-            // IMPORTANTE: tipo_hora_extra en BD tiene valores ENUM('PENDIENTE', 'APROBADA', 'RECHAZADA')
-            // No guardamos el valor del frontend, usamos PENDIENTE por defecto
             var horaExtra = new HorasExtras
             {
                 EmpleadoId = dto.EmpleadoId,
                 FechaInicio = fechaInicio,
                 FechaFin = fechaFin,
-                TipoHoraExtra = "PENDIENTE", // ← Siempre PENDIENTE según schema de BD
+                TipoHoraExtra = "PENDIENTE",
                 Motivo = dto.Motivo.Trim(),
                 EstadoSolicitud = "PENDIENTE",
                 JefeApruebaId = dto.JefeApruebaId,
@@ -179,7 +169,6 @@ namespace BusinessLogicLayer.Managers
 
             var creada = await _horasExtrasRepo.CreateAsync(horaExtra);
 
-            // 7. RECUPERAR CON RELACIONES CARGADAS
             var registroCreado = await _horasExtrasRepo.GetByIdAsync(creada.IdHoraExtra);
 
             if (registroCreado == null)

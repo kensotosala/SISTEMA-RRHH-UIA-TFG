@@ -32,14 +32,12 @@ namespace BusinessLogicLayer.Managers
 
         public async Task<List<DetalleNominaDTO>> GenerarNominaQuincenalAsync(GenerarNominaQuincenalDTO dto)
         {
-            // Validaciones
             if (dto.Quincena != 1 && dto.Quincena != 2)
                 throw new ArgumentException("La quincena debe ser 1 o 2");
 
             if (dto.Mes < 1 || dto.Mes > 12)
                 throw new ArgumentException("El mes debe estar entre 1 y 12");
 
-            // Obtener empleados
             List<Empleados> empleados;
             if (dto.EmpleadosIds != null && dto.EmpleadosIds.Any())
             {
@@ -61,15 +59,12 @@ namespace BusinessLogicLayer.Managers
 
             foreach (var empleado in empleados)
             {
-                // Verificar si ya existe nómina para este empleado en esta quincena
                 var existe = await _nominaRepo.ExisteNominaQuincenaAsync(
                     empleado.IdEmpleado, dto.Quincena, dto.Mes, dto.Anio);
 
                 if (existe)
-                    continue; // Skip si ya tiene nómina
+                    continue;
 
-                // Obtener datos para el cálculo usando tus métodos reales
-                // ✅ CORRECTO: GetByEmpleadoAsync (retorna IEnumerable)
                 var horasExtrasEnumerable = await _horasExtraRepo.GetByEmpleadoAsync(empleado.IdEmpleado);
                 var horasExtras = horasExtrasEnumerable.ToList();
 
@@ -81,7 +76,6 @@ namespace BusinessLogicLayer.Managers
                 var permisosEmpleado = permisos
                     .Where(p => p.EmpleadoId == empleado.IdEmpleado).ToList();
 
-                // Calcular nómina
                 var detalle = _calculador.CalcularNominaQuincenal(
                     empleado,
                     dto.Quincena,
@@ -92,7 +86,6 @@ namespace BusinessLogicLayer.Managers
                     permisosEmpleado
                 );
 
-                // Guardar en base de datos
                 var nomina = new Nominas
                 {
                     EmpleadoId = empleado.IdEmpleado,
@@ -107,7 +100,7 @@ namespace BusinessLogicLayer.Managers
                     Deducciones = detalle.TotalDeducciones,
                     TotalBruto = detalle.TotalBruto,
                     TotalNeto = detalle.TotalNeto,
-                    Estado = "PENDIENTE" // Según tu tabla SQL
+                    Estado = "PENDIENTE"
                 };
 
                 await _nominaRepo.CrearNominaAsync(nomina);

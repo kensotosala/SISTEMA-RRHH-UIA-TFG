@@ -17,7 +17,7 @@ namespace DataAccessLayer.Repositories
         public async Task<Nominas> CrearNominaAsync(Nominas nomina)
         {
             nomina.FechaCreacion = DateTime.UtcNow;
-            nomina.Estado = nomina.Estado ?? "GENERADA"; // ❌ CORREGIDO: Era "PAGADA"
+            nomina.Estado = nomina.Estado ?? "GENERADA";
 
             _context.Nominas.Add(nomina);
             await _context.SaveChangesAsync();
@@ -35,7 +35,7 @@ namespace DataAccessLayer.Repositories
                 .FirstOrDefaultAsync(n => n.IdNomina == id);
         }
 
-        public async Task<List<Nominas>> ListarNominasAsync() // ❌ CORREGIDO: Sin parámetro
+        public async Task<List<Nominas>> ListarNominasAsync()
         {
             return await _context.Nominas
                 .Include(n => n.Empleado)

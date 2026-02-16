@@ -1727,6 +1727,16 @@
     "EndpointName": "AprobarRechazarPermiso"
   },
   {
+    "ContainingType": "PresentationLayer.Controllers.RolController",
+    "Method": "GetAll",
+    "RelativePath": "api/v1/Rol",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "PresentationLayer.Controllers.VacacionesController",
     "Method": "Crear",
     "RelativePath": "api/v1/Vacaciones",

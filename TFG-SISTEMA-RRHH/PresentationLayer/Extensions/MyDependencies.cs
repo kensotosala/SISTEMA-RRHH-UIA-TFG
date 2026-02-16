@@ -110,6 +110,10 @@ namespace PresentationLayer.Extensions
             services.AddScoped<BusinessLogicLayer.Interfaces.IAguinaldoManager,
                                        BusinessLogicLayer.Managers.AguinaldoManager>();
 
+            // Roles
+            services.AddScoped<BusinessLogicLayer.Interfaces.IRolesManager,
+                                       BusinessLogicLayer.Managers.RolesManager>();
+
             return services;
         }
     }

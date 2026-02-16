@@ -119,10 +119,8 @@ namespace PresentationLayer.Controllers
         {
             try
             {
-                // Log para debugging
                 _logger.LogInformation("📥 Recibiendo solicitud: {@DTO}", dto);
 
-                // Validación explícita del ModelState
                 if (!ModelState.IsValid)
                 {
                     var errors = ModelState

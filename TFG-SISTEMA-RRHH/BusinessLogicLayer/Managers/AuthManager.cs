@@ -37,34 +37,28 @@ namespace BusinessLogicLayer.Managers
 
             try
             {
-                // Obtener usuario con todos sus detalles INCLUYENDO ROLES
                 var user = await _repo.GetByUsernameWithDetailsAsync(dto.Username);
 
                 if (user == null)
-                    return null;
+                    return null; // Esto se convierte en 401
 
-                // Verificar que el usuario esté activo
                 if (user.Estado != "ACTIVO")
-                    throw new InvalidOperationException("El usuario está inactivo. Contacte al administrador.");
+                    throw new InvalidOperationException("Su cuenta está inactiva. Contacte al administrador."); // Esto debe ser 401 también
 
-                // Verificar que el empleado asociado esté activo
                 if (user.Empleado?.Estado != "ACTIVO")
-                    throw new InvalidOperationException("Su cuenta de empleado está inactiva. Contacte al administrador.");
+                    throw new InvalidOperationException("Su cuenta de empleado está inactiva."); // Esto debe ser 401 también
 
-                // Verificar contraseña (funciona con SHA256 y BCrypt)
                 if (!_passwordHasher.Verify(dto.Password, user.PasswordHash))
-                    return null;
+                    return null; // Esto se convierte en 401
 
-                // Actualizar último acceso
                 user.UltimoAcceso = DateTime.UtcNow;
                 await _repo.UpdateAsync(user);
 
-                // Generar JWT y retornar respuesta completa
                 return GenerateJwt(user);
             }
             catch (InvalidOperationException)
             {
-                throw; // Re-lanzar excepciones de validación de estado
+                throw; // Re-lanzar, pero el controlador debe convertirlo a 401
             }
             catch (Exception ex)
             {
@@ -225,7 +219,6 @@ namespace BusinessLogicLayer.Managers
         {
             var jwtSettings = _config.GetSection("Jwt");
 
-            // Claims básicos del usuario
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier, user.IdUsuario.ToString()),
@@ -234,7 +227,6 @@ namespace BusinessLogicLayer.Managers
                 new Claim("Username", user.NombreUsuario)
             };
 
-            // Información del empleado
             UsuarioInfoDTO? usuarioInfo = null;
             if (user.Empleado != null)
             {
@@ -247,7 +239,6 @@ namespace BusinessLogicLayer.Managers
                 claims.Add(new Claim("DepartmentId", user.Empleado.DepartamentoId.ToString()));
                 claims.Add(new Claim("PositionId", user.Empleado.PuestoId.ToString()));
 
-                // Si el empleado tiene jefe inmediato
                 if (user.Empleado.JefeInmediatoId.HasValue)
                 {
                     claims.Add(new Claim("ManagerId", user.Empleado.JefeInmediatoId.Value.ToString()));
@@ -268,44 +259,33 @@ namespace BusinessLogicLayer.Managers
                 };
             }
 
-            // ============================================
-            // AGREGAR ROLES - ESTA ES LA PARTE IMPORTANTE
-            // ============================================
             var rolesList = new List<string>();
 
-            // Verificar que UsuariosRoles no sea null y tenga elementos
             if (user.UsuariosRoles != null && user.UsuariosRoles.Any())
             {
                 foreach (var usuarioRol in user.UsuariosRoles)
                 {
-                    // Verificar que el rol no sea null
                     if (usuarioRol?.Rol != null && !string.IsNullOrWhiteSpace(usuarioRol.Rol.Nombre))
                     {
-                        // Agregar como ClaimTypes.Role (estándar de .NET)
                         claims.Add(new Claim(ClaimTypes.Role, usuarioRol.Rol.Nombre));
 
-                        // Agregar ID del rol también
                         claims.Add(new Claim("RoleId", usuarioRol.RolId.ToString()));
 
-                        // Agregar a la lista para el claim "Roles"
                         rolesList.Add(usuarioRol.Rol.Nombre);
                     }
                 }
             }
 
-            // Agregar todos los roles como una lista separada por comas
             if (rolesList.Any())
             {
                 claims.Add(new Claim("Roles", string.Join(",", rolesList)));
             }
 
-            // Agregar roles al UsuarioInfo
             if (usuarioInfo != null)
             {
                 usuarioInfo.Roles = rolesList;
             }
 
-            // Crear clave de seguridad
             var key = new SymmetricSecurityKey(
                 Encoding.UTF8.GetBytes(jwtSettings["Key"]!)
             );
@@ -336,6 +316,6 @@ namespace BusinessLogicLayer.Managers
             };
         }
 
-        #endregion
+        #endregion Métodos Privados
     }
 }
