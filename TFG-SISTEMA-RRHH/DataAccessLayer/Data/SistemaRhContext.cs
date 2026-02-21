@@ -493,7 +493,7 @@ public partial class SistemaRhContext : DbContext
             entity.Property(e => e.EmpleadoId).HasColumnName("empleado_id");
             entity.Property(e => e.Estado)
                 .HasDefaultValueSql("'CALCULADA'")
-                .HasColumnType("enum('CALCULADA','PAGADA')")
+                .HasColumnType("enum('CALCULADA', 'ANULADA')")
                 .HasColumnName("estado");
             entity.Property(e => e.FechaCreacion)
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
@@ -512,7 +512,7 @@ public partial class SistemaRhContext : DbContext
                 .HasDefaultValueSql("'0.00'")
                 .HasColumnName("indemnizacion");
             entity.Property(e => e.MotivoLiquidacion)
-                .HasColumnType("enum('RENUNCIA','DESPIDO','DESPIDO_JUSTIFICADO','JUBILACION')")
+                .HasColumnType("enum('RENUNCIA','RENUNCIA_RESPONSABILIDAD_PATRONAL','DESPIDO_RESPONSABILIDAD_PATRONAL','DESPIDO_SIN_RESPONSABILIDAD', 'JUBILACION')")
                 .HasColumnName("motivo_liquidacion");
             entity.Property(e => e.OtrosConceptos)
                 .HasPrecision(10, 2)
