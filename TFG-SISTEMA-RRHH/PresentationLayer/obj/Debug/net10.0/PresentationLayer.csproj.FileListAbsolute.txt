@@ -244,6 +244,7 @@ C:\Users\USER\Documents\UIA\TRABAJO FINAL DE GRADUACION\SISTEMA-RRHH-UIA-TFG\TFG
 C:\Users\USER\Documents\UIA\TRABAJO FINAL DE GRADUACION\SISTEMA-RRHH-UIA-TFG\TFG-SISTEMA-RRHH\PresentationLayer\obj\Debug\net10.0\ref\PresentationLayer.dll
 C:\Users\USER\Documents\UIA\TRABAJO FINAL DE GRADUACION\SERVIDOR\SISTEMA-RRHH-UIA-TFG\TFG-SISTEMA-RRHH\PresentationLayer\bin\Debug\net10.0\appsettings.Development.json
 C:\Users\USER\Documents\UIA\TRABAJO FINAL DE GRADUACION\SERVIDOR\SISTEMA-RRHH-UIA-TFG\TFG-SISTEMA-RRHH\PresentationLayer\bin\Debug\net10.0\appsettings.json
+C:\Users\USER\Documents\UIA\TRABAJO FINAL DE GRADUACION\SERVIDOR\SISTEMA-RRHH-UIA-TFG\TFG-SISTEMA-RRHH\PresentationLayer\bin\Debug\net10.0\PresentationLayer.staticwebassets.runtime.json
 C:\Users\USER\Documents\UIA\TRABAJO FINAL DE GRADUACION\SERVIDOR\SISTEMA-RRHH-UIA-TFG\TFG-SISTEMA-RRHH\PresentationLayer\bin\Debug\net10.0\PresentationLayer.staticwebassets.endpoints.json
 C:\Users\USER\Documents\UIA\TRABAJO FINAL DE GRADUACION\SERVIDOR\SISTEMA-RRHH-UIA-TFG\TFG-SISTEMA-RRHH\PresentationLayer\bin\Debug\net10.0\PresentationLayer.exe
 C:\Users\USER\Documents\UIA\TRABAJO FINAL DE GRADUACION\SERVIDOR\SISTEMA-RRHH-UIA-TFG\TFG-SISTEMA-RRHH\PresentationLayer\bin\Debug\net10.0\PresentationLayer.deps.json

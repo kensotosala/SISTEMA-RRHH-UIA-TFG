@@ -9,14 +9,13 @@ using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Controllers
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
-        options.JsonSerializerOptions.Converters.Add(
-            new JsonStringEnumConverter()
-        );
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
     });
+
 builder.Services.AddSwaggerGen();
 
 // Connection string
@@ -45,14 +44,12 @@ builder.Services.AddAuthentication(options =>
 .AddJwtBearer(options =>
 {
     var jwtSettings = builder.Configuration.GetSection("Jwt");
-
     options.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuer = true,
         ValidateAudience = true,
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
-
         ValidIssuer = jwtSettings["Issuer"],
         ValidAudience = jwtSettings["Audience"],
         IssuerSigningKey = new SymmetricSecurityKey(
@@ -62,62 +59,33 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-// CONFIGURACIÓN CORS MEJORADA
+// CORS — una sola política para desarrollo
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowFrontend",
-        policy =>
-        {
-            policy.WithOrigins("http://localhost:3000", "https://localhost:3000", "https://localhost:7121")
-                  .AllowAnyMethod()
-                  .AllowAnyHeader()
-                  .AllowCredentials()
-                  .SetIsOriginAllowed((host) => true); // Permite cualquier origen en desarrollo
-        });
-
-    // Política más permisiva para desarrollo
-    options.AddPolicy("AllowAll",
-        policy =>
-        {
-            policy.AllowAnyOrigin()
-                  .AllowAnyMethod()
-                  .AllowAnyHeader();
-        });
+    options.AddPolicy("AllowFrontend", policy =>
+    {
+        policy.WithOrigins("http://localhost:3000", "https://localhost:3000")
+              .AllowAnyMethod()
+              .AllowAnyHeader()
+              .AllowCredentials();
+    });
 });
 
-// Authorization
 builder.Services.AddAuthorization();
-
-// Registrar dependencias
 builder.Services.Dependencies();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-    app.UseCors("AllowAll"); // Usar política permisiva en desarrollo
-}
-else
-{
-    app.UseCors("AllowFrontend"); // Usar política específica en producción
 }
 
-// ORDEN CORRECTO DE MIDDLEWARES
-app.UseHttpsRedirection();
-
-app.UseRouting(); // <-- AÑADIR ESTO ES CRUCIAL
-
-// CORS debe ir después de UseRouting() pero antes de UseAuthentication()
-app.UseCors("AllowFrontend");
-
-app.UseMiddleware<ExceptionHandlingMiddleware>();
-
-app.UseAuthentication();
-app.UseAuthorization();
-
-app.MapControllers();
+app.UseStaticFiles();           
+app.UseMiddleware<ExceptionHandlingMiddleware>(); 
+app.UseAuthentication();        
+app.UseAuthorization();        
+app.MapControllers();           
 
 app.Run();

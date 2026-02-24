@@ -1185,9 +1185,39 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "dto",
-        "Type": "BusinessLogicLayer.DTOs.RegistrarIncapacidadDto",
-        "IsRequired": true
+        "Name": "ArchivoAdjunto",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Diagnostico",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "EmpleadoId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "FechaFin",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      },
+      {
+        "Name": "FechaInicio",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      },
+      {
+        "Name": "TipoIncapacidad",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "archivo",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": [

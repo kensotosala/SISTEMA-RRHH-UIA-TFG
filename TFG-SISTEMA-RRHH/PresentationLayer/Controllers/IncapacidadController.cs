@@ -101,16 +101,40 @@ namespace PresentationLayer.Controllers
         [HttpPost]
         [ProducesResponseType(typeof(IncapacidadDto), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<IncapacidadDto>> RegistrarIncapacidad([FromBody] RegistrarIncapacidadDto dto)
+        public async Task<ActionResult<IncapacidadDto>> RegistrarIncapacidad(
+    [FromForm] RegistrarIncapacidadDto dto, 
+    IFormFile? archivo)
         {
             try
             {
+                // Guardar archivo si viene
+                if (archivo != null)
+                {
+                    var extensionesPermitidas = new[] { ".pdf", ".jpg", ".png" };
+                    var extension = Path.GetExtension(archivo.FileName).ToLower();
+
+                    if (!extensionesPermitidas.Contains(extension))
+                        return BadRequest(new { mensaje = "Formato de archivo no permitido" });
+
+                    var carpeta = Path.Combine("wwwroot", "uploads", "incapacidades");
+                    Directory.CreateDirectory(carpeta); // Crea la carpeta si no existe
+
+                    // Nombre único para evitar colisiones
+                    var nombreArchivo = $"{Guid.NewGuid()}{extension}";
+                    var rutaCompleta = Path.Combine(carpeta, nombreArchivo);
+
+                    using var stream = new FileStream(rutaCompleta, FileMode.Create);
+                    await archivo.CopyToAsync(stream);
+
+                    // Guardar solo la ruta relativa en el DTO
+                    dto.ArchivoAdjunto = $"/uploads/incapacidades/{nombreArchivo}";
+                }
+
                 var incapacidadCreada = await _managerIncapacidades.RegistrarIncapacidad(dto);
                 return CreatedAtAction(
                     nameof(ObtenerIncapacidadPorId),
                     new { id = incapacidadCreada.IdIncapacidad },
-                    incapacidadCreada
-                    );
+                    incapacidadCreada);
             }
             catch (ArgumentException ex)
             {

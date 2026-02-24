@@ -1853,19 +1853,71 @@
         ],
         "requestBody": {
           "content": {
-            "application/json": {
+            "multipart/form-data": {
               "schema": {
-                "$ref": "#/components/schemas/RegistrarIncapacidadDto"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RegistrarIncapacidadDto"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/RegistrarIncapacidadDto"
+                "required": [
+                  "EmpleadoId",
+                  "FechaFin",
+                  "FechaInicio",
+                  "TipoIncapacidad"
+                ],
+                "type": "object",
+                "properties": {
+                  "ArchivoAdjunto": {
+                    "maxLength": 500,
+                    "minLength": 0,
+                    "type": "string"
+                  },
+                  "Diagnostico": {
+                    "maxLength": 500,
+                    "minLength": 0,
+                    "type": "string"
+                  },
+                  "EmpleadoId": {
+                    "maximum": 2147483647,
+                    "minimum": 1,
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "FechaFin": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "FechaInicio": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "TipoIncapacidad": {
+                    "type": "string"
+                  },
+                  "archivo": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              },
+              "encoding": {
+                "ArchivoAdjunto": {
+                  "style": "form"
+                },
+                "Diagnostico": {
+                  "style": "form"
+                },
+                "EmpleadoId": {
+                  "style": "form"
+                },
+                "FechaFin": {
+                  "style": "form"
+                },
+                "FechaInicio": {
+                  "style": "form"
+                },
+                "TipoIncapacidad": {
+                  "style": "form"
+                },
+                "archivo": {
+                  "style": "form"
+                }
               }
             }
           }
@@ -5780,48 +5832,6 @@
               "$ref": "#/components/schemas/ResultadoCalculoAguinaldoDTO"
             },
             "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "RegistrarIncapacidadDto": {
-        "required": [
-          "empleadoId",
-          "fechaFin",
-          "fechaInicio",
-          "tipoIncapacidad"
-        ],
-        "type": "object",
-        "properties": {
-          "archivoAdjunto": {
-            "maxLength": 500,
-            "minLength": 0,
-            "type": "string",
-            "nullable": true
-          },
-          "diagnostico": {
-            "maxLength": 500,
-            "minLength": 0,
-            "type": "string",
-            "nullable": true
-          },
-          "empleadoId": {
-            "maximum": 2147483647,
-            "minimum": 1,
-            "type": "integer",
-            "format": "int32"
-          },
-          "fechaFin": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "fechaInicio": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "tipoIncapacidad": {
-            "minLength": 1,
-            "type": "string"
           }
         },
         "additionalProperties": false
