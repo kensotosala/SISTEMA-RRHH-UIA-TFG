@@ -1572,6 +1572,46 @@
         }
       }
     },
+    "/api/HorasExtras/activa/{empleadoId}": {
+      "get": {
+        "tags": [
+          "HorasExtras"
+        ],
+        "parameters": [
+          {
+            "name": "empleadoId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/HoraExtraHoyDTO"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HoraExtraHoyDTO"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HoraExtraHoyDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/Incapacidad/{id}": {
       "put": {
         "tags": [
@@ -5039,6 +5079,25 @@
             "nullable": true
           },
           "fechaCreacion": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "HoraExtraHoyDTO": {
+        "type": "object",
+        "properties": {
+          "tieneHoraExtra": {
+            "type": "boolean"
+          },
+          "inicio": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "fin": {
             "type": "string",
             "format": "date-time",
             "nullable": true

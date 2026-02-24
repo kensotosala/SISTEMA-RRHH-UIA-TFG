@@ -107,4 +107,11 @@ namespace BusinessLogicLayer.DTOs
         public TimeSpan TotalHorasAprobadas { get; set; }
         public TimeSpan TotalHorasSolicitadas { get; set; }
     }
+
+    public class HoraExtraHoyDTO
+    {
+        public bool TieneHoraExtra { get; set; }
+        public DateTime? Inicio { get; set; }
+        public DateTime? Fin { get; set; }
+    }
 }

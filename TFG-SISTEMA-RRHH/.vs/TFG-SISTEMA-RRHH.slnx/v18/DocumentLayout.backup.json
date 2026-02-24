@@ -3,58 +3,6 @@
   "WorkspaceRootPath": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|c:\\users\\user\\documents\\uia\\trabajo final de graduacion\\servidor\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\businesslogiclayer\\shared\\errorresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|solutionrelative:businesslogiclayer\\shared\\errorresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|c:\\users\\user\\documents\\uia\\trabajo final de graduacion\\servidor\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\businesslogiclayer\\managers\\empleadosmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|solutionrelative:businesslogiclayer\\managers\\empleadosmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|c:\\users\\user\\documents\\uia\\trabajo final de graduacion\\servidor\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\businesslogiclayer\\shared\\businessexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|solutionrelative:businesslogiclayer\\shared\\businessexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{51B4CFD2-5728-0F00-60C4-E24DAE522468}|PresentationLayer\\PresentationLayer.csproj|c:\\users\\user\\documents\\uia\\trabajo final de graduacion\\servidor\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\presentationlayer\\extensions\\mydependencies.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{51B4CFD2-5728-0F00-60C4-E24DAE522468}|PresentationLayer\\PresentationLayer.csproj|solutionrelative:presentationlayer\\extensions\\mydependencies.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{51B4CFD2-5728-0F00-60C4-E24DAE522468}|PresentationLayer\\PresentationLayer.csproj|c:\\users\\user\\documents\\uia\\trabajo final de graduacion\\servidor\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\presentationlayer\\controllers\\rolcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{51B4CFD2-5728-0F00-60C4-E24DAE522468}|PresentationLayer\\PresentationLayer.csproj|solutionrelative:presentationlayer\\controllers\\rolcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|c:\\users\\user\\documents\\uia\\trabajo final de graduacion\\servidor\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\businesslogiclayer\\managers\\rolesmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|solutionrelative:businesslogiclayer\\managers\\rolesmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|c:\\users\\user\\documents\\uia\\trabajo final de graduacion\\servidor\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\businesslogiclayer\\dtos\\rolesdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|solutionrelative:businesslogiclayer\\dtos\\rolesdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|c:\\users\\user\\documents\\uia\\trabajo final de graduacion\\servidor\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\businesslogiclayer\\managers\\vacacionesmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|solutionrelative:businesslogiclayer\\managers\\vacacionesmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|c:\\users\\user\\documents\\uia\\trabajo final de graduacion\\servidor\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\businesslogiclayer\\interfaces\\irolesmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|solutionrelative:businesslogiclayer\\interfaces\\irolesmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A9FCCEB3-DD88-F8C0-89A3-FD31A7C54F23}|DataAccessLayer\\DataAccessLayer.csproj|c:\\users\\user\\documents\\uia\\trabajo final de graduacion\\servidor\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\dataaccesslayer\\interfaces\\irolesrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A9FCCEB3-DD88-F8C0-89A3-FD31A7C54F23}|DataAccessLayer\\DataAccessLayer.csproj|solutionrelative:dataaccesslayer\\interfaces\\irolesrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|c:\\users\\user\\documents\\uia\\trabajo final de graduacion\\servidor\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\businesslogiclayer\\managers\\authmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|solutionrelative:businesslogiclayer\\managers\\authmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{51B4CFD2-5728-0F00-60C4-E24DAE522468}|PresentationLayer\\PresentationLayer.csproj|c:\\users\\user\\documents\\uia\\trabajo final de graduacion\\servidor\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\presentationlayer\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{51B4CFD2-5728-0F00-60C4-E24DAE522468}|PresentationLayer\\PresentationLayer.csproj|solutionrelative:presentationlayer\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|c:\\users\\user\\documents\\uia\\trabajo final de graduacion\\servidor\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\businesslogiclayer\\managers\\permisosmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|solutionrelative:businesslogiclayer\\managers\\permisosmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{51B4CFD2-5728-0F00-60C4-E24DAE522468}|PresentationLayer\\PresentationLayer.csproj|c:\\users\\user\\documents\\uia\\trabajo final de graduacion\\servidor\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\presentationlayer\\controllers\\horasextracontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{51B4CFD2-5728-0F00-60C4-E24DAE522468}|PresentationLayer\\PresentationLayer.csproj|solutionrelative:presentationlayer\\controllers\\horasextracontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -63,8 +11,16 @@
       "RelativeMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|solutionrelative:businesslogiclayer\\managers\\horasextramanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|c:\\users\\user\\documents\\uia\\trabajo final de graduacion\\servidor\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\businesslogiclayer\\interfaces\\ihorasextramanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|solutionrelative:businesslogiclayer\\interfaces\\ihorasextramanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|c:\\users\\user\\documents\\uia\\trabajo final de graduacion\\servidor\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\businesslogiclayer\\managers\\asistenciamanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|solutionrelative:businesslogiclayer\\managers\\asistenciamanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|c:\\users\\user\\documents\\uia\\trabajo final de graduacion\\servidor\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\businesslogiclayer\\dtos\\horasextradto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|solutionrelative:businesslogiclayer\\dtos\\horasextradto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -74,7 +30,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -82,196 +38,68 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "ErrorResponse.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\Shared\\ErrorResponse.cs",
-              "RelativeDocumentMoniker": "BusinessLogicLayer\\Shared\\ErrorResponse.cs",
-              "ToolTip": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\Shared\\ErrorResponse.cs",
-              "RelativeToolTip": "BusinessLogicLayer\\Shared\\ErrorResponse.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAAA8AAAAeAAAAAAAAAA==",
+              "DocumentIndex": 4,
+              "Title": "HorasExtraDTO.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\DTOs\\HorasExtraDTO.cs",
+              "RelativeDocumentMoniker": "BusinessLogicLayer\\DTOs\\HorasExtraDTO.cs",
+              "ToolTip": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\DTOs\\HorasExtraDTO.cs",
+              "RelativeToolTip": "BusinessLogicLayer\\DTOs\\HorasExtraDTO.cs",
+              "ViewState": "AgIAAGEAAAAAAAAAAAA9wG4AAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-16T04:37:59.51Z",
+              "WhenOpened": "2026-02-24T15:54:42.51Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "BusinessException.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\Shared\\BusinessException.cs",
-              "RelativeDocumentMoniker": "BusinessLogicLayer\\Shared\\BusinessException.cs",
-              "ToolTip": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\Shared\\BusinessException.cs",
-              "RelativeToolTip": "BusinessLogicLayer\\Shared\\BusinessException.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-16T04:35:09.632Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "MyDependencies.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\PresentationLayer\\Extensions\\MyDependencies.cs",
-              "RelativeDocumentMoniker": "PresentationLayer\\Extensions\\MyDependencies.cs",
-              "ToolTip": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\PresentationLayer\\Extensions\\MyDependencies.cs",
-              "RelativeToolTip": "PresentationLayer\\Extensions\\MyDependencies.cs",
-              "ViewState": "AgIAAFgAAAAAAAAAAAAgwHIAAABPAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-16T04:16:21.942Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "EmpleadosManager.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\Managers\\EmpleadosManager.cs",
-              "RelativeDocumentMoniker": "BusinessLogicLayer\\Managers\\EmpleadosManager.cs",
-              "ToolTip": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\Managers\\EmpleadosManager.cs",
-              "RelativeToolTip": "BusinessLogicLayer\\Managers\\EmpleadosManager.cs",
-              "ViewState": "AgIAAC8AAAAAAAAAAAAuwHoAAAAyAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-15T17:02:32.925Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "RolesDTO.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\DTOs\\RolesDTO.cs",
-              "RelativeDocumentMoniker": "BusinessLogicLayer\\DTOs\\RolesDTO.cs",
-              "ToolTip": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\DTOs\\RolesDTO.cs",
-              "RelativeToolTip": "BusinessLogicLayer\\DTOs\\RolesDTO.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAcAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-16T04:11:51.01Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "RolesManager.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\Managers\\RolesManager.cs",
-              "RelativeDocumentMoniker": "BusinessLogicLayer\\Managers\\RolesManager.cs",
-              "ToolTip": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\Managers\\RolesManager.cs",
-              "RelativeToolTip": "BusinessLogicLayer\\Managers\\RolesManager.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAhAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-16T04:10:18.07Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "IRolesRepository.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\DataAccessLayer\\Interfaces\\IRolesRepository.cs",
-              "RelativeDocumentMoniker": "DataAccessLayer\\Interfaces\\IRolesRepository.cs",
-              "ToolTip": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\DataAccessLayer\\Interfaces\\IRolesRepository.cs",
-              "RelativeToolTip": "DataAccessLayer\\Interfaces\\IRolesRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-16T04:09:52.126Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "IRolesManager.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\Interfaces\\IRolesManager.cs",
-              "RelativeDocumentMoniker": "BusinessLogicLayer\\Interfaces\\IRolesManager.cs",
-              "ToolTip": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\Interfaces\\IRolesManager.cs",
-              "RelativeToolTip": "BusinessLogicLayer\\Interfaces\\IRolesManager.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAfAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-16T04:09:42.802Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "AuthManager.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\Managers\\AuthManager.cs",
-              "RelativeDocumentMoniker": "BusinessLogicLayer\\Managers\\AuthManager.cs",
-              "ToolTip": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\Managers\\AuthManager.cs",
-              "RelativeToolTip": "BusinessLogicLayer\\Managers\\AuthManager.cs",
-              "ViewState": "AgIAACUBAAAAAAAAAAAIwCkBAAA2AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-15T22:57:12.042Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "AuthController.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\PresentationLayer\\Controllers\\AuthController.cs",
-              "RelativeDocumentMoniker": "PresentationLayer\\Controllers\\AuthController.cs",
-              "ToolTip": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\PresentationLayer\\Controllers\\AuthController.cs",
-              "RelativeToolTip": "PresentationLayer\\Controllers\\AuthController.cs",
-              "ViewState": "AgIAAPgAAAAAAAAAAAAgwBEBAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-15T22:57:01.756Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "VacacionesManager.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\Managers\\VacacionesManager.cs",
-              "RelativeDocumentMoniker": "BusinessLogicLayer\\Managers\\VacacionesManager.cs",
-              "ToolTip": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\Managers\\VacacionesManager.cs",
-              "RelativeToolTip": "BusinessLogicLayer\\Managers\\VacacionesManager.cs",
-              "ViewState": "AgIAAP4AAAAAAAAAAAAuwAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-16T04:12:41.947Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "RolController.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\PresentationLayer\\Controllers\\RolController.cs",
-              "RelativeDocumentMoniker": "PresentationLayer\\Controllers\\RolController.cs",
-              "ToolTip": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\PresentationLayer\\Controllers\\RolController.cs",
-              "RelativeToolTip": "PresentationLayer\\Controllers\\RolController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-16T04:14:58.867Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "PermisosManager.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\Managers\\PermisosManager.cs",
-              "RelativeDocumentMoniker": "BusinessLogicLayer\\Managers\\PermisosManager.cs",
-              "ToolTip": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\Managers\\PermisosManager.cs",
-              "RelativeToolTip": "BusinessLogicLayer\\Managers\\PermisosManager.cs",
-              "ViewState": "AgIAAD4AAAAAAAAAAAAwwFAAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-15T17:00:54.855Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 0,
               "Title": "HorasExtraController.cs",
               "DocumentMoniker": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\PresentationLayer\\Controllers\\HorasExtraController.cs",
               "RelativeDocumentMoniker": "PresentationLayer\\Controllers\\HorasExtraController.cs",
               "ToolTip": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\PresentationLayer\\Controllers\\HorasExtraController.cs",
               "RelativeToolTip": "PresentationLayer\\Controllers\\HorasExtraController.cs",
-              "ViewState": "AgIAAIkAAAAAAAAAAAAuwHcAAAAPAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAJ4AAAA/AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-15T16:58:07.798Z"
+              "WhenOpened": "2026-02-24T14:34:31.092Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 1,
               "Title": "HorasExtraManager.cs",
               "DocumentMoniker": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\Managers\\HorasExtraManager.cs",
               "RelativeDocumentMoniker": "BusinessLogicLayer\\Managers\\HorasExtraManager.cs",
               "ToolTip": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\Managers\\HorasExtraManager.cs",
               "RelativeToolTip": "BusinessLogicLayer\\Managers\\HorasExtraManager.cs",
-              "ViewState": "AgIAAKUAAAAAAAAAAAAuwLUAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFIAAAAyAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-15T16:55:26.348Z"
+              "WhenOpened": "2026-02-24T13:44:42.633Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 2,
+              "Title": "IHorasExtraManager.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\Interfaces\\IHorasExtraManager.cs",
+              "RelativeDocumentMoniker": "BusinessLogicLayer\\Interfaces\\IHorasExtraManager.cs",
+              "ToolTip": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\Interfaces\\IHorasExtraManager.cs",
+              "RelativeToolTip": "BusinessLogicLayer\\Interfaces\\IHorasExtraManager.cs",
+              "ViewState": "AgIAAAUAAAAAAAAAAAA1wB0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-24T14:12:59.927Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "AsistenciaManager.cs",
               "DocumentMoniker": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\Managers\\AsistenciaManager.cs",
               "RelativeDocumentMoniker": "BusinessLogicLayer\\Managers\\AsistenciaManager.cs",
               "ToolTip": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\Managers\\AsistenciaManager.cs",
               "RelativeToolTip": "BusinessLogicLayer\\Managers\\AsistenciaManager.cs",
-              "ViewState": "AgIAABsAAAAAAAAAAAAowBcAAAAIAAAAAAAAAA==",
+              "ViewState": "AgIAADgBAAAAAAAAAAAswFwBAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-15T16:51:32.757Z"
+              "WhenOpened": "2026-02-24T13:44:01.618Z",
+              "EditorCaption": ""
             }
           ]
         }

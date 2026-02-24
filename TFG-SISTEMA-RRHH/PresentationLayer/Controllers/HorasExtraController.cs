@@ -28,6 +28,11 @@ namespace PresentationLayer.Controllers
                 var horasExtras = await _horasExtrasManager.GetAllAsync();
                 return Ok(horasExtras);
             }
+            catch (BusinessException ex)
+            {
+                _logger.LogWarning(ex, "Error de negocio al obtener todas las horas extras");
+                return BadRequest(new { message = ex.Message, code = ex.Code });
+            }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error al obtener todas las horas extras");
@@ -42,11 +47,14 @@ namespace PresentationLayer.Controllers
             {
                 var horaExtra = await _horasExtrasManager.GetByIdAsync(id);
                 if (horaExtra == null)
-                {
                     return NotFound(new { message = "Registro de hora extra no encontrado" });
-                }
 
                 return Ok(horaExtra);
+            }
+            catch (BusinessException ex)
+            {
+                _logger.LogWarning(ex, "Error de negocio al obtener hora extra por ID: {Id}", id);
+                return BadRequest(new { message = ex.Message, code = ex.Code });
             }
             catch (Exception ex)
             {
@@ -63,6 +71,11 @@ namespace PresentationLayer.Controllers
             {
                 var horasExtras = await _horasExtrasManager.GetByFiltrosAsync(filtros);
                 return Ok(horasExtras);
+            }
+            catch (BusinessException ex)
+            {
+                _logger.LogWarning(ex, "Error de negocio al buscar horas extras con filtros");
+                return BadRequest(new { message = ex.Message, code = ex.Code });
             }
             catch (Exception ex)
             {
@@ -81,7 +94,7 @@ namespace PresentationLayer.Controllers
             }
             catch (BusinessException ex)
             {
-                _logger.LogWarning(ex, "Error de negocio al obtener horas extras del empleado");
+                _logger.LogWarning(ex, "Error de negocio al obtener horas extras del empleado: {EmpleadoId}", empleadoId);
                 return BadRequest(new { message = ex.Message, code = ex.Code });
             }
             catch (Exception ex)
@@ -101,7 +114,7 @@ namespace PresentationLayer.Controllers
             }
             catch (BusinessException ex)
             {
-                _logger.LogWarning(ex, "Error de negocio al obtener pendientes del jefe");
+                _logger.LogWarning(ex, "Error de negocio al obtener pendientes del jefe: {JefeId}", jefeId);
                 return BadRequest(new { message = ex.Message, code = ex.Code });
             }
             catch (Exception ex)
@@ -111,56 +124,29 @@ namespace PresentationLayer.Controllers
             }
         }
 
-        /// <summary>
-        /// Crea una nueva solicitud de hora extra
-        /// </summary>
         [HttpPost]
         public async Task<ActionResult<HoraExtraDTO>> Create([FromBody] CrearHoraExtraDTO dto)
         {
             try
             {
-                _logger.LogInformation("📥 Recibiendo solicitud: {@DTO}", dto);
-
                 if (!ModelState.IsValid)
-                {
-                    var errors = ModelState
-                        .Where(x => x.Value?.Errors.Count > 0)
-                        .ToDictionary(
-                            kvp => kvp.Key,
-                            kvp => kvp.Value?.Errors.Select(e => e.ErrorMessage).ToArray()
-                        );
-
-                    _logger.LogWarning("❌ ModelState inválido: {@Errors}", errors);
-
-                    return BadRequest(new
-                    {
-                        message = "Datos de entrada inválidos",
-                        errors = errors
-                    });
-                }
+                    return BadRequest(BuildModelStateErrors());
 
                 var horaExtra = await _horasExtrasManager.CreateAsync(dto);
 
-                _logger.LogInformation("✅ Hora extra creada: {Id}", horaExtra.IdHoraExtra);
+                _logger.LogInformation("Hora extra creada correctamente: {Id}", horaExtra.IdHoraExtra);
 
-                return CreatedAtAction(
-                    nameof(GetById),
-                    new { id = horaExtra.IdHoraExtra },
-                    horaExtra);
+                return CreatedAtAction(nameof(GetById), new { id = horaExtra.IdHoraExtra }, horaExtra);
             }
             catch (BusinessException ex)
             {
-                _logger.LogWarning(ex, "⚠️ Error de negocio al crear hora extra");
+                _logger.LogWarning(ex, "Error de negocio al crear hora extra");
                 return BadRequest(new { message = ex.Message, code = ex.Code });
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "💥 Error inesperado al crear hora extra");
-                return StatusCode(500, new
-                {
-                    message = "Error interno del servidor al crear hora extra",
-                    detail = ex.Message
-                });
+                _logger.LogError(ex, "Error inesperado al crear hora extra");
+                return StatusCode(500, new { message = "Error interno del servidor al crear hora extra" });
             }
         }
 
@@ -170,21 +156,17 @@ namespace PresentationLayer.Controllers
             try
             {
                 if (!ModelState.IsValid)
-                {
-                    return BadRequest(ModelState);
-                }
+                    return BadRequest(BuildModelStateErrors());
 
                 var resultado = await _horasExtrasManager.UpdateAsync(id, dto);
                 if (!resultado)
-                {
                     return NotFound(new { message = "Registro de hora extra no encontrado" });
-                }
 
                 return Ok(new { message = "Hora extra actualizada correctamente" });
             }
             catch (BusinessException ex)
             {
-                _logger.LogWarning(ex, "Error de negocio al actualizar hora extra");
+                _logger.LogWarning(ex, "Error de negocio al actualizar hora extra: {Id}", id);
                 return BadRequest(new { message = ex.Message, code = ex.Code });
             }
             catch (Exception ex)
@@ -201,15 +183,13 @@ namespace PresentationLayer.Controllers
             {
                 var resultado = await _horasExtrasManager.DeleteAsync(id);
                 if (!resultado)
-                {
                     return NotFound(new { message = "Registro de hora extra no encontrado" });
-                }
 
                 return Ok(new { message = "Hora extra eliminada correctamente" });
             }
             catch (BusinessException ex)
             {
-                _logger.LogWarning(ex, "Error de negocio al eliminar hora extra");
+                _logger.LogWarning(ex, "Error de negocio al eliminar hora extra: {Id}", id);
                 return BadRequest(new { message = ex.Message, code = ex.Code });
             }
             catch (Exception ex)
@@ -221,28 +201,23 @@ namespace PresentationLayer.Controllers
 
         [HttpPatch("{id}/aprobar-rechazar")]
         public async Task<ActionResult> AprobarRechazar(
-            int id,
-            [FromBody] AprobarRechazarHoraExtraDTO dto)
+            int id, [FromBody] AprobarRechazarHoraExtraDTO dto)
         {
             try
             {
                 if (!ModelState.IsValid)
-                {
-                    return BadRequest(ModelState);
-                }
+                    return BadRequest(BuildModelStateErrors()); // ✅ Consistente con Create
 
                 var resultado = await _horasExtrasManager.AprobarRechazarAsync(id, dto);
                 if (!resultado)
-                {
                     return NotFound(new { message = "Registro de hora extra no encontrado" });
-                }
 
                 var accion = dto.EstadoSolicitud == "APROBADA" ? "aprobada" : "rechazada";
                 return Ok(new { message = $"Solicitud {accion} correctamente" });
             }
             catch (BusinessException ex)
             {
-                _logger.LogWarning(ex, "Error de negocio al aprobar/rechazar hora extra");
+                _logger.LogWarning(ex, "Error de negocio al aprobar/rechazar hora extra: {Id}", id);
                 return BadRequest(new { message = ex.Message, code = ex.Code });
             }
             catch (Exception ex)
@@ -261,15 +236,13 @@ namespace PresentationLayer.Controllers
             try
             {
                 var reporte = await _horasExtrasManager.GetReporteEmpleadoAsync(
-                    empleadoId,
-                    fechaInicio,
-                    fechaFin);
+                    empleadoId, fechaInicio, fechaFin);
 
                 return Ok(reporte);
             }
             catch (BusinessException ex)
             {
-                _logger.LogWarning(ex, "Error de negocio al generar reporte");
+                _logger.LogWarning(ex, "Error de negocio al generar reporte del empleado: {EmpleadoId}", empleadoId);
                 return BadRequest(new { message = ex.Message, code = ex.Code });
             }
             catch (Exception ex)
@@ -277,6 +250,38 @@ namespace PresentationLayer.Controllers
                 _logger.LogError(ex, "Error al generar reporte para empleado: {EmpleadoId}", empleadoId);
                 return StatusCode(500, new { message = "Error al generar reporte" });
             }
+        }
+
+        [HttpGet("activa/{empleadoId}")]
+        public async Task<ActionResult<HoraExtraHoyDTO>> ObtenerHoraExtraActiva(int empleadoId)
+        {
+            try
+            {
+                var horaExtra = await _horasExtrasManager.ObtenerHoraExtraHoyAsync(empleadoId);
+                return Ok(horaExtra ?? new HoraExtraHoyDTO { TieneHoraExtra = false });
+            }
+            catch (BusinessException ex)
+            {
+                _logger.LogWarning(ex, "Error de negocio al obtener hora extra activa del empleado: {EmpleadoId}", empleadoId);
+                return BadRequest(new { message = ex.Message, code = ex.Code });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error al obtener hora extra activa para empleado: {EmpleadoId}", empleadoId);
+                return StatusCode(500, new { message = "Error interno del servidor" });
+            }
+        }
+
+        private object BuildModelStateErrors()
+        {
+            var errors = ModelState
+                .Where(x => x.Value?.Errors.Count > 0)
+                .ToDictionary(
+                    kvp => kvp.Key,
+                    kvp => kvp.Value!.Errors.Select(e => e.ErrorMessage).ToArray()
+                );
+
+            return new { message = "Datos de entrada inválidos", errors };
         }
     }
 }

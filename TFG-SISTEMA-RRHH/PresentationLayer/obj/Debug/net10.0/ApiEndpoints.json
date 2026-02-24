@@ -628,6 +628,32 @@
   },
   {
     "ContainingType": "PresentationLayer.Controllers.HorasExtrasController",
+    "Method": "ObtenerHoraExtraActiva",
+    "RelativePath": "api/HorasExtras/activa/{empleadoId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "empleadoId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "BusinessLogicLayer.DTOs.HoraExtraHoyDTO",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PresentationLayer.Controllers.HorasExtrasController",
     "Method": "BuscarPorFiltros",
     "RelativePath": "api/HorasExtras/buscar",
     "HttpMethod": "POST",

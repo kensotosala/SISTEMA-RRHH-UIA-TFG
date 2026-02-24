@@ -29,5 +29,7 @@ namespace DataAccessLayer.Interfaces
         Task<bool> ExistsAsync(int id);
 
         Task<bool> TieneSolapamientoAsync(int empleadoId, DateTime fechaInicio, DateTime fechaFin, int? excludeId = null);
+
+        
     }
 }
