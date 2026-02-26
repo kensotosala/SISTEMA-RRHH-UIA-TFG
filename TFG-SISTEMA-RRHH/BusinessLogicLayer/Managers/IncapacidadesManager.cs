@@ -56,7 +56,7 @@ namespace BusinessLogicLayer.Managers
             if (!string.IsNullOrEmpty(dto.ArchivoAdjunto))
                 incapacidadExistente.ArchivoAdjunto = dto.ArchivoAdjunto;
 
-            incapacidadExistente.FechaModificacion = DateTime.UtcNow;
+            incapacidadExistente.FechaModificacion = DateTime.Now;
 
             // 5. Persistir cambios
             var resultado = await _repoIncapacidades.ActualizarIncapacidadAsync(incapacidadExistente);
@@ -90,7 +90,7 @@ namespace BusinessLogicLayer.Managers
                 Diagnostico = incapacidadExistente.Diagnostico,
                 ArchivoAdjunto = incapacidadExistente.ArchivoAdjunto,
                 Estado = incapacidadExistente.Estado ?? EstadoIncapacidad.ACTIVA.ToString(),
-                FechaCreacion = incapacidadExistente.FechaCreacion ?? DateTime.UtcNow,
+                FechaCreacion = incapacidadExistente.FechaCreacion ?? DateTime.Now,
                 FechaModificacion = incapacidadExistente.FechaModificacion
             };
         }
@@ -146,7 +146,7 @@ namespace BusinessLogicLayer.Managers
                     Diagnostico = inc.Diagnostico,
                     ArchivoAdjunto = inc.ArchivoAdjunto,
                     Estado = inc.Estado ?? EstadoIncapacidad.ACTIVA.ToString(),
-                    FechaCreacion = inc.FechaCreacion ?? DateTime.UtcNow,
+                    FechaCreacion = inc.FechaCreacion ?? DateTime.Now,
                     FechaModificacion = inc.FechaModificacion
                 });
             }
@@ -174,7 +174,7 @@ namespace BusinessLogicLayer.Managers
                 Diagnostico = incapacidad.Diagnostico,
                 ArchivoAdjunto = incapacidad.ArchivoAdjunto,
                 Estado = incapacidad.Estado ?? EstadoIncapacidad.ACTIVA.ToString(),
-                FechaCreacion = incapacidad.FechaCreacion ?? DateTime.UtcNow,
+                FechaCreacion = incapacidad.FechaCreacion ?? DateTime.Now,
                 FechaModificacion = incapacidad.FechaModificacion
             };
         }
@@ -207,7 +207,7 @@ namespace BusinessLogicLayer.Managers
                 Diagnostico = dto.Diagnostico,
                 ArchivoAdjunto = dto.ArchivoAdjunto,
                 Estado = EstadoIncapacidad.ACTIVA.ToString(),
-                FechaCreacion = DateTime.UtcNow
+                FechaCreacion = DateTime.Now
             };
 
             // 3. Guardar
@@ -246,7 +246,7 @@ namespace BusinessLogicLayer.Managers
                 Diagnostico = incapacidadGuardada.Diagnostico,
                 ArchivoAdjunto = incapacidadGuardada.ArchivoAdjunto,
                 Estado = incapacidadGuardada.Estado ?? EstadoIncapacidad.ACTIVA.ToString(),
-                FechaCreacion = incapacidadGuardada.FechaCreacion ?? DateTime.UtcNow,
+                FechaCreacion = incapacidadGuardada.FechaCreacion ?? DateTime.Now,
                 FechaModificacion = incapacidadGuardada.FechaModificacion
             };
         }

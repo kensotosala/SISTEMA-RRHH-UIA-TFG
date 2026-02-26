@@ -82,7 +82,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseStaticFiles();           
+app.UseStaticFiles();
+app.UseCors("AllowFrontend");
 app.UseMiddleware<ExceptionHandlingMiddleware>(); 
 app.UseAuthentication();        
 app.UseAuthorization();        
