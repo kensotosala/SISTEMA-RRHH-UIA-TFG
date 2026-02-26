@@ -1,13 +1,29 @@
-using BusinessLogicLayer.Profiles;
+﻿using BusinessLogicLayer.Profiles;
 using DataAccessLayer.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using PresentationLayer.Extensions;
+using System.Runtime.ConstrainedExecution;
 using System.Text;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Configurar límites para subida de archivos (AGREGAR ESTO)
+builder.Services.Configure<FormOptions>(options =>
+{
+    options.ValueLengthLimit = int.MaxValue;
+    options.MultipartBodyLengthLimit = 10 * 1024 * 1024; // 10MB
+    options.MemoryBufferThreshold = int.MaxValue;
+});
+
+// Configurar Kestrel para archivos grandes
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.Limits.MaxRequestBodySize = 10 * 1024 * 1024; // 10MB
+});
 
 // Controllers
 builder.Services.AddControllers()
@@ -59,7 +75,7 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-// CORS � una sola pol�tica para desarrollo
+// CORS — una sola política para desarrollo
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend", policy =>
@@ -75,6 +91,14 @@ builder.Services.AddAuthorization();
 builder.Services.Dependencies();
 
 var app = builder.Build();
+
+// Crear carpeta de uploads ANTES de usar StaticFiles
+var uploadsPath = Path.Combine(app.Environment.ContentRootPath, "wwwroot", "uploads", "incapacidades");
+if (!Directory.Exists(uploadsPath))
+{
+    Directory.CreateDirectory(uploadsPath);
+    Console.WriteLine($"Carpeta creada: {uploadsPath}");
+}
 
 if (app.Environment.IsDevelopment())
 {

@@ -21,8 +21,4 @@
     <ProjectReference Include="..\BusinessLogicLayer\BusinessLogicLayer.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="wwwroot\uploads\incapacidades\" />
-  </ItemGroup>
-
 </Project>

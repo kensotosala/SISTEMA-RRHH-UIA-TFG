@@ -10,11 +10,13 @@ namespace PresentationLayer.Controllers
     {
         private readonly ILogger<IncapacidadController> _logger;
         private readonly IIncapacidadesManager _managerIncapacidades;
+        private readonly IWebHostEnvironment _environment;
 
-        public IncapacidadController(IIncapacidadesManager managerIncapacidades, ILogger<IncapacidadController> logger)
+        public IncapacidadController(IIncapacidadesManager managerIncapacidades, ILogger<IncapacidadController> logger, IWebHostEnvironment environment)
         {
             _managerIncapacidades = managerIncapacidades;
             _logger = logger;
+            _environment = environment;
         }
 
         [HttpPut("{id}")]
@@ -117,45 +119,51 @@ namespace PresentationLayer.Controllers
     [FromForm] RegistrarIncapacidadDto dto,
     IFormFile? archivo)
         {
-            string? rutaArchivoGuardado = null;
+            if (dto == null)
+                return BadRequest(new { mensaje = "El DTO no puede ser nulo" });
+
+            if (dto.FechaFin < dto.FechaInicio)
+                return BadRequest(new { mensaje = "La fecha fin no puede ser menor a la fecha de inicio" });
+
+            // Guardar archivo si viene en el request
+            if (archivo != null && archivo.Length > 0)
+            {
+                var extensionesPermitidas = new[] { ".pdf", ".jpg", ".jpeg", ".png" };
+                var extension = Path.GetExtension(archivo.FileName).ToLower();
+
+                if (!extensionesPermitidas.Contains(extension))
+                    return BadRequest(new { mensaje = "Formato no permitido. Use: PDF, JPG, PNG" });
+
+                if (archivo.Length > 5 * 1024 * 1024)
+                    return BadRequest(new { mensaje = "El archivo no puede ser mayor a 5MB" });
+
+                var carpeta = Path.Combine(_environment.ContentRootPath, "wwwroot", "uploads", "incapacidades");
+                Directory.CreateDirectory(carpeta);
+
+                var nombreArchivo = $"{Guid.NewGuid():N}{extension}";
+                var rutaCompleta = Path.Combine(carpeta, nombreArchivo);
+
+                using var stream = new FileStream(rutaCompleta, FileMode.Create);
+                await archivo.CopyToAsync(stream);
+
+                dto.ArchivoAdjunto = $"/uploads/incapacidades/{nombreArchivo}";
+            }
 
             try
             {
-                if (archivo != null)
-                {
-                    var extensionesPermitidas = new[] { ".pdf", ".jpg", ".png" };
-                    var extension = Path.GetExtension(archivo.FileName).ToLower();
-
-                    if (!extensionesPermitidas.Contains(extension))
-                        return BadRequest(new { mensaje = "Formato de archivo no permitido" });
-
-                    var carpeta = Path.Combine("wwwroot", "uploads", "incapacidades");
-                    Directory.CreateDirectory(carpeta);
-
-                    var nombreArchivo = $"{Guid.NewGuid()}{extension}";
-                    var rutaCompleta = Path.Combine(carpeta, nombreArchivo);
-
-                    using var stream = new FileStream(rutaCompleta, FileMode.Create);
-                    await archivo.CopyToAsync(stream);
-
-                    rutaArchivoGuardado = rutaCompleta;
-
-                    dto.ArchivoAdjunto = $"/uploads/incapacidades/{nombreArchivo}";
-                }
-
                 var incapacidadCreada = await _managerIncapacidades.RegistrarIncapacidad(dto);
+
                 return CreatedAtAction(
                     nameof(ObtenerIncapacidadPorId),
                     new { id = incapacidadCreada.IdIncapacidad },
                     incapacidadCreada);
             }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { mensaje = ex.Message });
+            }
             catch (Exception ex)
             {
-                if (rutaArchivoGuardado != null && System.IO.File.Exists(rutaArchivoGuardado))
-                {
-                    System.IO.File.Delete(rutaArchivoGuardado);
-                }
-
                 _logger.LogError(ex, "Error al registrar incapacidad");
                 return StatusCode(500, new { mensaje = "Error interno del servidor" });
             }
