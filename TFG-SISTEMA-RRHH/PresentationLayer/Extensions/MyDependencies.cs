@@ -114,6 +114,13 @@ namespace PresentationLayer.Extensions
             services.AddScoped<BusinessLogicLayer.Interfaces.IRolesManager,
                                        BusinessLogicLayer.Managers.RolesManager>();
 
+            // Liquidaciones
+            services.AddScoped<DataAccessLayer.Interfaces.ILiquidacionesRepository,
+                           DataAccessLayer.Repositories.LiquidacionesRepository>();
+
+            services.AddScoped<BusinessLogicLayer.Interfaces.ILiquidacionesManager,
+                                       BusinessLogicLayer.Managers.LiquidacionesManager>();
+
             return services;
         }
     }

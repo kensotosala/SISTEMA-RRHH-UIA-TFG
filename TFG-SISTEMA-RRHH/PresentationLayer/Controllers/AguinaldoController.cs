@@ -1,4 +1,4 @@
-﻿// PresentationLayer/Controllers/AguinaldoController.cs
+﻿
 using BusinessLogicLayer.DTOs;
 using BusinessLogicLayer.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -100,16 +100,16 @@ namespace PresentationLayer.Controllers
         {
             try
             {
-                // Verificar que el usuario solo pueda ver sus propios aguinaldos
-                var userEmployeeId = User.FindFirst("EmployeeId")?.Value;
-                var userRole = User.FindFirst("Roles")?.Value;
+                //// Verificar que el usuario solo pueda ver sus propios aguinaldos
+                //var userEmployeeId = User.FindFirst("EmployeeId")?.Value;
+                //var userRole = User.FindFirst("Roles")?.Value;
 
-                if (userRole != "Administrador" &&
-                    userRole != "Recursos Humanos" &&
-                    userEmployeeId != empleadoId.ToString())
-                {
-                    return Forbid();
-                }
+                //if (userRole != "Administrador" &&
+                //    userRole != "Recursos Humanos" &&
+                //    userEmployeeId != empleadoId.ToString())
+                //{
+                //    return Forbid();
+                //}
 
                 var aguinaldos = await _aguinaldoManager.ObtenerPorEmpleadoAsync(empleadoId);
 

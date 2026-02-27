@@ -7,23 +7,18 @@ namespace DataAccessLayer.Interfaces
         // CRUD
         Task<IEnumerable<Liquidaciones>> ListarLiquidaciones();
 
-        Task<bool> ModificarLiquidacion(int id);
+        Task<bool> ModificarLiquidacion(Liquidaciones liquidacion);
 
         Task<bool> AnularLiquidacion(int id);
 
-        Task<Liquidaciones> CalcularLiquidacion();
+        Task<Liquidaciones> CrearLiquidacion(Liquidaciones liquidacion);
 
         Task<Liquidaciones?> ObtenerLiquidacionPorId(int id);
 
         // Otros métodos específicos
-        Task<double> CalcularSalarioPromedio();
+        Task<List<Nominas>> ObtenerNominasUltimos6Meses(int idEmpleado);
+        Task<List<Nominas>> ObtenerNominasUltimos12Meses(int idEmpleado);
 
-        Task<double> CalcularPreaviso();
-
-        Task<double> CalcularAuxilioCesantia();
-
-        Task<double> CalcularVacacionesProporcionales();
-
-        Task<double> CalcularAguinaldoProporcional();
+        Task<Empleados?> ObtenerEmpleadoPorId(int idEmpleado);
     }
 }

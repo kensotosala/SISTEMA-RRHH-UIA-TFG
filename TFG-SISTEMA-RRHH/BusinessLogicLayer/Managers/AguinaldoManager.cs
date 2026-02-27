@@ -1,5 +1,4 @@
-﻿// BusinessLogicLayer/Managers/AguinaldoManager.cs
-using BusinessLogicLayer.DTOs;
+﻿using BusinessLogicLayer.DTOs;
 using BusinessLogicLayer.Interfaces;
 using DataAccessLayer.Entities;
 using DataAccessLayer.Interfaces;

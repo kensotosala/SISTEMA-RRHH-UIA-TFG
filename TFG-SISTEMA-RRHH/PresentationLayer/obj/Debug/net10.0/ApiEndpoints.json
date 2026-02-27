@@ -1357,6 +1357,22 @@
     ]
   },
   {
+    "ContainingType": "PresentationLayer.Controllers.LiquidacionesController",
+    "Method": "CalcularSalarioPromedio",
+    "RelativePath": "api/v1/Liquidaciones",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idEmpleado",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "PresentationLayer.Controllers.NominaController",
     "Method": "ListarNominas",
     "RelativePath": "api/v1/Nomina",

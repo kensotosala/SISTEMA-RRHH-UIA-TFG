@@ -1966,6 +1966,28 @@
         }
       }
     },
+    "/api/v1/Liquidaciones": {
+      "get": {
+        "tags": [
+          "Liquidaciones"
+        ],
+        "parameters": [
+          {
+            "name": "idEmpleado",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/v1/Nomina/generar": {
       "post": {
         "tags": [
@@ -6248,6 +6270,9 @@
     },
     {
       "name": "Incapacidad"
+    },
+    {
+      "name": "Liquidaciones"
     },
     {
       "name": "Nomina"
