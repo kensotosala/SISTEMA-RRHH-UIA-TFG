@@ -7,10 +7,9 @@ namespace BusinessLogicLayer.Managers
 {
     public class LiquidacionesManager : ILiquidacionesManager
     {
+        private readonly NotificacionesManager _notificacionesManager;
         private readonly ILiquidacionesRepository _repo;
         private readonly IEmpleadosRepository _repoEmpleados;
-        private readonly NotificacionesManager _notificacionesManager;
-
         public LiquidacionesManager(ILiquidacionesRepository repo, IEmpleadosRepository repoEmpleados, NotificacionesManager notificacionesManager)
         {
             _repo = repo;
@@ -283,7 +282,7 @@ namespace BusinessLogicLayer.Managers
                 SalarioBase = await CalcularSalarioPromedio(idEmpleado),
                 VacacionesPendientes = vacaciones.MontoVacacionesProporcionales,
                 AguinaldoProporcional = aguinaldo.MontoAguinaldoProporcional,
-                Indemnizacion = indemnizacion,
+                Indemnizacion = cesantia.MontoAuxilioCesantia,
                 OtrosConceptos = deduccionPreaviso > 0 ? -deduccionPreaviso : 0m,
                 TotalLiquidacion = vacaciones.MontoVacacionesProporcionales
                                   + aguinaldo.MontoAguinaldoProporcional
@@ -305,6 +304,45 @@ namespace BusinessLogicLayer.Managers
             return liquidacion;
         }
 
+        public async Task<ResultDTO<IEnumerable<LiquidacionDTO>>> ListarLiquidaciones()
+        {
+            try
+            {
+                var listaLiquidaciones = await _repo.ListarLiquidaciones();
+
+                if (listaLiquidaciones == null || !listaLiquidaciones.Any())
+                    return ResultDTO<IEnumerable<LiquidacionDTO>>.Failure("No se encontraron liquidaciones.");
+
+                var listaDTO = new List<LiquidacionDTO>();
+
+                foreach (var l in listaLiquidaciones)
+                {
+                    var fechaSalida = DateOnly.FromDateTime(l.FechaLiquidacion);
+
+                    var preaviso = await CalcularPreaviso(l.EmpleadoId, fechaSalida);
+                    var vacaciones = await CalcularVacacionesProporcionales(l.EmpleadoId, fechaSalida);
+                    var aguinaldo = await CalcularAguinaldoProporcional(l.EmpleadoId, fechaSalida);
+                    var cesantia = await CalcularAuxilioCesantia(l.EmpleadoId, fechaSalida);
+
+                    listaDTO.Add(new LiquidacionDTO
+                    {
+                        IdLiquidacion = l.IdLiquidacion,
+                        IdEmpleado = l.EmpleadoId,
+                        MontoPreaviso = preaviso.MontoPreaviso,
+                        MontoVacaciones = vacaciones.MontoVacacionesProporcionales,
+                        MontoAguinaldo = aguinaldo.MontoAguinaldoProporcional,
+                        MontoCesantia = cesantia.MontoAuxilioCesantia
+                    });
+                }
+
+                return ResultDTO<IEnumerable<LiquidacionDTO>>.Success(listaDTO, "Liquidaciones obtenidas exitosamente.");
+            }
+            catch (Exception ex)
+            {
+                return ResultDTO<IEnumerable<LiquidacionDTO>>.Failure($"Ocurrió un error al obtener las liquidaciones: {ex.Message}");
+            }
+        }
+
         public async Task<ResultDTO<bool>> ModificarLiquidacion(Liquidaciones liquidacion)
         {
             if (liquidacion is null) return ResultDTO<bool>.Failure("La liquidación no es válida.");
@@ -318,7 +356,7 @@ namespace BusinessLogicLayer.Managers
 
             var liquidacionExistente = await ObtenerLiquidacionPorId(liquidacion.IdLiquidacion);
 
-            if (liquidacionExistente is null) return ResultDTO<bool>.Failure("Liquidación no encontrada.")
+            if (liquidacionExistente is null) return ResultDTO<bool>.Failure("Liquidación no encontrada.");
 
             liquidacionExistente.FechaLiquidacion = liquidacion.FechaLiquidacion;
             liquidacionExistente.MotivoLiquidacion = liquidacion.MotivoLiquidacion;

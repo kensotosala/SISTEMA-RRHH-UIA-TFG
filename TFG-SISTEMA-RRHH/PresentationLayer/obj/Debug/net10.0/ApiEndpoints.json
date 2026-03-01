@@ -1358,8 +1358,65 @@
   },
   {
     "ContainingType": "PresentationLayer.Controllers.LiquidacionesController",
-    "Method": "CalcularSalarioPromedio",
+    "Method": "ListarLiquidaciones",
     "RelativePath": "api/v1/Liquidaciones",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PresentationLayer.Controllers.LiquidacionesController",
+    "Method": "CrearLiquidacion",
+    "RelativePath": "api/v1/Liquidaciones",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idEmpleado",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "fechaSalida",
+        "Type": "System.DateOnly",
+        "IsRequired": false
+      },
+      {
+        "Name": "motivo",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "preavisoEntregado",
+        "Type": "System.Boolean",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PresentationLayer.Controllers.LiquidacionesController",
+    "Method": "ObtenerLiquidacionPorId",
+    "RelativePath": "api/v1/Liquidaciones/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PresentationLayer.Controllers.LiquidacionesController",
+    "Method": "CalcularAguinaldoProporcional",
+    "RelativePath": "api/v1/Liquidaciones/calcular-aguinaldo-proporcional",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -1367,6 +1424,111 @@
       {
         "Name": "idEmpleado",
         "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "fechaSalida",
+        "Type": "System.DateOnly",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PresentationLayer.Controllers.LiquidacionesController",
+    "Method": "CalcularAuxilioCesantia",
+    "RelativePath": "api/v1/Liquidaciones/calcular-auxilio-cesantia",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idEmpleado",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "fechaSalida",
+        "Type": "System.DateOnly",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PresentationLayer.Controllers.LiquidacionesController",
+    "Method": "CalcularLiquidacion",
+    "RelativePath": "api/v1/Liquidaciones/calcular-liquidacion",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idEmpleado",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "fechaSalida",
+        "Type": "System.DateOnly",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PresentationLayer.Controllers.LiquidacionesController",
+    "Method": "CalcularPreaviso",
+    "RelativePath": "api/v1/Liquidaciones/calcular-preaviso",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idEmpleado",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "fechaSalida",
+        "Type": "System.DateOnly",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PresentationLayer.Controllers.LiquidacionesController",
+    "Method": "CalcularSalarioPromedio",
+    "RelativePath": "api/v1/Liquidaciones/calcular-salario-promedio",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idEmpleado",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PresentationLayer.Controllers.LiquidacionesController",
+    "Method": "CalcularVacacionesProporcionales",
+    "RelativePath": "api/v1/Liquidaciones/calcular-vacaciones-proporcionales",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idEmpleado",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "fechaSalida",
+        "Type": "System.DateOnly",
         "IsRequired": false
       }
     ],

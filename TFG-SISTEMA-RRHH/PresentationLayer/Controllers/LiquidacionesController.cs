@@ -1,5 +1,4 @@
 ﻿using BusinessLogicLayer.Interfaces;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace PresentationLayer.Controllers
@@ -17,7 +16,7 @@ namespace PresentationLayer.Controllers
             _logger = logger;
         }
 
-        [HttpGet]
+        [HttpGet("calcular-salario-promedio")]
         public async Task<IActionResult> CalcularSalarioPromedio(int idEmpleado)
         {
             try
@@ -29,6 +28,133 @@ namespace PresentationLayer.Controllers
             {
                 _logger.LogError(ex, "Error al calcular el salario promedio para el empleado con ID {IdEmpleado}", idEmpleado);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error al calcular el salario promedio.");
+            }
+        }
+
+        [HttpGet("calcular-preaviso")]
+        public async Task<IActionResult> CalcularPreaviso(int idEmpleado, DateOnly fechaSalida)
+        {
+            try
+            {
+                var resultadoPreaviso = await _manager.CalcularPreaviso(idEmpleado, fechaSalida);
+                return Ok(resultadoPreaviso);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error al calcular el preaviso para el empleado con ID {IdEmpleado}", idEmpleado);
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error al calcular el preaviso.");
+            }
+        }
+
+        [HttpGet("calcular-auxilio-cesantia")]
+
+        public async Task<IActionResult> CalcularAuxilioCesantia(int idEmpleado, DateOnly fechaSalida)
+        {
+            try
+            {
+                var resultadoAuxilioCesantia = await _manager.CalcularAuxilioCesantia(idEmpleado, fechaSalida);
+                return Ok(resultadoAuxilioCesantia);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error al calcular el auxilio de cesantía para el empleado con ID {IdEmpleado}", idEmpleado);
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error al calcular el auxilio de cesantía.");
+            }
+        }
+
+        [HttpGet("calcular-vacaciones-proporcionales")]
+        public async Task<IActionResult> CalcularVacacionesProporcionales(int idEmpleado, DateOnly fechaSalida)
+        {
+            try
+            {
+                var resultadoVacacionesProporcionales = await _manager.CalcularVacacionesProporcionales(idEmpleado, fechaSalida);
+                return Ok(resultadoVacacionesProporcionales);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error al calcular las vacaciones proporcionales para el empleado con ID {IdEmpleado}", idEmpleado);
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error al calcular las vacaciones proporcionales.");
+            }
+        }
+
+        [HttpGet("calcular-aguinaldo-proporcional")]
+        public async Task<IActionResult> CalcularAguinaldoProporcional(int idEmpleado, DateOnly fechaSalida)
+        {
+            try
+            {
+                var resultadoAguinaldoProporcional = await _manager.CalcularAguinaldoProporcional(idEmpleado, fechaSalida);
+                return Ok(resultadoAguinaldoProporcional);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error al calcular el aguinaldo proporcional para el empleado con ID {IdEmpleado}", idEmpleado);
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error al calcular el aguinaldo proporcional.");
+            }
+        }
+
+        [HttpGet("calcular-liquidacion")]
+        public async Task<IActionResult> CalcularLiquidacion(int idEmpleado, DateOnly fechaSalida)
+        {
+            try
+            {
+                var liquidacion = await _manager.CalcularLiquidacion(idEmpleado, fechaSalida);
+                return Ok(liquidacion);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error al calcular la liquidación para el empleado con ID {IdEmpleado}", idEmpleado);
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error al calcular la liquidación.");
+            }
+        }
+
+        /*
+         * Endpoints CRUD para liquidaciones
+         */
+
+        [HttpGet]
+        public async Task<IActionResult> ListarLiquidaciones()
+        {
+            try
+            {
+                var liquidaciones = await _manager.ListarLiquidaciones();
+                return Ok(liquidaciones);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error al listar las liquidaciones");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error al listar las liquidaciones.");
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CrearLiquidacion(int idEmpleado, DateOnly fechaSalida, string motivo, bool preavisoEntregado)
+        {
+            try
+            {
+                var liquidacion = await _manager.CrearLiquidacion(idEmpleado, fechaSalida, motivo, preavisoEntregado);
+                return Ok(liquidacion);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error al crear la liquidación para el empleado con ID {IdEmpleado}", idEmpleado);
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error al crear la liquidación.");
+            }
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> ObtenerLiquidacionPorId(int id)
+        {
+            try
+            {
+                var liquidacion = await _manager.ObtenerLiquidacionPorId(id);
+                if (liquidacion == null)
+                    return NotFound($"No se encontró una liquidación con ID {id}");
+                return Ok(liquidacion);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error al obtener la liquidación con ID {IdLiquidacion}", id);
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error al obtener la liquidación.");
             }
         }
     }

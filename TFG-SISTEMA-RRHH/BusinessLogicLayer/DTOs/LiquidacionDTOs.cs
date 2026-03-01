@@ -2,6 +2,7 @@
 {
     public class LiquidacionDTO
     {
+        public int IdLiquidacion { get; set; }
         public int IdEmpleado { get; set; }
         public decimal MontoPreaviso { get; set; }
         public decimal MontoVacaciones { get; set; }

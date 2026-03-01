@@ -5,6 +5,18 @@ namespace BusinessLogicLayer.Interfaces
 {
     public interface ILiquidacionesManager
     {
+        // CRUD
+        Task<Liquidaciones> CrearLiquidacion(int idEmpleado, DateOnly fechaSalida, string motivo, bool preavisoEntregado = true);
+
+        Task<ResultDTO<bool>> ModificarLiquidacion(Liquidaciones liquidacion);
+
+        Task<Liquidaciones?> ObtenerLiquidacionPorId(int idLiquidacion);
+
+        Task<ResultDTO<bool>> AnularLiquidacion(int idLiquidacion);
+
+        Task<ResultDTO<IEnumerable<LiquidacionDTO>>> ListarLiquidaciones();
+
+        // Cálculos
         Task<decimal> CalcularSalarioPromedio(int idEmpleado);
 
         Task<ResultadoPreaviso> CalcularPreaviso(int idEmpleado, DateOnly fechaSalida);
@@ -16,14 +28,5 @@ namespace BusinessLogicLayer.Interfaces
         Task<ResultadoAguinaldoProporcional> CalcularAguinaldoProporcional(int idEmpleado, DateOnly fechaSalida);
 
         Task<LiquidacionDTO> CalcularLiquidacion(int idEmpleado, DateOnly fechaSalida);
-
-        // CRUD
-        Task<Liquidaciones> CrearLiquidacion(int idEmpleado, DateOnly fechaSalida, string motivo, bool preavisoEntregado = true);
-
-        Task<ResultDTO<bool>> ModificarLiquidacion(Liquidaciones liquidacion);
-
-        Task<Liquidaciones?> ObtenerLiquidacionPorId(int idLiquidacion);
-
-        Task<ResultDTO<bool>> AnularLiquidacion(int idLiquidacion);
     }
 }
