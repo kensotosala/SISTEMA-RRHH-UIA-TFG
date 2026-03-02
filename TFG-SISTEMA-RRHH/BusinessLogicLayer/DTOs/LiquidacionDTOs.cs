@@ -9,6 +9,7 @@
         public decimal MontoAguinaldo { get; set; }
         public decimal MontoCesantia { get; set; }
         public decimal MontoTotal => MontoPreaviso + MontoVacaciones + MontoAguinaldo + MontoCesantia;
+        public string? Estado { get; set; }
     }
 
     public class ResultadoPreaviso
@@ -32,5 +33,13 @@
     public class ResultadoAguinaldoProporcional
     {
         public decimal MontoAguinaldoProporcional { get; set; }
+    }
+
+    public class CrearLiquidacionRequest
+    {
+        public int EmpleadoId { get; set; }
+        public DateTime FechaSalida { get; set; }
+        public string MotivoLiquidacion { get; set; } = string.Empty;
+        public bool PreavisoEntregado { get; set; }
     }
 }

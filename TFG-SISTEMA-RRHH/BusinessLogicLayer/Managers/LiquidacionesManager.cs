@@ -331,7 +331,8 @@ namespace BusinessLogicLayer.Managers
                         MontoPreaviso = preaviso.MontoPreaviso,
                         MontoVacaciones = vacaciones.MontoVacacionesProporcionales,
                         MontoAguinaldo = aguinaldo.MontoAguinaldoProporcional,
-                        MontoCesantia = cesantia.MontoAuxilioCesantia
+                        MontoCesantia = cesantia.MontoAuxilioCesantia,
+                        Estado = l.Estado
                     });
                 }
 
@@ -347,7 +348,7 @@ namespace BusinessLogicLayer.Managers
         {
             if (liquidacion is null) return ResultDTO<bool>.Failure("La liquidación no es válida.");
 
-            if (liquidacion.Estado != "CAlCULADA")
+            if (liquidacion.Estado != "CALCULADA")
             {
                 return ResultDTO<bool>.Failure(
                     "Solo se pueden modificar liquidaciones CALCULADAS"

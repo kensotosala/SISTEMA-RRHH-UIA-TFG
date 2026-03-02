@@ -1,4 +1,5 @@
-﻿using BusinessLogicLayer.Interfaces;
+﻿using BusinessLogicLayer.DTOs;
+using BusinessLogicLayer.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace PresentationLayer.Controllers
@@ -127,16 +128,25 @@ namespace PresentationLayer.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CrearLiquidacion(int idEmpleado, DateOnly fechaSalida, string motivo, bool preavisoEntregado)
+        public async Task<IActionResult> CrearLiquidacion([FromBody] CrearLiquidacionRequest request) 
         {
             try
             {
-                var liquidacion = await _manager.CrearLiquidacion(idEmpleado, fechaSalida, motivo, preavisoEntregado);
+                var liquidacion = await _manager.CrearLiquidacion(
+                    request.EmpleadoId,
+                    DateOnly.FromDateTime(request.FechaSalida), 
+                    request.MotivoLiquidacion,
+                    request.PreavisoEntregado
+                );
                 return Ok(liquidacion);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error al crear la liquidación para el empleado con ID {IdEmpleado}", idEmpleado);
+                _logger.LogError(ex, "Error al crear la liquidación para el empleado con ID {IdEmpleado}", request.EmpleadoId);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error al crear la liquidación.");
             }
         }
@@ -155,6 +165,21 @@ namespace PresentationLayer.Controllers
             {
                 _logger.LogError(ex, "Error al obtener la liquidación con ID {IdLiquidacion}", id);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error al obtener la liquidación.");
+            }
+        }
+
+        [HttpPatch("{id}/anular")]
+        public async Task<IActionResult> AnularLiquidacion(int id)
+        {
+            try
+            {
+                var resultado = await _manager.AnularLiquidacion(id);
+                return resultado.Exitoso ? Ok(resultado) : BadRequest(resultado);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error al anular la liquidación con ID {Id}", id);
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error al anular la liquidación.");
             }
         }
     }

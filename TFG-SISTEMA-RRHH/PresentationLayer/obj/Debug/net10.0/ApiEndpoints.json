@@ -1375,24 +1375,9 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "idEmpleado",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "fechaSalida",
-        "Type": "System.DateOnly",
-        "IsRequired": false
-      },
-      {
-        "Name": "motivo",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "preavisoEntregado",
-        "Type": "System.Boolean",
-        "IsRequired": false
+        "Name": "request",
+        "Type": "BusinessLogicLayer.DTOs.CrearLiquidacionRequest",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []
@@ -1402,6 +1387,22 @@
     "Method": "ObtenerLiquidacionPorId",
     "RelativePath": "api/v1/Liquidaciones/{id}",
     "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PresentationLayer.Controllers.LiquidacionesController",
+    "Method": "AnularLiquidacion",
+    "RelativePath": "api/v1/Liquidaciones/{id}/anular",
+    "HttpMethod": "PATCH",
     "IsController": true,
     "Order": 0,
     "Parameters": [

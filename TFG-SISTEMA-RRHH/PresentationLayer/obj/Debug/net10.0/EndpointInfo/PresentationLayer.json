@@ -2153,35 +2153,45 @@
         "tags": [
           "Liquidaciones"
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CrearLiquidacionRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CrearLiquidacionRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CrearLiquidacionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/Liquidaciones/{id}": {
+      "get": {
+        "tags": [
+          "Liquidaciones"
+        ],
         "parameters": [
           {
-            "name": "idEmpleado",
-            "in": "query",
+            "name": "id",
+            "in": "path",
+            "required": true,
             "schema": {
               "type": "integer",
               "format": "int32"
-            }
-          },
-          {
-            "name": "fechaSalida",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "format": "date"
-            }
-          },
-          {
-            "name": "motivo",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "preavisoEntregado",
-            "in": "query",
-            "schema": {
-              "type": "boolean"
             }
           }
         ],
@@ -2192,8 +2202,8 @@
         }
       }
     },
-    "/api/v1/Liquidaciones/{id}": {
-      "get": {
+    "/api/v1/Liquidaciones/{id}/anular": {
+      "patch": {
         "tags": [
           "Liquidaciones"
         ],
@@ -4882,6 +4892,27 @@
             "type": "integer",
             "format": "int32",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CrearLiquidacionRequest": {
+        "type": "object",
+        "properties": {
+          "empleadoId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "fechaSalida": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "motivoLiquidacion": {
+            "type": "string",
+            "nullable": true
+          },
+          "preavisoEntregado": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false
