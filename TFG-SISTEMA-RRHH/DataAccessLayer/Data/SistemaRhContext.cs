@@ -528,7 +528,10 @@ public partial class SistemaRhContext : DbContext
                 .HasPrecision(10, 2)
                 .HasDefaultValueSql("'0.00'")
                 .HasColumnName("vacaciones_pendientes");
-
+            entity.Property(e => e.MontoPreaviso)
+                .HasPrecision(10, 2)
+                .HasDefaultValueSql("'0.00'")
+                .HasColumnName("monto_preaviso");
             entity.HasOne(d => d.Empleado).WithMany(p => p.Liquidaciones)
                 .HasForeignKey(d => d.EmpleadoId)
                 .OnDelete(DeleteBehavior.ClientSetNull)

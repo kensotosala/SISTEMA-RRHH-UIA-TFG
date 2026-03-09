@@ -17,6 +17,7 @@ public partial class Liquidaciones
     public string? Estado { get; set; }
     public DateTime? FechaCreacion { get; set; }
     public DateTime? FechaModificacion { get; set; }
+    public decimal? MontoPreaviso { get; set; }
 
     [JsonIgnore]
     public virtual Empleados Empleado { get; set; } = null!;

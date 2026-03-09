@@ -45,7 +45,13 @@ namespace DataAccessLayer.Repositories
 
         public async Task<bool> ModificarLiquidacion(Liquidaciones liquidacion)
         {
-            _context.Liquidaciones.Update(liquidacion);
+            _context.Entry(liquidacion).State = EntityState.Modified;
+
+            _context.Entry(liquidacion).Property(l => l.FechaCreacion).IsModified = false;
+            _context.Entry(liquidacion).Property(l => l.EmpleadoId).IsModified = false;
+            _context.Entry(liquidacion).Property(l => l.MotivoLiquidacion).IsModified = false;
+            _context.Entry(liquidacion).Property(l => l.SalarioBase).IsModified = false;
+
             var result = await _context.SaveChangesAsync();
             return result > 0;
         }

@@ -182,5 +182,34 @@ namespace PresentationLayer.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error al anular la liquidación.");
             }
         }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> ModificarLiquidacion(int id, [FromBody] ModificarLiquidacionRequest request)
+        {
+            try
+            {
+                var liquidacionExistente = await _manager.ObtenerLiquidacionPorId(id);
+                if (liquidacionExistente == null)
+                    return NotFound($"No se encontró una liquidación con ID {id}");
+
+                liquidacionExistente.VacacionesPendientes = request.MontoVacaciones;
+                liquidacionExistente.AguinaldoProporcional = request.MontoAguinaldo;
+                liquidacionExistente.Indemnizacion = request.MontoCesantia;
+                liquidacionExistente.MontoPreaviso = request.MontoPreaviso;
+                liquidacionExistente.TotalLiquidacion = request.MontoPreaviso
+                                                           + request.MontoVacaciones
+                                                           + request.MontoAguinaldo
+                                                           + request.MontoCesantia;
+                liquidacionExistente.Estado = "CALCULADA";
+
+                var resultado = await _manager.ModificarLiquidacion(liquidacionExistente);
+                return resultado.Exitoso ? Ok(resultado) : BadRequest(resultado);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error al modificar la liquidación con ID {Id}", id);
+                return StatusCode(500, "Error al modificar la liquidación.");
+            }
+        }
     }
 }

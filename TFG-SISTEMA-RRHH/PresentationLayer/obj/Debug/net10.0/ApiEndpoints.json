@@ -1400,6 +1400,27 @@
   },
   {
     "ContainingType": "PresentationLayer.Controllers.LiquidacionesController",
+    "Method": "ModificarLiquidacion",
+    "RelativePath": "api/v1/Liquidaciones/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "request",
+        "Type": "BusinessLogicLayer.DTOs.ModificarLiquidacionRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PresentationLayer.Controllers.LiquidacionesController",
     "Method": "AnularLiquidacion",
     "RelativePath": "api/v1/Liquidaciones/{id}/anular",
     "HttpMethod": "PATCH",

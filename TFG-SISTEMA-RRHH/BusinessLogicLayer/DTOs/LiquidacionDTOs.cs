@@ -42,4 +42,13 @@
         public string MotivoLiquidacion { get; set; } = string.Empty;
         public bool PreavisoEntregado { get; set; }
     }
+
+    public class ModificarLiquidacionRequest
+    {
+        public int IdLiquidacion { get; set; }
+        public decimal MontoPreaviso { get; set; }
+        public decimal MontoVacaciones { get; set; }
+        public decimal MontoAguinaldo { get; set; }
+        public decimal MontoCesantia { get; set; }
+    }
 }

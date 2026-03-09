@@ -2200,6 +2200,46 @@
             "description": "OK"
           }
         }
+      },
+      "put": {
+        "tags": [
+          "Liquidaciones"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ModificarLiquidacionRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ModificarLiquidacionRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ModificarLiquidacionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
       }
     },
     "/api/v1/Liquidaciones/{id}/anular": {
@@ -5853,6 +5893,32 @@
           "mensaje": {
             "type": "string",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ModificarLiquidacionRequest": {
+        "type": "object",
+        "properties": {
+          "idLiquidacion": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "montoPreaviso": {
+            "type": "number",
+            "format": "double"
+          },
+          "montoVacaciones": {
+            "type": "number",
+            "format": "double"
+          },
+          "montoAguinaldo": {
+            "type": "number",
+            "format": "double"
+          },
+          "montoCesantia": {
+            "type": "number",
+            "format": "double"
           }
         },
         "additionalProperties": false
