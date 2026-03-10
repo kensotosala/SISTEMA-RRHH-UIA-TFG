@@ -121,6 +121,13 @@ namespace PresentationLayer.Extensions
             services.AddScoped<BusinessLogicLayer.Interfaces.ILiquidacionesManager,
                                        BusinessLogicLayer.Managers.LiquidacionesManager>();
 
+            // Evaluaciones Rendimiento
+            services.AddScoped<DataAccessLayer.Interfaces.IEvaluacionRendimientoRepository,
+                           DataAccessLayer.Repositories.EvaluacionRendimientoRepository>();
+
+            services.AddScoped<BusinessLogicLayer.Interfaces.IEvaluacionRendimientoManager,
+                                       BusinessLogicLayer.Managers.EvaluacionRendimientoManager>(); 
+
             return services;
         }
     }
