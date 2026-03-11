@@ -345,8 +345,8 @@ public partial class SistemaRhContext : DbContext
                 .HasColumnName("comentarios");
             entity.Property(e => e.EmpleadoId).HasColumnName("empleado_id");
             entity.Property(e => e.Estado)
-                .HasDefaultValueSql("'COMPLETADA'")
-                .HasColumnType("enum('ANULADA','COMPLETADA')")
+                .HasDefaultValueSql("'PENDIENTE'")
+                .HasColumnType("enum('ANULADA','APROBADA')")
                 .HasColumnName("estado");
             entity.Property(e => e.EvaluadorId).HasColumnName("evaluador_id");
             entity.Property(e => e.FechaCreacion)

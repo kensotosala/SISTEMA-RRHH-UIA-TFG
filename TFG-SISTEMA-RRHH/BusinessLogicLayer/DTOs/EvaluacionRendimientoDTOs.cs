@@ -34,8 +34,6 @@
         public DateTime FechaFin { get; set; }
         public int EvaluadorId { get; set; }
         public string? Comentarios { get; set; }
-        public string Estado { get; set; } = "Pendiente";
-
         public List<CreateDetalleEvaluacionDTO> Detalles { get; set; } = new();
     }
 

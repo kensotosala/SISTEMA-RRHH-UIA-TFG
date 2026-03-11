@@ -105,5 +105,24 @@ namespace PresentationLayer.Controllers
 
             return Ok(result);
         }
+
+        [HttpDelete("/aprobar/{id:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> Aprobar([FromRoute] int id)
+        {
+            var result = await _manager.AproveAsync(id);
+
+            if (!result.Exitoso)
+            {
+                if (result.Mensaje.Contains("No se encontró"))
+                    return NotFound(result);
+
+                return BadRequest(result);
+            }
+
+            return Ok(result);
+        }
     }
 }

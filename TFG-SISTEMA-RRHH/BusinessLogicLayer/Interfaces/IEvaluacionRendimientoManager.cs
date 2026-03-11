@@ -13,5 +13,6 @@ namespace BusinessLogicLayer.Interfaces
         Task<ResultDTO<EvaluacionResponseDTO>> UpdateAsync(int idEvaluacion, UpdateEvaluacionDTO dto);
 
         Task<ResultDTO<bool>> DeleteAsync(int idEvaluacion);
+        Task<ResultDTO<bool>> AproveAsync(int idEvaluacion);
     }
 }

@@ -12,7 +12,7 @@ namespace BusinessLogicLayer.Managers
         private readonly ILogger<EvaluacionRendimientoManager> _logger;
 
         private static readonly HashSet<string> EstadosPermitidos =
-            new(StringComparer.OrdinalIgnoreCase) { "COMPLETADA", "ANULADA"};
+            new(StringComparer.OrdinalIgnoreCase) { "COMPLETADA", "ANULADA" };
 
         public EvaluacionRendimientoManager(
             IEvaluacionRendimientoRepository repo,
@@ -72,7 +72,6 @@ namespace BusinessLogicLayer.Managers
                         $"El empleado {dto.EmpleadoId} ya tiene una evaluación registrada " +
                         $"para el año {anioEvaluacion}. Solo se permite una evaluación por año.");
 
-                // Calcula puntuación total como promedio de detalles (si existen)
                 sbyte puntuacionTotal = CalcularPuntuacionTotal(
                     dto.Detalles.Select(d => d.Puntuacion).ToList());
 
@@ -84,7 +83,7 @@ namespace BusinessLogicLayer.Managers
                     EvaluadorId = dto.EvaluadorId,
                     PuntuacionTotal = puntuacionTotal,
                     Comentarios = dto.Comentarios?.Trim(),
-                    Estado = dto.Estado,
+                    Estado = "PENDIENTE",
                     DetalleEvaluaciones = dto.Detalles.Select(d => new DetalleEvaluaciones
                     {
                         IdMetrica = d.IdMetrica,
@@ -96,7 +95,6 @@ namespace BusinessLogicLayer.Managers
                 };
 
                 var creada = await _repo.CreateAsync(entity);
-                // Recarga con navegaciones para devolver datos completos
                 var resultado = await _repo.GetByIdAsync(creada.IdEvaluacion);
 
                 return ResultDTO<EvaluacionResponseDTO>
@@ -211,10 +209,6 @@ namespace BusinessLogicLayer.Managers
                     return ResultDTO<bool>
                         .Failure($"La evaluación con Id {idEvaluacion} ya se encuentra anulada.");
 
-                //if (evaluacion.Estado?.ToUpper() == "COMPLETADA")
-                //    return ResultDTO<bool>
-                //        .Failure("No se puede anular una evaluación que ya está completada.");
-
                 evaluacion.Estado = "ANULADA";
                 await _repo.UpdateAsync(evaluacion);
 
@@ -225,6 +219,37 @@ namespace BusinessLogicLayer.Managers
             {
                 _logger.LogError(ex, "Error al anular evaluación con Id {Id}.", idEvaluacion);
                 return ResultDTO<bool>.Failure("Error interno al anular la evaluación.");
+            }
+        }
+
+        public async Task<ResultDTO<bool>> AproveAsync(int idEvaluacion)
+        {
+            try
+            {
+                var evaluacion = await _repo.GetByIdAsync(idEvaluacion);
+
+                if (evaluacion is null)
+                    return ResultDTO<bool>
+                        .Failure($"No se encontró la evaluación con Id {idEvaluacion}.");
+
+                if (evaluacion.Estado?.ToUpper() == "ANULADA")
+                    return ResultDTO<bool>
+                        .Failure($"La evaluación con Id {idEvaluacion} ya se encuentra anulada. No puede ser aprobada");
+
+                if (evaluacion.Estado?.ToUpper() == "APROBADA")
+                    return ResultDTO<bool>
+                        .Failure($"La evaluación con Id {idEvaluacion} ya se encuentra aprobada.");
+
+                evaluacion.Estado = "APROBADA";
+                await _repo.UpdateAsync(evaluacion);
+
+                return ResultDTO<bool>.Success(true,
+                    $"Evaluación {idEvaluacion} aprobada exitosamente.");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error al aprobar evaluación con Id {Id}.", idEvaluacion);
+                return ResultDTO<bool>.Failure("Error interno al aprobar la evaluación.");
             }
         }
 
@@ -246,8 +271,6 @@ namespace BusinessLogicLayer.Managers
                 errores.Add("El evaluador no puede ser el mismo empleado evaluado.");
             if (dto.FechaInicio >= dto.FechaFin)
                 errores.Add("FechaInicio debe ser anterior a FechaFin.");
-            if (!EstadosPermitidos.Contains(dto.Estado))
-                errores.Add($"Estado inválido. Valores permitidos: {string.Join(", ", EstadosPermitidos)}.");
 
             errores.AddRange(ValidarDetallesCreate(dto.Detalles));
             return errores;

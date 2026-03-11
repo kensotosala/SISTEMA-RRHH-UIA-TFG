@@ -48,7 +48,6 @@ namespace PresentationLayer.Controllers
         }
 
         [HttpGet("calcular-auxilio-cesantia")]
-
         public async Task<IActionResult> CalcularAuxilioCesantia(int idEmpleado, DateOnly fechaSalida)
         {
             try
@@ -128,13 +127,13 @@ namespace PresentationLayer.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CrearLiquidacion([FromBody] CrearLiquidacionRequest request) 
+        public async Task<IActionResult> CrearLiquidacion([FromBody] CrearLiquidacionRequest request)
         {
             try
             {
                 var liquidacion = await _manager.CrearLiquidacion(
                     request.EmpleadoId,
-                    DateOnly.FromDateTime(request.FechaSalida), 
+                    DateOnly.FromDateTime(request.FechaSalida),
                     request.MotivoLiquidacion,
                     request.PreavisoEntregado
                 );

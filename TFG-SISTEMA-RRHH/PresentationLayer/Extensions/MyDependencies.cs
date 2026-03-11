@@ -126,7 +126,14 @@ namespace PresentationLayer.Extensions
                            DataAccessLayer.Repositories.EvaluacionRendimientoRepository>();
 
             services.AddScoped<BusinessLogicLayer.Interfaces.IEvaluacionRendimientoManager,
-                                       BusinessLogicLayer.Managers.EvaluacionRendimientoManager>(); 
+                                       BusinessLogicLayer.Managers.EvaluacionRendimientoManager>();
+
+            // Metricas Rendimiento
+            services.AddScoped<DataAccessLayer.Interfaces.IMetricasRendimientoRepository,
+                           DataAccessLayer.Repositories.MetricasRendimientoRepository>();
+
+            services.AddScoped<BusinessLogicLayer.Interfaces.IMetricasRendimientoManager,
+                                       BusinessLogicLayer.Managers.MetricasRendimientoManager>();
 
             return services;
         }

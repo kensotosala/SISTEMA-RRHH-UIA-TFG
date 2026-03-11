@@ -1324,6 +1324,42 @@
         }
       }
     },
+    "/aprobar/{id}": {
+      "delete": {
+        "tags": [
+          "EvaluacionesRendimiento"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
     "/api/HorasExtras": {
       "get": {
         "tags": [
@@ -2451,6 +2487,21 @@
         "responses": {
           "200": {
             "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/MetricasRendimiento": {
+      "get": {
+        "tags": [
+          "MetricasRendimiento"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
@@ -5286,10 +5337,6 @@
             "type": "string",
             "nullable": true
           },
-          "estado": {
-            "type": "string",
-            "nullable": true
-          },
           "detalles": {
             "type": "array",
             "items": {
@@ -6774,10 +6821,6 @@
             "type": "string",
             "nullable": true
           },
-          "estado": {
-            "type": "string",
-            "nullable": true
-          },
           "detalles": {
             "type": "array",
             "items": {
@@ -6904,6 +6947,9 @@
     },
     {
       "name": "Liquidaciones"
+    },
+    {
+      "name": "MetricasRendimiento"
     },
     {
       "name": "Nomina"
