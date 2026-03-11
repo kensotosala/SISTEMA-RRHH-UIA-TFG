@@ -53,7 +53,8 @@ namespace DataAccessLayer.Repositories
                 .AnyAsync(e =>
                     e.EmpleadoId == empleadoId &&
                     e.FechaInicio.Year == anio &&
-                    (excluirIdEvaluacion == null || e.IdEvaluacion != excluirIdEvaluacion));
+                    (excluirIdEvaluacion == null || e.IdEvaluacion != excluirIdEvaluacion) &&
+                    e.Estado != "ANULADA");
         }
 
         public async Task<EvaluacionesRendimiento> UpdateAsync(EvaluacionesRendimiento evaluacion)

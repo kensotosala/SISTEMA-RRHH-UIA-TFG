@@ -106,7 +106,7 @@ namespace PresentationLayer.Controllers
             return Ok(result);
         }
 
-        [HttpDelete("/aprobar/{id:int}")]
+        [HttpPatch("aprobar/{id:int}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]

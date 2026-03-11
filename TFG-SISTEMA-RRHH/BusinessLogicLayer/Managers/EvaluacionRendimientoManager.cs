@@ -12,7 +12,7 @@ namespace BusinessLogicLayer.Managers
         private readonly ILogger<EvaluacionRendimientoManager> _logger;
 
         private static readonly HashSet<string> EstadosPermitidos =
-            new(StringComparer.OrdinalIgnoreCase) { "COMPLETADA", "ANULADA" };
+            new(StringComparer.OrdinalIgnoreCase) { "APROBADA", "ANULADA", "PENDIENTE" };
 
         public EvaluacionRendimientoManager(
             IEvaluacionRendimientoRepository repo,
@@ -67,7 +67,7 @@ namespace BusinessLogicLayer.Managers
 
                 int anioEvaluacion = dto.FechaInicio.Year;
                 bool yaExiste = await _repo.ExisteEvaluacionEnAnioAsync(dto.EmpleadoId, anioEvaluacion);
-                if (yaExiste)
+                if (yaExiste )
                     return ResultDTO<EvaluacionResponseDTO>.Failure(
                         $"El empleado {dto.EmpleadoId} ya tiene una evaluación registrada " +
                         $"para el año {anioEvaluacion}. Solo se permite una evaluación por año.");

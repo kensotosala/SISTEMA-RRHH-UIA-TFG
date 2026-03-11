@@ -1324,8 +1324,8 @@
         }
       }
     },
-    "/aprobar/{id}": {
-      "delete": {
+    "/api/v1/EvaluacionesRendimiento/aprobar/{id}": {
+      "patch": {
         "tags": [
           "EvaluacionesRendimiento"
         ],
@@ -6818,6 +6818,10 @@
             "format": "int32"
           },
           "comentarios": {
+            "type": "string",
+            "nullable": true
+          },
+          "estado": {
             "type": "string",
             "nullable": true
           },
