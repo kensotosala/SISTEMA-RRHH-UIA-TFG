@@ -3,6 +3,14 @@
   "WorkspaceRootPath": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|c:\\users\\user\\documents\\uia\\trabajo final de graduacion\\servidor\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\businesslogiclayer\\interfaces\\ievaluacionrendimientomanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|solutionrelative:businesslogiclayer\\interfaces\\ievaluacionrendimientomanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{51B4CFD2-5728-0F00-60C4-E24DAE522468}|PresentationLayer\\PresentationLayer.csproj|c:\\users\\user\\documents\\uia\\trabajo final de graduacion\\servidor\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\presentationlayer\\controllers\\evaluacionesrendimientocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{51B4CFD2-5728-0F00-60C4-E24DAE522468}|PresentationLayer\\PresentationLayer.csproj|solutionrelative:presentationlayer\\controllers\\evaluacionesrendimientocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A9FCCEB3-DD88-F8C0-89A3-FD31A7C54F23}|DataAccessLayer\\DataAccessLayer.csproj|c:\\users\\user\\documents\\uia\\trabajo final de graduacion\\servidor\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\dataaccesslayer\\repositories\\evaluacionrendimientorepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A9FCCEB3-DD88-F8C0-89A3-FD31A7C54F23}|DataAccessLayer\\DataAccessLayer.csproj|solutionrelative:dataaccesslayer\\repositories\\evaluacionrendimientorepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -19,14 +27,6 @@
       "RelativeMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|solutionrelative:businesslogiclayer\\dtos\\evaluacionrendimientodtos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{51B4CFD2-5728-0F00-60C4-E24DAE522468}|PresentationLayer\\PresentationLayer.csproj|c:\\users\\user\\documents\\uia\\trabajo final de graduacion\\servidor\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\presentationlayer\\controllers\\evaluacionesrendimientocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{51B4CFD2-5728-0F00-60C4-E24DAE522468}|PresentationLayer\\PresentationLayer.csproj|solutionrelative:presentationlayer\\controllers\\evaluacionesrendimientocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|c:\\users\\user\\documents\\uia\\trabajo final de graduacion\\servidor\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\businesslogiclayer\\interfaces\\ievaluacionrendimientomanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|solutionrelative:businesslogiclayer\\interfaces\\ievaluacionrendimientomanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A9FCCEB3-DD88-F8C0-89A3-FD31A7C54F23}|DataAccessLayer\\DataAccessLayer.csproj|c:\\users\\user\\documents\\uia\\trabajo final de graduacion\\servidor\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\dataaccesslayer\\data\\sistemarhcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A9FCCEB3-DD88-F8C0-89A3-FD31A7C54F23}|DataAccessLayer\\DataAccessLayer.csproj|solutionrelative:dataaccesslayer\\data\\sistemarhcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
@@ -38,7 +38,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -46,20 +46,19 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "EvaluacionRendimientoRepository.cs",
               "DocumentMoniker": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\DataAccessLayer\\Repositories\\EvaluacionRendimientoRepository.cs",
               "RelativeDocumentMoniker": "DataAccessLayer\\Repositories\\EvaluacionRendimientoRepository.cs",
               "ToolTip": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\DataAccessLayer\\Repositories\\EvaluacionRendimientoRepository.cs",
               "RelativeToolTip": "DataAccessLayer\\Repositories\\EvaluacionRendimientoRepository.cs",
-              "ViewState": "AgIAACkAAAAAAAAAAAAIwDkAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAACkAAAAAAAAAAAAIwC0AAAArAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-11T04:30:59.774Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-11T04:30:59.774Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "EmpleadosRepository.cs",
               "DocumentMoniker": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\DataAccessLayer\\Repositories\\EmpleadosRepository.cs",
               "RelativeDocumentMoniker": "DataAccessLayer\\Repositories\\EmpleadosRepository.cs",
@@ -67,12 +66,11 @@
               "RelativeToolTip": "DataAccessLayer\\Repositories\\EmpleadosRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-11T04:30:59.175Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-11T04:30:59.175Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 0,
               "Title": "IEvaluacionRendimientoManager.cs",
               "DocumentMoniker": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\Interfaces\\IEvaluacionRendimientoManager.cs",
               "RelativeDocumentMoniker": "BusinessLogicLayer\\Interfaces\\IEvaluacionRendimientoManager.cs",
@@ -85,20 +83,19 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 1,
               "Title": "EvaluacionesRendimientoController.cs",
               "DocumentMoniker": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\PresentationLayer\\Controllers\\EvaluacionesRendimientoController.cs",
               "RelativeDocumentMoniker": "PresentationLayer\\Controllers\\EvaluacionesRendimientoController.cs",
               "ToolTip": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\PresentationLayer\\Controllers\\EvaluacionesRendimientoController.cs",
               "RelativeToolTip": "PresentationLayer\\Controllers\\EvaluacionesRendimientoController.cs",
-              "ViewState": "AgIAADMAAAAAAAAAAAAcwGwAAAAUAAAAAAAAAA==",
+              "ViewState": "AgIAAGEAAAAAAAAAAAAuwH8AAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-10T18:00:36.538Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-10T18:00:36.538Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "EvaluacionRendimientoDTOs.cs",
               "DocumentMoniker": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\DTOs\\EvaluacionRendimientoDTOs.cs",
               "RelativeDocumentMoniker": "BusinessLogicLayer\\DTOs\\EvaluacionRendimientoDTOs.cs",
@@ -106,12 +103,11 @@
               "RelativeToolTip": "BusinessLogicLayer\\DTOs\\EvaluacionRendimientoDTOs.cs",
               "ViewState": "AgIAAB8AAAAAAAAAAAA6wCgAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-10T17:46:34.751Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-10T17:46:34.751Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "EvaluacionRendimientoManager.cs",
               "DocumentMoniker": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\Managers\\EvaluacionRendimientoManager.cs",
               "RelativeDocumentMoniker": "BusinessLogicLayer\\Managers\\EvaluacionRendimientoManager.cs",
@@ -119,8 +115,7 @@
               "RelativeToolTip": "BusinessLogicLayer\\Managers\\EvaluacionRendimientoManager.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAA5AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-10T17:46:13.506Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-10T17:46:13.506Z"
             },
             {
               "$type": "Document",
@@ -132,8 +127,7 @@
               "RelativeToolTip": "DataAccessLayer\\Data\\SistemaRhContext.cs",
               "ViewState": "AgIAADgBAAAAAAAAAAAcwEQBAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-10T17:45:38.312Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-10T17:45:38.312Z"
             }
           ]
         }

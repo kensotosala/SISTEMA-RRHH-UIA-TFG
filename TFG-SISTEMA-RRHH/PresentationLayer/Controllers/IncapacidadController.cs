@@ -168,5 +168,14 @@ namespace PresentationLayer.Controllers
                 return StatusCode(500, new { mensaje = "Error interno del servidor" });
             }
         }
+
+        [HttpGet("empleado/{empleadoId}")]
+        [ProducesResponseType(typeof(IEnumerable<IncapacidadDto>), StatusCodes.Status200OK)]
+        public async Task<ActionResult<IEnumerable<IncapacidadDto>>> ListarPorEmpleado(int empleadoId)
+        {
+            var todas = await _managerIncapacidades.ListarIncapacidadesAsync();
+            var filtradas = todas.Where(i => i.EmpleadoId == empleadoId);
+            return Ok(filtradas);
+        }
     }
 }
