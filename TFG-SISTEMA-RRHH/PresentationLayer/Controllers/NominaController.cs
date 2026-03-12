@@ -1,13 +1,11 @@
 ﻿using BusinessLogicLayer.DTOs;
 using BusinessLogicLayer.Interfaces;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace PresentationLayer.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]")]
-
     public class NominaController : ControllerBase
     {
         private readonly INominaManager _nominaManager;
@@ -19,9 +17,6 @@ namespace PresentationLayer.Controllers
             _logger = logger;
         }
 
-        /// <summary>
-        /// Generar nómina quincenal para todos los empleados activos
-        /// </summary>
         [HttpPost("generar")]
         public async Task<ActionResult<List<DetalleNominaDTO>>> GenerarNominaQuincenal(
             [FromBody] GenerarNominaQuincenalDTO dto)
@@ -36,16 +31,18 @@ namespace PresentationLayer.Controllers
 
                 return Ok(detalles);
             }
+            catch (ArgumentException ex)
+            {
+                _logger.LogWarning(ex, "Argumento inválido al generar nómina quincenal");
+                return BadRequest(new { mensaje = ex.Message });
+            }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error al generar nómina quincenal");
-                return BadRequest(new { mensaje = ex.Message });
+                return StatusCode(500, new { mensaje = "Error interno del servidor" });
             }
         }
 
-        /// <summary>
-        /// Obtener nómina por ID
-        /// </summary>
         [HttpGet("{id}")]
         public async Task<ActionResult<NominaDTO>> ObtenerNominaPorId(int id)
         {
@@ -65,9 +62,6 @@ namespace PresentationLayer.Controllers
             }
         }
 
-        /// <summary>
-        /// Listar todas las nóminas
-        /// </summary>
         [HttpGet]
         public async Task<ActionResult<List<NominaDTO>>> ListarNominas()
         {
@@ -83,9 +77,6 @@ namespace PresentationLayer.Controllers
             }
         }
 
-        /// <summary>
-        /// Obtener nóminas de un empleado específico
-        /// </summary>
         [HttpGet("empleado/{empleadoId}")]
         public async Task<ActionResult<List<NominaDTO>>> ObtenerNominasPorEmpleado(int empleadoId)
         {
@@ -101,9 +92,6 @@ namespace PresentationLayer.Controllers
             }
         }
 
-        /// <summary>
-        /// Obtener nóminas de una quincena específica
-        /// </summary>
         [HttpGet("quincena/{quincena}/mes/{mes}/anio/{anio}")]
         public async Task<ActionResult<List<NominaDTO>>> ObtenerNominasQuincena(
             int quincena, int mes, int anio)
@@ -112,6 +100,12 @@ namespace PresentationLayer.Controllers
             {
                 if (quincena != 1 && quincena != 2)
                     return BadRequest(new { mensaje = "La quincena debe ser 1 o 2" });
+
+                if (mes < 1 || mes > 12)
+                    return BadRequest(new { mensaje = "El mes debe estar entre 1 y 12" });
+
+                if (anio < 2000 || anio > DateTime.UtcNow.Year + 1)
+                    return BadRequest(new { mensaje = "El año no es válido" });
 
                 var nominas = await _nominaManager.ObtenerNominasQuincenaAsync(quincena, mes, anio);
                 return Ok(nominas);
@@ -123,9 +117,6 @@ namespace PresentationLayer.Controllers
             }
         }
 
-        /// <summary>
-        /// Aprobar una nómina
-        /// </summary>
         [HttpPut("{id}/aprobar")]
         public async Task<ActionResult> AprobarNomina(int id)
         {
@@ -133,10 +124,13 @@ namespace PresentationLayer.Controllers
             {
                 var resultado = await _nominaManager.AprobarNominaAsync(id);
 
-                if (!resultado)
-                    return NotFound(new { mensaje = "Nómina no encontrada" });
-
-                return Ok(new { mensaje = "Nómina aprobada correctamente" });
+                return resultado switch
+                {
+                    BusinessLogicLayer.Shared.AprobarNominaResultado.Aprobada => Ok(new { mensaje = "Nómina aprobada correctamente" }),
+                    BusinessLogicLayer.Shared.AprobarNominaResultado.NoEncontrada => NotFound(new { mensaje = "Nómina no encontrada" }),
+                    BusinessLogicLayer.Shared.AprobarNominaResultado.EstadoInvalido => BadRequest(new { mensaje = "Solo se pueden aprobar nóminas en estado PENDIENTE" }),
+                    _ => StatusCode(500, new { mensaje = "Error desconocido" })
+                };
             }
             catch (Exception ex)
             {
@@ -145,9 +139,6 @@ namespace PresentationLayer.Controllers
             }
         }
 
-        /// <summary>
-        /// Pagar una nómina
-        /// </summary>
         [HttpPut("{id}/pagar")]
         public async Task<ActionResult> PagarNomina(int id)
         {
@@ -155,10 +146,13 @@ namespace PresentationLayer.Controllers
             {
                 var resultado = await _nominaManager.PagarNominaAsync(id);
 
-                if (!resultado)
-                    return BadRequest(new { mensaje = "La nómina debe estar aprobada para poder pagarla" });
-
-                return Ok(new { mensaje = "Nómina pagada correctamente" });
+                return resultado switch
+                {
+                    BusinessLogicLayer.Shared.PagarNominaResultado.Pagada => Ok(new { mensaje = "Nómina pagada correctamente" }),
+                    BusinessLogicLayer.Shared.PagarNominaResultado.NoEncontrada => NotFound(new { mensaje = "Nómina no encontrada" }),
+                    BusinessLogicLayer.Shared.PagarNominaResultado.NoAprobada => BadRequest(new { mensaje = "La nómina debe estar aprobada para poder pagarla" }),
+                    _ => StatusCode(500, new { mensaje = "Error desconocido" })
+                };
             }
             catch (Exception ex)
             {
@@ -167,9 +161,6 @@ namespace PresentationLayer.Controllers
             }
         }
 
-        /// <summary>
-        /// Anular una nómina
-        /// </summary>
         [HttpPut("{id}/anular")]
         public async Task<ActionResult> AnularNomina(int id)
         {
@@ -177,10 +168,13 @@ namespace PresentationLayer.Controllers
             {
                 var resultado = await _nominaManager.AnularNominaAsync(id);
 
-                if (!resultado)
-                    return BadRequest(new { mensaje = "No se puede anular una nómina pagada" });
-
-                return Ok(new { mensaje = "Nómina anulada correctamente" });
+                return resultado switch
+                {
+                    BusinessLogicLayer.Shared.AnularNominaResultado.Anulada => Ok(new { mensaje = "Nómina anulada correctamente" }),
+                    BusinessLogicLayer.Shared.AnularNominaResultado.NoEncontrada => NotFound(new { mensaje = "Nómina no encontrada" }),
+                    BusinessLogicLayer.Shared.AnularNominaResultado.NoPuedeAnularse => BadRequest(new { mensaje = "No se puede anular una nómina pagada" }),
+                    _ => StatusCode(500, new { mensaje = "Error desconocido" })
+                };
             }
             catch (Exception ex)
             {
@@ -189,9 +183,6 @@ namespace PresentationLayer.Controllers
             }
         }
 
-        /// <summary>
-        /// Obtener resumen de una quincena
-        /// </summary>
         [HttpGet("resumen/quincena/{quincena}/mes/{mes}/anio/{anio}")]
         public async Task<ActionResult<ResumenNominaQuincenalDTO>> ObtenerResumenQuincena(
             int quincena, int mes, int anio)
@@ -208,9 +199,6 @@ namespace PresentationLayer.Controllers
             }
         }
 
-        /// <summary>
-        /// Generar planilla CCSS mensual
-        /// </summary>
         [HttpGet("reportes/ccss/mes/{mes}/anio/{anio}")]
         public async Task<ActionResult<PlanillaCCSSDTO>> GenerarPlanillaCCSS(int mes, int anio)
         {
@@ -226,9 +214,6 @@ namespace PresentationLayer.Controllers
             }
         }
 
-        /// <summary>
-        /// Generar declaración D-151 (impuesto sobre la renta)
-        /// </summary>
         [HttpGet("reportes/d151/mes/{mes}/anio/{anio}")]
         public async Task<ActionResult<DeclaracionD151DTO>> GenerarDeclaracionD151(int mes, int anio)
         {

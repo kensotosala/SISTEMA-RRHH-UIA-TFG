@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace DataAccessLayer.Entities;
+﻿namespace DataAccessLayer.Entities;
 
 public partial class Aguinaldos
 {
     public int IdAguinaldo { get; set; }
 
     public int EmpleadoId { get; set; }
+
+    public int Anio { get; set; }
 
     public DateTime FechaCalculo { get; set; }
 

@@ -1126,22 +1126,6 @@
   },
   {
     "ContainingType": "PresentationLayer.Controllers.AguinaldoController",
-    "Method": "RegistrarAguinaldos",
-    "RelativePath": "api/v1/Aguinaldo/registrar",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "request",
-        "Type": "PresentationLayer.Controllers.RegistrarAguinaldosRequest",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "PresentationLayer.Controllers.AguinaldoController",
     "Method": "ObtenerResumen",
     "RelativePath": "api/v1/Aguinaldo/resumen/{anio}",
     "HttpMethod": "GET",
@@ -1556,6 +1540,32 @@
           "text/json"
         ],
         "StatusCode": 404
+      }
+    ]
+  },
+  {
+    "ContainingType": "PresentationLayer.Controllers.IncapacidadController",
+    "Method": "ListarPorEmpleado",
+    "RelativePath": "api/v1/Incapacidad/empleado/{empleadoId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "empleadoId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[BusinessLogicLayer.DTOs.IncapacidadDto, BusinessLogicLayer, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
       }
     ]
   },

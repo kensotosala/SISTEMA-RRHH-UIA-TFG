@@ -23,8 +23,11 @@ namespace DataAccessLayer.Interfaces
         Task<IEnumerable<Empleados>> GetAllWithUsersAndRolesAsync();
 
         Task<Empleados?> GetByIdAsync(int id);
+
         Task<bool> TieneSubordinadosAsync(int id);
 
         Task<bool> UpdateAsync(Empleados empleado);
+
+        Task<List<Empleados>> GetByIdsAsync(IEnumerable<int> ids);
     }
 }

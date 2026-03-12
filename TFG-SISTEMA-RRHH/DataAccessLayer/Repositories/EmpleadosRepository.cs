@@ -109,6 +109,20 @@ namespace DataAccessLayer.Repositories
             ;
         }
 
+        public async Task<List<Empleados>> GetByIdsAsync(IEnumerable<int> ids)
+        {
+            var idList = ids.ToList();
+
+            if (!idList.Any())
+                return new List<Empleados>();
+
+            return await _context.Empleados
+                .Include(e => e.Puesto)
+                .Include(e => e.Departamento)
+                .Where(e => idList.Contains(e.IdEmpleado))
+                .ToListAsync();
+        }
+
         public async Task<bool> TieneSubordinadosAsync(int jefeId)
         {
             return await _context.Empleados

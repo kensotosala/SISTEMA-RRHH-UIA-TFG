@@ -192,37 +192,6 @@
         }
       }
     },
-    "/api/v1/Aguinaldo/registrar": {
-      "post": {
-        "tags": [
-          "Aguinaldo"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RegistrarAguinaldosRequest"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RegistrarAguinaldosRequest"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/RegistrarAguinaldosRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/api/v1/Aguinaldo/{id}/pagar": {
       "put": {
         "tags": [
@@ -2185,6 +2154,55 @@
               "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/Incapacidad/empleado/{empleadoId}": {
+      "get": {
+        "tags": [
+          "Incapacidad"
+        ],
+        "parameters": [
+          {
+            "name": "empleadoId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IncapacidadDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IncapacidadDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IncapacidadDto"
+                  }
                 }
               }
             }
@@ -4918,13 +4936,21 @@
         "additionalProperties": false
       },
       "CalcularAguinaldoDTO": {
+        "required": [
+          "anio",
+          "empleadoId"
+        ],
         "type": "object",
         "properties": {
           "empleadoId": {
+            "maximum": 2147483647,
+            "minimum": 1,
             "type": "integer",
             "format": "int32"
           },
           "anio": {
+            "maximum": 2100,
+            "minimum": 2000,
             "type": "integer",
             "format": "int32"
           },
@@ -4937,20 +4963,20 @@
         "additionalProperties": false
       },
       "CalcularAguinaldoMasivoDTO": {
+        "required": [
+          "anio"
+        ],
         "type": "object",
         "properties": {
           "anio": {
+            "maximum": 2100,
+            "minimum": 2000,
             "type": "integer",
             "format": "int32"
           },
           "fechaCorte": {
             "type": "string",
             "format": "date-time",
-            "nullable": true
-          },
-          "departamentoId": {
-            "type": "integer",
-            "format": "int32",
             "nullable": true
           }
         },
@@ -6300,12 +6326,11 @@
         "additionalProperties": false
       },
       "PagarAguinaldoDTO": {
+        "required": [
+          "fechaPago"
+        ],
         "type": "object",
         "properties": {
-          "idAguinaldo": {
-            "type": "integer",
-            "format": "int32"
-          },
           "fechaPago": {
             "type": "string",
             "format": "date-time"
@@ -6457,23 +6482,6 @@
         },
         "additionalProperties": false
       },
-      "RegistrarAguinaldosRequest": {
-        "type": "object",
-        "properties": {
-          "anio": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "calculos": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/ResultadoCalculoAguinaldoDTO"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
       "RegistroUsuarioDTO": {
         "required": [
           "empleadoId",
@@ -6583,48 +6591,6 @@
           "totalHorasSolicitadas": {
             "type": "string",
             "format": "date-span"
-          }
-        },
-        "additionalProperties": false
-      },
-      "ResultadoCalculoAguinaldoDTO": {
-        "type": "object",
-        "properties": {
-          "empleadoId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "nombreEmpleado": {
-            "type": "string",
-            "nullable": true
-          },
-          "fechaContratacion": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "fechaInicio": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "fechaFin": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "diasTrabajados": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "salarioPromedio": {
-            "type": "number",
-            "format": "double"
-          },
-          "montoAguinaldo": {
-            "type": "number",
-            "format": "double"
-          },
-          "detalle": {
-            "type": "string",
-            "nullable": true
           }
         },
         "additionalProperties": false

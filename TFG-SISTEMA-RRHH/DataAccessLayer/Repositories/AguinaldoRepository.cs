@@ -1,13 +1,11 @@
-﻿using DataAccessLayer.Data;
+﻿
+using DataAccessLayer.Data;
 using DataAccessLayer.Entities;
 using DataAccessLayer.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataAccessLayer.Repositories
 {
-    /// <summary>
-    /// Repositorio para operaciones CRUD de Aguinaldos
-    /// </summary>
     public class AguinaldoRepository : IAguinaldoRepository
     {
         private readonly SistemaRhContext _context;
@@ -34,7 +32,7 @@ namespace DataAccessLayer.Repositories
                     .ThenInclude(e => e.Departamento)
                 .Include(a => a.Empleado)
                     .ThenInclude(e => e.Puesto)
-                .OrderByDescending(a => a.FechaCalculo)
+                .OrderByDescending(a => a.Anio)
                 .ToListAsync();
         }
 
@@ -45,7 +43,7 @@ namespace DataAccessLayer.Repositories
                     .ThenInclude(e => e.Departamento)
                 .Include(a => a.Empleado)
                     .ThenInclude(e => e.Puesto)
-                .Where(a => a.FechaCalculo.Year == anio)
+                .Where(a => a.Anio == anio)
                 .OrderBy(a => a.Empleado.Nombre)
                 .ToListAsync();
         }
@@ -55,7 +53,7 @@ namespace DataAccessLayer.Repositories
             return await _context.Aguinaldos
                 .Include(a => a.Empleado)
                 .Where(a => a.EmpleadoId == empleadoId)
-                .OrderByDescending(a => a.FechaCalculo)
+                .OrderByDescending(a => a.Anio)
                 .ToListAsync();
         }
 
@@ -65,7 +63,7 @@ namespace DataAccessLayer.Repositories
                 .Include(a => a.Empleado)
                 .FirstOrDefaultAsync(a =>
                     a.EmpleadoId == empleadoId &&
-                    a.FechaCalculo.Year == anio);
+                    a.Anio == anio);
         }
 
         public async Task<IEnumerable<Aguinaldos>> GetByEstadoAsync(string estado)
@@ -76,11 +74,12 @@ namespace DataAccessLayer.Repositories
                 .Include(a => a.Empleado)
                     .ThenInclude(e => e.Puesto)
                 .Where(a => a.Estado == estado)
-                .OrderByDescending(a => a.FechaCalculo)
+                .OrderByDescending(a => a.Anio)
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<Aguinaldos>> GetByDepartamentoYAnioAsync(int departamentoId, int anio)
+        public async Task<IEnumerable<Aguinaldos>> GetByDepartamentoYAnioAsync(
+            int departamentoId, int anio)
         {
             return await _context.Aguinaldos
                 .Include(a => a.Empleado)
@@ -89,7 +88,7 @@ namespace DataAccessLayer.Repositories
                     .ThenInclude(e => e.Puesto)
                 .Where(a =>
                     a.Empleado.DepartamentoId == departamentoId &&
-                    a.FechaCalculo.Year == anio)
+                    a.Anio == anio)
                 .OrderBy(a => a.Empleado.Nombre)
                 .ToListAsync();
         }
@@ -97,11 +96,11 @@ namespace DataAccessLayer.Repositories
         public async Task<Aguinaldos> CreateAsync(Aguinaldos aguinaldo)
         {
             aguinaldo.FechaCreacion = DateTime.UtcNow;
-            aguinaldo.Estado = aguinaldo.Estado ?? "PENDIENTE";
+            aguinaldo.FechaModificacion = null;
+            aguinaldo.Estado ??= "PENDIENTE";
 
             _context.Aguinaldos.Add(aguinaldo);
             await _context.SaveChangesAsync();
-
             return aguinaldo;
         }
 
@@ -109,7 +108,11 @@ namespace DataAccessLayer.Repositories
         {
             aguinaldo.FechaModificacion = DateTime.UtcNow;
 
-            _context.Entry(aguinaldo).State = EntityState.Modified;
+            var entry = _context.Entry(aguinaldo);
+            entry.State = EntityState.Modified;
+            entry.Property(a => a.FechaCreacion).IsModified = false;
+            entry.Property(a => a.EmpleadoId).IsModified = false;
+            entry.Property(a => a.Anio).IsModified = false;
 
             try
             {
@@ -127,12 +130,10 @@ namespace DataAccessLayer.Repositories
         public async Task<bool> DeleteAsync(int id)
         {
             var aguinaldo = await _context.Aguinaldos.FindAsync(id);
-            if (aguinaldo == null)
-                return false;
+            if (aguinaldo == null) return false;
 
-            // Soft delete
-            aguinaldo.Estado = "ANULADO";
-            aguinaldo.FechaModificacion = DateTime.UtcNow;
+            _context.Entry(aguinaldo).Property(a => a.Estado).CurrentValue = "ANULADO";
+            _context.Entry(aguinaldo).Property(a => a.FechaModificacion).CurrentValue = DateTime.UtcNow;
 
             await _context.SaveChangesAsync();
             return true;
@@ -143,7 +144,8 @@ namespace DataAccessLayer.Repositories
             return await _context.Aguinaldos
                 .AnyAsync(a =>
                     a.EmpleadoId == empleadoId &&
-                    a.FechaCalculo.Year == anio);
+                    a.Anio == anio &&
+                    a.Estado != "ANULADO");
         }
 
         public async Task<IEnumerable<Nominas>> GetNominasPorPeriodoAsync(
@@ -151,11 +153,14 @@ namespace DataAccessLayer.Repositories
             DateTime fechaInicio,
             DateTime fechaFin)
         {
+            var inicio = fechaInicio.Date;
+            var fin = fechaFin.Date.AddDays(1).AddTicks(-1);
+
             return await _context.Nominas
                 .Where(n =>
                     n.EmpleadoId == empleadoId &&
-                    n.PeriodoNomina >= fechaInicio &&
-                    n.PeriodoNomina <= fechaFin &&
+                    n.PeriodoNomina >= inicio &&
+                    n.PeriodoNomina <= fin &&
                     n.Estado == "PAGADA")
                 .OrderBy(n => n.PeriodoNomina)
                 .ToListAsync();
@@ -167,6 +172,7 @@ namespace DataAccessLayer.Repositories
                 .Include(e => e.Departamento)
                 .Include(e => e.Puesto)
                 .Include(e => e.Nominas.Where(n => n.Estado == "PAGADA"))
+                .AsSplitQuery()
                 .FirstOrDefaultAsync(e => e.IdEmpleado == empleadoId);
         }
 

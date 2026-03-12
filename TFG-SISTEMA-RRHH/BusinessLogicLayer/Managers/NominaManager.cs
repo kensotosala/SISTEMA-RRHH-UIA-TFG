@@ -1,6 +1,7 @@
 ﻿using BusinessLogicLayer.DTOs;
 using BusinessLogicLayer.Interfaces;
 using BusinessLogicLayer.Services;
+using BusinessLogicLayer.Shared;
 using DataAccessLayer.Entities;
 using DataAccessLayer.Interfaces;
 
@@ -14,6 +15,8 @@ namespace BusinessLogicLayer.Managers
         private readonly IIncapacidadesRepository _incapacidadesRepo;
         private readonly IPermisosRepository _permisosRepo;
         private readonly CalculadorNominaCostaRica _calculador;
+
+        private const decimal TasaCCSSObrera = 0.1067m;
 
         public NominaManager(
             INominaRepository nominaRepo,
@@ -30,7 +33,8 @@ namespace BusinessLogicLayer.Managers
             _calculador = new CalculadorNominaCostaRica();
         }
 
-        public async Task<List<DetalleNominaDTO>> GenerarNominaQuincenalAsync(GenerarNominaQuincenalDTO dto)
+        public async Task<List<DetalleNominaDTO>> GenerarNominaQuincenalAsync(
+            GenerarNominaQuincenalDTO dto)
         {
             if (dto.Quincena != 1 && dto.Quincena != 2)
                 throw new ArgumentException("La quincena debe ser 1 o 2");
@@ -38,23 +42,24 @@ namespace BusinessLogicLayer.Managers
             if (dto.Mes < 1 || dto.Mes > 12)
                 throw new ArgumentException("El mes debe estar entre 1 y 12");
 
+            if (dto.Anio < 2000 || dto.Anio > DateTime.UtcNow.Year + 1)
+                throw new ArgumentException("El año no es válido");
+
             List<Empleados> empleados;
+
             if (dto.EmpleadosIds != null && dto.EmpleadosIds.Any())
             {
-                empleados = new List<Empleados>();
-                foreach (var id in dto.EmpleadosIds)
-                {
-                    var emp = await _empleadosRepo.GetByIdAsync(id);
-                    if (emp != null && emp.Estado == "ACTIVO")
-                        empleados.Add(emp);
-                }
+                empleados = await _empleadosRepo.GetByIdsAsync(dto.EmpleadosIds);
+                empleados = empleados.Where(e => e.Estado == "ACTIVO").ToList();
             }
             else
             {
-                var todosEmpleados = await _empleadosRepo.GetAllAsync();
-                empleados = todosEmpleados.Where(e => e.Estado == "ACTIVO").ToList();
+                var todos = await _empleadosRepo.GetAllAsync();
+                empleados = todos.Where(e => e.Estado == "ACTIVO").ToList();
             }
 
+            var todasIncapacidades = await _incapacidadesRepo.ListarIncapacidadesAsync();
+            var todosPermisos = await _permisosRepo.GetAllPermisosAsync();
             var detalles = new List<DetalleNominaDTO>();
 
             foreach (var empleado in empleados)
@@ -62,29 +67,25 @@ namespace BusinessLogicLayer.Managers
                 var existe = await _nominaRepo.ExisteNominaQuincenaAsync(
                     empleado.IdEmpleado, dto.Quincena, dto.Mes, dto.Anio);
 
-                if (existe)
-                    continue;
+                if (existe) continue;
 
-                var horasExtrasEnumerable = await _horasExtraRepo.GetByEmpleadoAsync(empleado.IdEmpleado);
-                var horasExtras = horasExtrasEnumerable.ToList();
+                var horasExtras = (await _horasExtraRepo
+                    .GetByEmpleadoAsync(empleado.IdEmpleado)).ToList();
 
-                var incapacidades = await _incapacidadesRepo.ListarIncapacidadesAsync();
-                var permisos = await _permisosRepo.GetAllPermisosAsync();
-
-                var incapacidadesEmpleado = incapacidades
+                var incapacidadesEmpleado = todasIncapacidades
                     .Where(i => i.EmpleadoId == empleado.IdEmpleado).ToList();
-                var permisosEmpleado = permisos
+                var permisosEmpleado = todosPermisos
                     .Where(p => p.EmpleadoId == empleado.IdEmpleado).ToList();
 
                 var detalle = _calculador.CalcularNominaQuincenal(
-                    empleado,
-                    dto.Quincena,
-                    dto.Mes,
-                    dto.Anio,
-                    horasExtras,
-                    incapacidadesEmpleado,
-                    permisosEmpleado
-                );
+                    empleado, dto.Quincena, dto.Mes, dto.Anio,
+                    horasExtras, incapacidadesEmpleado, permisosEmpleado);
+
+                decimal? cantidadHorasExtra = detalle.TotalHorasExtra > 0
+                    ? (decimal?)(detalle.HorasExtraDiurnas +
+                                 detalle.HorasExtraNocturnas +
+                                 detalle.HorasExtraFeriados)
+                    : null;
 
                 var nomina = new Nominas
                 {
@@ -92,11 +93,13 @@ namespace BusinessLogicLayer.Managers
                     PeriodoNomina = new DateTime(dto.Anio, dto.Mes, dto.Quincena == 1 ? 1 : 16),
                     FechaPago = dto.FechaPago,
                     SalarioBase = detalle.SalarioBaseQuincenal,
-                    HorasExtras = detalle.TotalHorasExtra > 0
-                        ? (decimal?)(detalle.HorasExtraDiurnas + detalle.HorasExtraNocturnas + detalle.HorasExtraFeriados) / (empleado.SalarioBase / 240)
+                    HorasExtras = cantidadHorasExtra,
+                    MontoHorasExtra = detalle.TotalHorasExtra > 0
+                        ? (decimal?)detalle.TotalHorasExtra
                         : null,
-                    MontoHorasExtra = detalle.TotalHorasExtra > 0 ? (decimal?)detalle.TotalHorasExtra : null,
-                    Bonificaciones = detalle.Bonificaciones > 0 ? (decimal?)detalle.Bonificaciones : null,
+                    Bonificaciones = detalle.Bonificaciones > 0
+                        ? (decimal?)detalle.Bonificaciones
+                        : null,
                     Deducciones = detalle.TotalDeducciones,
                     TotalBruto = detalle.TotalBruto,
                     TotalNeto = detalle.TotalNeto,
@@ -128,46 +131,69 @@ namespace BusinessLogicLayer.Managers
             return nominas.Select(MapToDTO).ToList();
         }
 
-        public async Task<List<NominaDTO>> ObtenerNominasQuincenaAsync(int quincena, int mes, int anio)
+        public async Task<List<NominaDTO>> ObtenerNominasQuincenaAsync(
+            int quincena, int mes, int anio)
         {
             var nominas = await _nominaRepo.ObtenerNominasQuincenaAsync(quincena, mes, anio);
             return nominas.Select(MapToDTO).ToList();
         }
 
-        public async Task<bool> AprobarNominaAsync(int nominaId)
+        public async Task<AprobarNominaResultado> AprobarNominaAsync(int nominaId)
         {
             var nomina = await _nominaRepo.ObtenerNominaPorIdAsync(nominaId);
-            if (nomina == null) return false;
+            if (nomina == null) return AprobarNominaResultado.NoEncontrada;
 
-            nomina.Estado = "PAGADA";
+            if (nomina.Estado != "PENDIENTE")
+                return AprobarNominaResultado.EstadoInvalido;
+
+            nomina.Estado = "APROBADA";
             await _nominaRepo.ActualizarNominaAsync(nomina);
-            return true;
+            return AprobarNominaResultado.Aprobada;
         }
 
-        public async Task<bool> PagarNominaAsync(int nominaId)
+        public async Task<PagarNominaResultado> PagarNominaAsync(int nominaId)
         {
             var nomina = await _nominaRepo.ObtenerNominaPorIdAsync(nominaId);
-            if (nomina == null) return false;
+            if (nomina == null) return PagarNominaResultado.NoEncontrada;
+
+            if (nomina.Estado != "APROBADA")
+                return PagarNominaResultado.NoAprobada;
 
             nomina.Estado = "PAGADA";
-            nomina.FechaPago = DateTime.Now;
+            nomina.FechaPago = DateTime.UtcNow;
             await _nominaRepo.ActualizarNominaAsync(nomina);
-            return true;
+            return PagarNominaResultado.Pagada;
         }
 
-        public async Task<bool> AnularNominaAsync(int nominaId)
+        public async Task<AnularNominaResultado> AnularNominaAsync(int nominaId)
         {
             var nomina = await _nominaRepo.ObtenerNominaPorIdAsync(nominaId);
-            if (nomina == null || nomina.Estado == "PAGADA") return false;
+            if (nomina == null) return AnularNominaResultado.NoEncontrada;
+
+            if (nomina.Estado == "PAGADA")
+                return AnularNominaResultado.NoPuedeAnularse;
 
             nomina.Estado = "ANULADA";
             await _nominaRepo.ActualizarNominaAsync(nomina);
-            return true;
+            return AnularNominaResultado.Anulada;
         }
 
-        public async Task<ResumenNominaQuincenalDTO> ObtenerResumenQuincenaAsync(int quincena, int mes, int anio)
+        public async Task<ResumenNominaQuincenalDTO> ObtenerResumenQuincenaAsync(
+            int quincena, int mes, int anio)
         {
             var nominas = await _nominaRepo.ObtenerNominasQuincenaAsync(quincena, mes, anio);
+
+            string estadoResumen = "SIN_DATOS";
+            if (nominas.Any())
+            {
+                var prioridad = new[] { "PENDIENTE", "APROBADA", "PAGADA", "ANULADA" };
+                estadoResumen = prioridad.FirstOrDefault(
+                    p => nominas.Any(n => n.Estado == p)) ?? "PENDIENTE";
+            }
+
+            decimal totalCCSS = nominas.Sum(n => n.TotalBruto * TasaCCSSObrera);
+            decimal totalDeducciones = nominas.Sum(n => n.Deducciones ?? 0);
+            decimal totalImpuestoRenta = Math.Max(0, totalDeducciones - totalCCSS);
 
             return new ResumenNominaQuincenalDTO
             {
@@ -176,11 +202,12 @@ namespace BusinessLogicLayer.Managers
                 Anio = anio,
                 TotalEmpleados = nominas.Count,
                 TotalBruto = nominas.Sum(n => n.TotalBruto),
-                TotalCCSS = nominas.Sum(n => n.TotalBruto * 0.1667m),
-                TotalDeducciones = nominas.Sum(n => n.Deducciones ?? 0),
+                TotalCCSS = totalCCSS,
+                TotalImpuestoRenta = totalImpuestoRenta,
+                TotalDeducciones = totalDeducciones,
                 TotalNeto = nominas.Sum(n => n.TotalNeto),
-                FechaGeneracion = DateTime.Now,
-                Estado = nominas.Any() ? nominas.First().Estado ?? "PENDIENTE" : "PENDIENTE"
+                FechaGeneracion = DateTime.UtcNow,
+                Estado = estadoResumen
             };
         }
 
@@ -199,10 +226,10 @@ namespace BusinessLogicLayer.Managers
             {
                 var detalle = new DetalleCCSSEmpleadoDTO
                 {
-                    Cedula = nomina.Empleado.CodigoEmpleado,
-                    NombreCompleto = $"{nomina.Empleado.Nombre} {nomina.Empleado.PrimerApellido}",
+                    Cedula = nomina.Empleado?.CodigoEmpleado ?? string.Empty,
+                    NombreCompleto = FormatearNombre(nomina.Empleado),
                     SalarioReportado = nomina.TotalBruto,
-                    CuotaObrera = nomina.TotalBruto * 0.1667m,
+                    CuotaObrera = nomina.TotalBruto * TasaCCSSObrera,
                     CuotaPatronal = nomina.TotalBruto * 0.2658m
                 };
                 planilla.Empleados.Add(detalle);
@@ -228,14 +255,20 @@ namespace BusinessLogicLayer.Managers
 
             foreach (var nomina in nominas)
             {
+                decimal cuotaCCSS = nomina.TotalBruto * TasaCCSSObrera;
+                decimal baseImponible = nomina.TotalBruto - cuotaCCSS;
+
+                decimal impuestoRetenido = Math.Max(
+                    0, (nomina.Deducciones ?? 0) - cuotaCCSS);
+
                 var detalle = new DetalleImpuestoEmpleadoDTO
                 {
-                    Cedula = nomina.Empleado.CodigoEmpleado,
-                    NombreCompleto = $"{nomina.Empleado.Nombre} {nomina.Empleado.PrimerApellido}",
+                    Cedula = nomina.Empleado?.CodigoEmpleado ?? string.Empty,
+                    NombreCompleto = FormatearNombre(nomina.Empleado),
                     SalarioBruto = nomina.TotalBruto,
-                    DeduccionCCSS = nomina.TotalBruto * 0.1667m,
-                    BaseImponible = nomina.TotalBruto * (1 - 0.1667m),
-                    ImpuestoRetenido = (nomina.Deducciones ?? 0) - (nomina.TotalBruto * 0.1667m)
+                    DeduccionCCSS = cuotaCCSS,
+                    BaseImponible = baseImponible,
+                    ImpuestoRetenido = impuestoRetenido
                 };
                 declaracion.Empleados.Add(detalle);
             }
@@ -245,7 +278,13 @@ namespace BusinessLogicLayer.Managers
             return declaracion;
         }
 
-        private NominaDTO MapToDTO(Nominas nomina)
+        private static string FormatearNombre(Empleados? empleado)
+        {
+            if (empleado == null) return string.Empty;
+            return $"{empleado.Nombre} {empleado.PrimerApellido}".Trim();
+        }
+
+        private static NominaDTO MapToDTO(Nominas nomina)
         {
             return new NominaDTO
             {
@@ -263,7 +302,7 @@ namespace BusinessLogicLayer.Managers
                 Estado = nomina.Estado,
                 FechaCreacion = nomina.FechaCreacion,
                 FechaActualizacion = nomina.FechaActualizacion,
-                NombreEmpleado = $"{nomina.Empleado?.Nombre} {nomina.Empleado?.PrimerApellido}",
+                NombreEmpleado = FormatearNombre(nomina.Empleado),
                 CodigoEmpleado = nomina.Empleado?.CodigoEmpleado,
                 Puesto = nomina.Empleado?.Puesto?.NombrePuesto,
                 Departamento = nomina.Empleado?.Departamento?.NombreDepartamento

@@ -590,7 +590,7 @@ public partial class SistemaRhContext : DbContext
             entity.Property(e => e.EmpleadoId).HasColumnName("empleado_id");
             entity.Property(e => e.Estado)
                 .HasDefaultValueSql("'PENDIENTE'")
-                .HasColumnType("enum('PENDIENTE','PAGADA','ANULADA')")
+                .HasColumnType("enum('PENDIENTE','PAGADA','ANULADA', 'APROBADA')")
                 .HasColumnName("estado");
             entity.Property(e => e.FechaActualizacion)
                 .ValueGeneratedOnAddOrUpdate()
