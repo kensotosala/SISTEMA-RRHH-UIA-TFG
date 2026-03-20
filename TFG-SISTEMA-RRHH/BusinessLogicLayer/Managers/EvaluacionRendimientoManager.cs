@@ -10,16 +10,19 @@ namespace BusinessLogicLayer.Managers
     {
         private readonly IEvaluacionRendimientoRepository _repo;
         private readonly ILogger<EvaluacionRendimientoManager> _logger;
+        private readonly IAuditoriaService _auditoria;
 
         private static readonly HashSet<string> EstadosPermitidos =
             new(StringComparer.OrdinalIgnoreCase) { "APROBADA", "ANULADA", "PENDIENTE" };
 
         public EvaluacionRendimientoManager(
             IEvaluacionRendimientoRepository repo,
-            ILogger<EvaluacionRendimientoManager> logger)
+            ILogger<EvaluacionRendimientoManager> logger,
+            IAuditoriaService auditoria)
         {
             _repo = repo;
             _logger = logger;
+            _auditoria = auditoria;
         }
 
         public async Task<ResultDTO<IEnumerable<EvaluacionResponseDTO>>> GetAllAsync()
@@ -67,7 +70,7 @@ namespace BusinessLogicLayer.Managers
 
                 int anioEvaluacion = dto.FechaInicio.Year;
                 bool yaExiste = await _repo.ExisteEvaluacionEnAnioAsync(dto.EmpleadoId, anioEvaluacion);
-                if (yaExiste )
+                if (yaExiste)
                     return ResultDTO<EvaluacionResponseDTO>.Failure(
                         $"El empleado {dto.EmpleadoId} ya tiene una evaluación registrada " +
                         $"para el año {anioEvaluacion}. Solo se permite una evaluación por año.");
@@ -96,6 +99,14 @@ namespace BusinessLogicLayer.Managers
 
                 var creada = await _repo.CreateAsync(entity);
                 var resultado = await _repo.GetByIdAsync(creada.IdEvaluacion);
+
+                await _auditoria.RegistrarAsync(
+                    tablaAfectada: "evaluaciones_rendimiento",
+                    descripcion: $"Evaluación creada (ID {creada.IdEvaluacion}) para empleado ID {dto.EmpleadoId}, " +
+                                   $"evaluador ID {dto.EvaluadorId}, " +
+                                   $"período: {dto.FechaInicio:dd/MM/yyyy} - {dto.FechaFin:dd/MM/yyyy}, " +
+                                   $"puntuación total: {puntuacionTotal}."
+                );
 
                 return ResultDTO<EvaluacionResponseDTO>
                     .Success(MapToResponseDTO(resultado!), "Evaluación creada exitosamente.");
@@ -139,6 +150,8 @@ namespace BusinessLogicLayer.Managers
                 var idsExistentes = existente.DetalleEvaluaciones
                     .Select(d => d.IdDetalle)
                     .ToHashSet();
+
+                var estadoAnterior = existente.Estado;
 
                 // Eliminar detalles que ya no están en la lista
                 var aEliminar = idsExistentes.Except(idsEntrantes).ToList();
@@ -184,6 +197,14 @@ namespace BusinessLogicLayer.Managers
 
                 await _repo.UpdateAsync(existente);
 
+                await _auditoria.RegistrarAsync(
+                    tablaAfectada: "evaluaciones_rendimiento",
+                    descripcion: $"Evaluación ID {idEvaluacion} actualizada. " +
+                                   $"Empleado ID {existente.EmpleadoId}, " +
+                                   $"estado anterior: '{estadoAnterior}', estado nuevo: '{dto.Estado}', " +
+                                   $"nueva puntuación total: {puntuacionTotal}."
+                );
+
                 var resultado = await _repo.GetByIdAsync(idEvaluacion);
                 return ResultDTO<EvaluacionResponseDTO>
                     .Success(MapToResponseDTO(resultado!), "Evaluación actualizada exitosamente.");
@@ -211,6 +232,13 @@ namespace BusinessLogicLayer.Managers
 
                 evaluacion.Estado = "ANULADA";
                 await _repo.UpdateAsync(evaluacion);
+
+                await _auditoria.RegistrarAsync(
+                    tablaAfectada: "evaluaciones_rendimiento",
+                    descripcion: $"Evaluación ID {idEvaluacion} anulada. " +
+                                   $"Empleado ID {evaluacion.EmpleadoId}, " +
+                                   $"evaluador ID {evaluacion.EvaluadorId}."
+                );
 
                 return ResultDTO<bool>.Success(true,
                     $"Evaluación {idEvaluacion} anulada exitosamente.");
@@ -242,6 +270,14 @@ namespace BusinessLogicLayer.Managers
 
                 evaluacion.Estado = "APROBADA";
                 await _repo.UpdateAsync(evaluacion);
+
+                await _auditoria.RegistrarAsync(
+                    tablaAfectada: "evaluaciones_rendimiento",
+                    descripcion: $"Evaluación ID {idEvaluacion} aprobada. " +
+                                   $"Empleado ID {evaluacion.EmpleadoId}, " +
+                                   $"evaluador ID {evaluacion.EvaluadorId}, " +
+                                   $"puntuación total: {evaluacion.PuntuacionTotal}."
+                );
 
                 return ResultDTO<bool>.Success(true,
                     $"Evaluación {idEvaluacion} aprobada exitosamente.");

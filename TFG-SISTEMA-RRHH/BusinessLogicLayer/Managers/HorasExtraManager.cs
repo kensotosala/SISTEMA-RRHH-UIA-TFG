@@ -11,13 +11,16 @@ namespace BusinessLogicLayer.Managers
     {
         private readonly IHorasExtrasRepository _horasExtrasRepo;
         private readonly IEmpleadosRepository _empleadosRepo;
+        private readonly IAuditoriaService _auditoria;
 
         public HorasExtrasManager(
             IHorasExtrasRepository horasExtrasRepo,
-            IEmpleadosRepository empleadosRepo)
+            IEmpleadosRepository empleadosRepo,
+            IAuditoriaService auditoria)
         {
             _horasExtrasRepo = horasExtrasRepo;
             _empleadosRepo = empleadosRepo;
+            _auditoria = auditoria;
         }
 
         public async Task<IEnumerable<HoraExtraDTO>> GetAllAsync()
@@ -64,7 +67,6 @@ namespace BusinessLogicLayer.Managers
 
         public async Task<HoraExtraDTO> CreateAsync(CrearHoraExtraDTO dto)
         {
-            // ✅ Parseo extraído a método privado
             var (fechaInicio, fechaFin) = ParsearFechas(dto.FechaInicio, dto.FechaFin);
 
             ValidarRangoFechas(fechaInicio, fechaFin);
@@ -94,6 +96,14 @@ namespace BusinessLogicLayer.Managers
             if (registroCreado == null)
                 throw new BusinessException("Error al recuperar el registro creado", "ERROR_CREACION");
 
+            await _auditoria.RegistrarAsync(
+                tablaAfectada: "horas_extras",
+                descripcion: $"Solicitud de hora extra creada (ID {creada.IdHoraExtra}) " +
+                               $"para empleado ID {dto.EmpleadoId}, " +
+                               $"período: {fechaInicio:dd/MM/yyyy HH:mm} - {fechaFin:dd/MM/yyyy HH:mm}, " +
+                               $"tipo: {dto.TipoHoraExtra}, jefe aprueba ID: {dto.JefeApruebaId}."
+            );
+
             return MapToDTO(registroCreado);
         }
 
@@ -108,7 +118,6 @@ namespace BusinessLogicLayer.Managers
 
             await ValidarEmpleadoExisteAsync(dto.EmpleadoId);
 
-            // ✅ Parseo extraído a método privado
             var (fechaInicio, fechaFin) = ParsearFechas(dto.FechaInicio, dto.FechaFin);
 
             ValidarRangoFechas(fechaInicio, fechaFin);
@@ -123,7 +132,18 @@ namespace BusinessLogicLayer.Managers
             horaExtra.JefeApruebaId = dto.JefeApruebaId;
             horaExtra.FechaModificacion = DateTime.UtcNow;
 
-            return await _horasExtrasRepo.UpdateAsync(horaExtra);
+            var resultado = await _horasExtrasRepo.UpdateAsync(horaExtra);
+
+            if (resultado)
+                await _auditoria.RegistrarAsync(
+                    tablaAfectada: "horas_extras",
+                    descripcion: $"Hora extra ID {id} actualizada. " +
+                                   $"Empleado ID {dto.EmpleadoId}, " +
+                                   $"nuevo período: {fechaInicio:dd/MM/yyyy HH:mm} - {fechaFin:dd/MM/yyyy HH:mm}, " +
+                                   $"tipo: {dto.TipoHoraExtra}."
+                );
+
+            return resultado;
         }
 
         public async Task<bool> DeleteAsync(int id)
@@ -135,7 +155,20 @@ namespace BusinessLogicLayer.Managers
             if (horaExtra.EstadoSolicitud == "APROBADA")
                 throw new BusinessException("No se pueden eliminar solicitudes aprobadas", "SOLICITUD_NO_ELIMINABLE");
 
-            return await _horasExtrasRepo.DeleteAsync(id);
+            var empleadoId = horaExtra.EmpleadoId;
+            var fechaInicio = horaExtra.FechaInicio;
+
+            var resultado = await _horasExtrasRepo.DeleteAsync(id);
+
+            if (resultado)
+                await _auditoria.RegistrarAsync(
+                    tablaAfectada: "horas_extras",
+                    descripcion: $"Hora extra ID {id} eliminada. " +
+                                   $"Empleado ID {empleadoId}, " +
+                                   $"fecha inicio: {fechaInicio:dd/MM/yyyy HH:mm}."
+                );
+
+            return resultado;
         }
 
         public async Task<bool> AprobarRechazarAsync(int id, AprobarRechazarHoraExtraDTO dto)
@@ -156,7 +189,18 @@ namespace BusinessLogicLayer.Managers
             horaExtra.FechaAprobacion = DateTime.UtcNow;
             horaExtra.FechaModificacion = DateTime.UtcNow;
 
-            return await _horasExtrasRepo.UpdateAsync(horaExtra);
+            var resultado = await _horasExtrasRepo.UpdateAsync(horaExtra);
+
+            if (resultado)
+                await _auditoria.RegistrarAsync(
+                    tablaAfectada: "horas_extras",
+                    descripcion: $"Hora extra ID {id} {dto.EstadoSolicitud.ToLower()} " +
+                                   $"por jefe ID {dto.JefeApruebaId} " +
+                                   $"({jefe.Nombre} {jefe.PrimerApellido}). " +
+                                   $"Empleado ID {horaExtra.EmpleadoId}."
+                );
+
+            return resultado;
         }
 
         public async Task<ReporteHorasExtrasDTO> GetReporteEmpleadoAsync(
@@ -314,6 +358,6 @@ namespace BusinessLogicLayer.Managers
             };
         }
 
-        #endregion
+        #endregion Métodos privados
     }
 }

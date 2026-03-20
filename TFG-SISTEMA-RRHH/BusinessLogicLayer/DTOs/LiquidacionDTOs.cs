@@ -10,6 +10,7 @@
         public decimal MontoCesantia { get; set; }
         public decimal MontoTotal => MontoPreaviso + MontoVacaciones + MontoAguinaldo + MontoCesantia;
         public string? Estado { get; set; }
+        public DateTime FechaLiquidacion { get; set; }
     }
 
     public class ResultadoPreaviso

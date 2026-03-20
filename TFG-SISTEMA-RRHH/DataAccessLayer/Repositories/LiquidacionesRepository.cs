@@ -43,6 +43,13 @@ namespace DataAccessLayer.Repositories
                 .ToListAsync();
         }
 
+        public async Task<IEnumerable<Liquidaciones>> ListarLiquidacionesPorEmpleado(int idEmpleado)
+        {
+            return await _context.Liquidaciones
+                         .Where(l => l.EmpleadoId == idEmpleado)
+                         .ToListAsync();
+        }
+
         public async Task<bool> ModificarLiquidacion(Liquidaciones liquidacion)
         {
             _context.Entry(liquidacion).State = EntityState.Modified;

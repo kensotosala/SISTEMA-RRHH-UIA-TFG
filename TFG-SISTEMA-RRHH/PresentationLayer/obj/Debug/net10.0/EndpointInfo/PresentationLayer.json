@@ -651,6 +651,18 @@
         }
       }
     },
+    "/api/v1/Auditoria": {
+      "get": {
+        "tags": [
+          "Auditoria"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Auth/login": {
       "post": {
         "tags": [
@@ -2416,6 +2428,29 @@
             }
           }
         },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/Liquidaciones/empleado/{idEmpleado}": {
+      "get": {
+        "tags": [
+          "Liquidaciones"
+        ],
+        "parameters": [
+          {
+            "name": "idEmpleado",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -6896,6 +6931,9 @@
     },
     {
       "name": "Asistencias"
+    },
+    {
+      "name": "Auditoria"
     },
     {
       "name": "Auth"

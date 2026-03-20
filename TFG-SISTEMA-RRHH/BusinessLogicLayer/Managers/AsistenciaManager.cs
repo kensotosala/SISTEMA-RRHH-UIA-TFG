@@ -11,6 +11,8 @@ namespace BusinessLogicLayer.Managers
         private readonly IAsistenciasRepository _asistenciasRepo;
         private readonly IEmpleadosRepository _empleadosRepo;
         private readonly IHorasExtrasManager _horasExtrasManager;
+        private readonly IAuditoriaService _auditoria;
+
 
         // Horario Laboral: 8:00 AM a 5:00 PM
         private readonly TimeSpan HoraEntradaNormal = new(8, 0, 0);
@@ -20,11 +22,13 @@ namespace BusinessLogicLayer.Managers
         public AsistenciaManager(
             IAsistenciasRepository asistenciasRepo,
             IEmpleadosRepository empleadosRepo,
-            IHorasExtrasManager horasExtrasManager)
+            IHorasExtrasManager horasExtrasManager,
+            IAuditoriaService auditoria)
         {
             _asistenciasRepo = asistenciasRepo;
             _empleadosRepo = empleadosRepo;
             _horasExtrasManager = horasExtrasManager;
+            _auditoria = auditoria;
         }
 
         #region Métodos originales (Marcado de asistencia por empleado)
@@ -54,6 +58,13 @@ namespace BusinessLogicLayer.Managers
 
                 await _asistenciasRepo.CreateAsync(nuevoRegistro);
 
+                await _auditoria.RegistrarAsync(
+                    tablaAfectada: "asistencias",
+                    descripcion: $"Entrada registrada para empleado ID {empleadoId} " +
+                                 $"({empleado.Nombre} {empleado.PrimerApellido}), " +
+                                 $"hora: {ahora:HH:mm:ss}, estado: {nuevoRegistro.Estado}."
+                );
+
                 return BuildResponse("ENTRADA", ahora, ahora, null, nuevoRegistro.Estado,
                                      "Entrada registrada correctamente", true);
             }
@@ -74,6 +85,13 @@ namespace BusinessLogicLayer.Managers
                 registro.HoraSalida = ahora;
                 registro.FechaModificacion = ahora;
                 await _asistenciasRepo.UpdateAsync(registro);
+
+                await _auditoria.RegistrarAsync(
+                    tablaAfectada: "asistencias",
+                    descripcion: $"Salida registrada para empleado ID {empleadoId} " +
+                                 $"({empleado.Nombre} {empleado.PrimerApellido}), " +
+                                 $"hora: {ahora:HH:mm:ss}."
+                );
 
                 return BuildResponse("SALIDA", ahora, registro.HoraEntrada, ahora,
                                      registro.Estado, "Salida registrada correctamente", true);
@@ -96,6 +114,13 @@ namespace BusinessLogicLayer.Managers
             registro.HoraSalida = ahora;
             registro.FechaModificacion = ahora;
             await _asistenciasRepo.UpdateAsync(registro);
+
+            await _auditoria.RegistrarAsync(
+                tablaAfectada: "asistencias",
+                descripcion: $"Salida con horas extras registrada para empleado ID {empleadoId} " +
+                             $"({empleado.Nombre} {empleado.PrimerApellido}), " +
+                             $"hora: {ahora:HH:mm:ss}, hora extra ID: {horaExtra.IdHoraExtra}."
+            );
 
             return BuildResponse("SALIDA", ahora, registro.HoraEntrada, ahora,
                                  registro.Estado, "Salida registrada con horas extras aprobadas", true);
@@ -189,19 +214,36 @@ namespace BusinessLogicLayer.Managers
 
             await _asistenciasRepo.CreateAsync(asistencia);
 
+            await _auditoria.RegistrarAsync(
+                tablaAfectada: "asistencias",
+                descripcion: $"Asistencia creada manualmente por admin para empleado ID {dto.EmpleadoId} " +
+                             $"({empleado.Nombre} {empleado.PrimerApellido}), " +
+                             $"fecha: {dto.FechaRegistro:dd/MM/yyyy}, estado: {dto.Estado}."
+            );
+
             var registroCreado = await _asistenciasRepo.GetByIdAsync(asistencia.IdAsistencia);
+
+
             return MapToDTO(registroCreado!);
         }
 
         public async Task<bool> DeleteAsync(int id)
         {
-            var existe = await _asistenciasRepo.ExistsAsync(id);
-            if (!existe)
-            {
+            var asistencia = await _asistenciasRepo.GetByIdAsync(id);
+            if (asistencia == null)
                 throw new BusinessException("Registro de asistencia no encontrado", "ASISTENCIA_NO_ENCONTRADA");
-            }
 
-            return await _asistenciasRepo.DeleteAsync(id);
+            var resultado = await _asistenciasRepo.DeleteAsync(id);
+
+            if (resultado)
+                await _auditoria.RegistrarAsync(
+                    tablaAfectada: "asistencias",
+                    descripcion: $"Asistencia ID {id} eliminada por admin. " +
+                                 $"Empleado ID {asistencia.EmpleadoId}, " +
+                                 $"fecha registro: {asistencia.FechaRegistro:dd/MM/yyyy}."
+                );
+
+            return resultado;
         }
 
         public async Task<IEnumerable<AsistenciaDTO>> GetAllAsync()
@@ -301,6 +343,19 @@ namespace BusinessLogicLayer.Managers
             asistencia.HoraSalida = dto.HoraSalida;
             asistencia.Estado = dto.Estado;
             asistencia.FechaModificacion = DateTime.Now;
+
+            var resultado = await _asistenciasRepo.UpdateAsync(asistencia);
+
+            if (resultado)
+                await _auditoria.RegistrarAsync(
+                    tablaAfectada: "asistencias",
+                    descripcion: $"Asistencia ID {id} actualizada por admin. " +
+                                 $"Empleado ID {dto.EmpleadoId} " +
+                                 $"({empleado.Nombre} {empleado.PrimerApellido}), " +
+                                 $"fecha: {dto.FechaRegistro:dd/MM/yyyy}, " +
+                                 $"nuevo estado: {dto.Estado}."
+                );
+
 
             return await _asistenciasRepo.UpdateAsync(asistencia);
         }

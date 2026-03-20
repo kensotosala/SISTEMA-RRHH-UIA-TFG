@@ -13,11 +13,13 @@ namespace BusinessLogicLayer.Managers
     {
         private readonly IUsuariosRepository _repo;
         private readonly IPasswordHasher _passwordHasher;
+        private readonly IAuditoriaService _auditoria;
 
-        public UsuariosManager(IUsuariosRepository repo, IPasswordHasher passwordHasher)
+        public UsuariosManager(IUsuariosRepository repo, IPasswordHasher passwordHasher, IAuditoriaService auditoria)
         {
             _repo = repo ?? throw new ArgumentNullException(nameof(repo));
             _passwordHasher = passwordHasher ?? throw new ArgumentNullException(nameof(passwordHasher));
+            _auditoria = auditoria;
         }
 
         public async Task<ResultadoOperacion<UsuarioDTO>> ActualizarAsync(ActualizarUsuarioDTO actualizarDTO)
@@ -31,22 +33,23 @@ namespace BusinessLogicLayer.Managers
                 if (usuarioExistente == null)
                     return ResultadoOperacion<UsuarioDTO>.Error("Usuario no encontrado");
 
-                // Actualizar campos
+                var estadoAnterior = usuarioExistente.Estado;
+                var nombreAnterior = usuarioExistente.NombreUsuario;
+                var cambioPassword = false;
+
                 if (!string.IsNullOrWhiteSpace(actualizarDTO.NombreUsuario))
                 {
                     if (await _repo.ExistsByUsernameExcludingIdAsync(
-                        actualizarDTO.NombreUsuario,
-                        actualizarDTO.IdUsuario))
-                    {
+                        actualizarDTO.NombreUsuario, actualizarDTO.IdUsuario))
                         return ResultadoOperacion<UsuarioDTO>.Error("El nombre de usuario ya existe");
-                    }
+
                     usuarioExistente.NombreUsuario = actualizarDTO.NombreUsuario;
                 }
 
                 if (!string.IsNullOrWhiteSpace(actualizarDTO.Password))
                 {
-                    // USAR BCRYPT EN VEZ DE SHA256
                     usuarioExistente.PasswordHash = _passwordHasher.Hash(actualizarDTO.Password);
+                    cambioPassword = true;
                 }
 
                 if (!string.IsNullOrWhiteSpace(actualizarDTO.Estado))
@@ -62,16 +65,22 @@ namespace BusinessLogicLayer.Managers
 
                 await _repo.UpdateAsync(usuarioExistente);
 
-                return ResultadoOperacion<UsuarioDTO>.Exito(
-                    MapearADTO(usuarioExistente),
-                    "Usuario actualizado exitosamente"
+                await _auditoria.RegistrarAsync(
+                    tablaAfectada: "usuarios",
+                    descripcion: $"Usuario ID {actualizarDTO.IdUsuario} actualizado. " +
+                                   $"Nombre anterior: '{nombreAnterior}', " +
+                                   $"nombre nuevo: '{usuarioExistente.NombreUsuario}', " +
+                                   $"estado anterior: '{estadoAnterior}', " +
+                                   $"estado nuevo: '{usuarioExistente.Estado}'" +
+                                   (cambioPassword ? ", contraseña actualizada." : ".")
                 );
+
+                return ResultadoOperacion<UsuarioDTO>.Exito(
+                    MapearADTO(usuarioExistente), "Usuario actualizado exitosamente");
             }
             catch (Exception ex)
             {
-                return ResultadoOperacion<UsuarioDTO>.Error(
-                    $"Error al actualizar usuario: {ex.Message}"
-                );
+                return ResultadoOperacion<UsuarioDTO>.Error($"Error al actualizar usuario: {ex.Message}");
             }
         }
 
@@ -131,16 +140,17 @@ namespace BusinessLogicLayer.Managers
                 if (!resultado)
                     return ResultadoOperacion<bool>.Error("Usuario no encontrado");
 
-                return ResultadoOperacion<bool>.Exito(
-                    true,
-                    $"Estado cambiado a {nuevoEstado} exitosamente"
+                await _auditoria.RegistrarAsync(
+                    tablaAfectada: "usuarios",
+                    descripcion: $"Estado del usuario ID {idUsuario} cambiado a '{nuevoEstado}'."
                 );
+
+                return ResultadoOperacion<bool>.Exito(
+                    true, $"Estado cambiado a {nuevoEstado} exitosamente");
             }
             catch (Exception ex)
             {
-                return ResultadoOperacion<bool>.Error(
-                    $"Error al cambiar estado: {ex.Message}"
-                );
+                return ResultadoOperacion<bool>.Error($"Error al cambiar estado: {ex.Message}");
             }
         }
 
@@ -155,28 +165,30 @@ namespace BusinessLogicLayer.Managers
                 if (await _repo.ExistsByUsernameAsync(crearUsuarioDTO.NombreUsuario))
                     return ResultadoOperacion<UsuarioDTO>.Error("El nombre de usuario ya existe");
 
-                // USAR BCRYPT EN VEZ DE SHA256
                 var usuario = new Usuarios
                 {
                     EmpleadoId = crearUsuarioDTO.EmpleadoId,
                     NombreUsuario = crearUsuarioDTO.NombreUsuario,
                     PasswordHash = _passwordHasher.Hash(crearUsuarioDTO.Password),
                     Estado = "ACTIVO",
-                    FechaCreacion = DateTime.UtcNow
+                    FechaCreacion = DateTime.Now,
                 };
 
                 var usuarioCreado = await _repo.CreateAsync(usuario);
 
-                return ResultadoOperacion<UsuarioDTO>.Exito(
-                    MapearADTO(usuarioCreado),
-                    "Usuario creado exitosamente"
+                await _auditoria.RegistrarAsync(
+                    tablaAfectada: "usuarios",
+                    descripcion: $"Usuario creado: '{usuarioCreado.NombreUsuario}' " +
+                                   $"(ID {usuarioCreado.IdUsuario}), " +
+                                   $"empleado ID {usuarioCreado.EmpleadoId}."
                 );
+
+                return ResultadoOperacion<UsuarioDTO>.Exito(
+                    MapearADTO(usuarioCreado), "Usuario creado exitosamente");
             }
             catch (Exception ex)
             {
-                return ResultadoOperacion<UsuarioDTO>.Error(
-                    $"Error al crear usuario: {ex.Message}"
-                );
+                return ResultadoOperacion<UsuarioDTO>.Error($"Error al crear usuario: {ex.Message}");
             }
         }
 
@@ -187,18 +199,26 @@ namespace BusinessLogicLayer.Managers
                 if (idUsuario <= 0)
                     return ResultadoOperacion<bool>.Error("ID de usuario inválido");
 
+                var usuario = await _repo.GetByIdAsync(idUsuario);
+
                 var resultado = await _repo.DeleteAsync(idUsuario);
 
                 if (!resultado)
                     return ResultadoOperacion<bool>.Error("Usuario no encontrado");
 
+                await _auditoria.RegistrarAsync(
+                    tablaAfectada: "usuarios",
+                    descripcion: $"Usuario ID {idUsuario} eliminado" +
+                                   (usuario != null
+                                       ? $" ('{usuario.NombreUsuario}', empleado ID {usuario.EmpleadoId})."
+                                       : ".")
+                );
+
                 return ResultadoOperacion<bool>.Exito(true, "Usuario eliminado exitosamente");
             }
             catch (Exception ex)
             {
-                return ResultadoOperacion<bool>.Error(
-                    $"Error al eliminar usuario: {ex.Message}"
-                );
+                return ResultadoOperacion<bool>.Error($"Error al eliminar usuario: {ex.Message}");
             }
         }
 
@@ -283,6 +303,6 @@ namespace BusinessLogicLayer.Managers
             return ResultadoOperacion<bool>.Exito(true, "Validación exitosa");
         }
 
-        #endregion
+        #endregion Métodos Privados
     }
 }

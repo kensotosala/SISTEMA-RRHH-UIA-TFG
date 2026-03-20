@@ -15,6 +15,7 @@ namespace BusinessLogicLayer.Managers
         private readonly IIncapacidadesRepository _incapacidadesRepo;
         private readonly IPermisosRepository _permisosRepo;
         private readonly CalculadorNominaCostaRica _calculador;
+        private readonly IAuditoriaService _auditoria;
 
         private const decimal TasaCCSSObrera = 0.1067m;
 
@@ -23,7 +24,8 @@ namespace BusinessLogicLayer.Managers
             IEmpleadosRepository empleadosRepo,
             IHorasExtrasRepository horasExtraRepo,
             IIncapacidadesRepository incapacidadesRepo,
-            IPermisosRepository permisosRepo)
+            IPermisosRepository permisosRepo,
+            IAuditoriaService auditoria)
         {
             _nominaRepo = nominaRepo;
             _empleadosRepo = empleadosRepo;
@@ -31,6 +33,7 @@ namespace BusinessLogicLayer.Managers
             _incapacidadesRepo = incapacidadesRepo;
             _permisosRepo = permisosRepo;
             _calculador = new CalculadorNominaCostaRica();
+            _auditoria = auditoria;
         }
 
         public async Task<List<DetalleNominaDTO>> GenerarNominaQuincenalAsync(
@@ -61,6 +64,7 @@ namespace BusinessLogicLayer.Managers
             var todasIncapacidades = await _incapacidadesRepo.ListarIncapacidadesAsync();
             var todosPermisos = await _permisosRepo.GetAllPermisosAsync();
             var detalles = new List<DetalleNominaDTO>();
+            var nominasGeneradas = 0;
 
             foreach (var empleado in empleados)
             {
@@ -94,12 +98,8 @@ namespace BusinessLogicLayer.Managers
                     FechaPago = dto.FechaPago,
                     SalarioBase = detalle.SalarioBaseQuincenal,
                     HorasExtras = cantidadHorasExtra,
-                    MontoHorasExtra = detalle.TotalHorasExtra > 0
-                        ? (decimal?)detalle.TotalHorasExtra
-                        : null,
-                    Bonificaciones = detalle.Bonificaciones > 0
-                        ? (decimal?)detalle.Bonificaciones
-                        : null,
+                    MontoHorasExtra = detalle.TotalHorasExtra > 0 ? (decimal?)detalle.TotalHorasExtra : null,
+                    Bonificaciones = detalle.Bonificaciones > 0 ? (decimal?)detalle.Bonificaciones : null,
                     Deducciones = detalle.TotalDeducciones,
                     TotalBruto = detalle.TotalBruto,
                     TotalNeto = detalle.TotalNeto,
@@ -108,7 +108,16 @@ namespace BusinessLogicLayer.Managers
 
                 await _nominaRepo.CrearNominaAsync(nomina);
                 detalles.Add(detalle);
+                nominasGeneradas++;
             }
+
+            if (nominasGeneradas > 0)
+                await _auditoria.RegistrarAsync(
+                    tablaAfectada: "nominas",
+                    descripcion: $"Generación de nómina quincenal completada: " +
+                                   $"quincena {dto.Quincena}, mes {dto.Mes}/{dto.Anio}. " +
+                                   $"{nominasGeneradas} nómina(s) generada(s)."
+                );
 
             return detalles;
         }
@@ -148,6 +157,15 @@ namespace BusinessLogicLayer.Managers
 
             nomina.Estado = "APROBADA";
             await _nominaRepo.ActualizarNominaAsync(nomina);
+
+            await _auditoria.RegistrarAsync(
+                tablaAfectada: "nominas",
+                descripcion: $"Nómina ID {nominaId} aprobada. " +
+                               $"Empleado ID {nomina.EmpleadoId}, " +
+                               $"período: {nomina.PeriodoNomina:MM/yyyy}, " +
+                               $"total neto: {nomina.TotalNeto:N2}."
+            );
+
             return AprobarNominaResultado.Aprobada;
         }
 
@@ -162,6 +180,16 @@ namespace BusinessLogicLayer.Managers
             nomina.Estado = "PAGADA";
             nomina.FechaPago = DateTime.UtcNow;
             await _nominaRepo.ActualizarNominaAsync(nomina);
+
+            await _auditoria.RegistrarAsync(
+                tablaAfectada: "nominas",
+                descripcion: $"Nómina ID {nominaId} marcada como PAGADA. " +
+                               $"Empleado ID {nomina.EmpleadoId}, " +
+                               $"período: {nomina.PeriodoNomina:MM/yyyy}, " +
+                               $"total neto: {nomina.TotalNeto:N2}, " +
+                               $"fecha pago: {nomina.FechaPago:dd/MM/yyyy}."
+            );
+
             return PagarNominaResultado.Pagada;
         }
 
@@ -173,8 +201,19 @@ namespace BusinessLogicLayer.Managers
             if (nomina.Estado == "PAGADA")
                 return AnularNominaResultado.NoPuedeAnularse;
 
+            var estadoAnterior = nomina.Estado;
+
             nomina.Estado = "ANULADA";
             await _nominaRepo.ActualizarNominaAsync(nomina);
+
+            await _auditoria.RegistrarAsync(
+                tablaAfectada: "nominas",
+                descripcion: $"Nómina ID {nominaId} anulada. " +
+                               $"Empleado ID {nomina.EmpleadoId}, " +
+                               $"período: {nomina.PeriodoNomina:MM/yyyy}, " +
+                               $"estado anterior: '{estadoAnterior}'."
+            );
+
             return AnularNominaResultado.Anulada;
         }
 

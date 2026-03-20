@@ -10,76 +10,74 @@ namespace BusinessLogicLayer.Managers
     {
         private readonly IIncapacidadesRepository _repoIncapacidades;
         private readonly NotificacionesManager _notificacionesManager;
+        private readonly IAuditoriaService _auditoria;
 
-        public IncapacidadesManager(IIncapacidadesRepository repoIncapacidades, NotificacionesManager notificacionesManager)
+        public IncapacidadesManager(IIncapacidadesRepository repoIncapacidades, NotificacionesManager notificacionesManager, IAuditoriaService auditoria)
         {
             _repoIncapacidades = repoIncapacidades ??
                 throw new ArgumentNullException(nameof(repoIncapacidades));
             _notificacionesManager = notificacionesManager;
+            _auditoria = auditoria;
         }
 
         public async Task<IncapacidadDto> ActualizarIncapacidadAsync(ActualizarIncapacidadDto dto)
         {
-            // 1. Validar DTO
             if (dto == null)
                 throw new ArgumentNullException(nameof(dto));
 
             if (dto.IncapacidadId <= 0)
                 throw new ArgumentException("El ID de la incapacidad es requerido", nameof(dto.IncapacidadId));
 
-            // 2. Obtener la entidad existente
             var incapacidadExistente = await _repoIncapacidades.ListarIncapacidadPorId(dto.IncapacidadId);
 
             if (incapacidadExistente == null)
                 throw new KeyNotFoundException($"No se encontró la incapacidad con ID {dto.IncapacidadId}");
 
-            // 3. Validaciones de negocio
             if (dto.FechaFin < dto.FechaInicio)
                 throw new InvalidOperationException("La fecha fin no puede ser menor a la fecha de inicio");
 
-            // Validar que el TipoIncapacidad sea válido
             if (!Enum.TryParse<TipoIncapacidad>(dto.TipoIncapacidad, true, out _))
-            {
                 throw new ArgumentException(
                     $"El tipo de incapacidad '{dto.TipoIncapacidad}' no es válido. " +
                     $"Valores permitidos: ENFERMEDAD, ACCIDENTE, MATERNIDAD, PATERNIDAD",
                     nameof(dto.TipoIncapacidad));
-            }
 
-            // 4. Actualizar campos
+            var tipoAnterior = incapacidadExistente.TipoIncapacidad;
+
             incapacidadExistente.EmpleadoId = dto.EmpleadoId;
             incapacidadExistente.FechaInicio = dto.FechaInicio;
             incapacidadExistente.FechaFin = dto.FechaFin;
             incapacidadExistente.TipoIncapacidad = dto.TipoIncapacidad.ToUpper();
             incapacidadExistente.Diagnostico = dto.Diagnostico;
+            incapacidadExistente.FechaModificacion = DateTime.Now;
 
             if (!string.IsNullOrEmpty(dto.ArchivoAdjunto))
                 incapacidadExistente.ArchivoAdjunto = dto.ArchivoAdjunto;
 
-            incapacidadExistente.FechaModificacion = DateTime.Now;
+            await _repoIncapacidades.ActualizarIncapacidadAsync(incapacidadExistente);
 
-            // 5. Persistir cambios
-            var resultado = await _repoIncapacidades.ActualizarIncapacidadAsync(incapacidadExistente);
+            await _auditoria.RegistrarAsync(
+                tablaAfectada: "incapacidades",
+                descripcion: $"Incapacidad ID {dto.IncapacidadId} actualizada. " +
+                               $"Empleado ID {dto.EmpleadoId}, " +
+                               $"tipo anterior: {ObtenerLabelTipo(tipoAnterior)}, " +
+                               $"tipo nuevo: {ObtenerLabelTipo(dto.TipoIncapacidad)}, " +
+                               $"período: {dto.FechaInicio:dd/MM/yyyy} - {dto.FechaFin:dd/MM/yyyy}."
+            );
 
             var dias = (dto.FechaFin - dto.FechaInicio).Days + 1;
             var tipoLabel = ObtenerLabelTipo(dto.TipoIncapacidad);
 
-            var detalles = $@"
-                <p><strong>Tipo:</strong> {tipoLabel}</p>
-                <p><strong>Diagnóstico:</strong> {dto.Diagnostico}</p>
-                <p><strong>Fecha de Inicio:</strong> {dto.FechaInicio:dd/MM/yyyy}</p>
-                <p><strong>Fecha de Fin:</strong> {dto.FechaFin:dd/MM/yyyy}</p>
-                <p><strong>Total de Días:</strong> {dias} día(s)</p>
-                <p><strong>Estado:</strong> ACTIVA</p>
-            ";
-
             await _notificacionesManager.NotificarSolicitudCreadaAsync(
-                dto.EmpleadoId,
-                "Incapacidad",
-                detalles
+                dto.EmpleadoId, "Incapacidad",
+                $@"<p><strong>Tipo:</strong> {tipoLabel}</p>
+                   <p><strong>Diagnóstico:</strong> {dto.Diagnostico}</p>
+                   <p><strong>Fecha de Inicio:</strong> {dto.FechaInicio:dd/MM/yyyy}</p>
+                   <p><strong>Fecha de Fin:</strong> {dto.FechaFin:dd/MM/yyyy}</p>
+                   <p><strong>Total de Días:</strong> {dias} día(s)</p>
+                   <p><strong>Estado:</strong> ACTIVA</p>"
             );
 
-            // 6. Retornar DTO actualizado
             return new IncapacidadDto
             {
                 IdIncapacidad = incapacidadExistente.IdIncapacidad,
@@ -105,25 +103,33 @@ namespace BusinessLogicLayer.Managers
             if (incapacidadExistente == null)
                 return false;
 
-            var dias = (incapacidadExistente.FechaFin - incapacidadExistente.FechaInicio).Days + 1;
-            var tipoLabel = ObtenerLabelTipo(incapacidadExistente.TipoIncapacidad);
+            var empleadoId = incapacidadExistente.EmpleadoId;
+            var tipo = incapacidadExistente.TipoIncapacidad;
+            var fechaInicio = incapacidadExistente.FechaInicio;
+            var fechaFin = incapacidadExistente.FechaFin;
 
-            var detalles = $@"
-                <p><strong>Tipo:</strong> {tipoLabel}</p>
-                <p><strong>Diagnóstico:</strong> {incapacidadExistente.Diagnostico}</p>
-                <p><strong>Fecha de Inicio:</strong> {incapacidadExistente.FechaInicio:dd/MM/yyyy}</p>
-                <p><strong>Fecha de Fin:</strong> {incapacidadExistente.FechaFin:dd/MM/yyyy}</p>
-                <p><strong>Total de Días:</strong> {dias} día(s)</p>
-                <p><strong>Fecha de Cancelación:</strong> {DateTime.Now:dd/MM/yyyy HH:mm}</p>
-            ";
+            var dias = (fechaFin - fechaInicio).Days + 1;
+            var tipoLabel = ObtenerLabelTipo(tipo);
 
             await _notificacionesManager.NotificarSolicitudCanceladaAsync(
-                incapacidadExistente.EmpleadoId,
-                "Incapacidad",
-                detalles
+                empleadoId, "Incapacidad",
+                $@"<p><strong>Tipo:</strong> {tipoLabel}</p>
+                   <p><strong>Diagnóstico:</strong> {incapacidadExistente.Diagnostico}</p>
+                   <p><strong>Fecha de Inicio:</strong> {fechaInicio:dd/MM/yyyy}</p>
+                   <p><strong>Fecha de Fin:</strong> {fechaFin:dd/MM/yyyy}</p>
+                   <p><strong>Total de Días:</strong> {dias} día(s)</p>
+                   <p><strong>Fecha de Cancelación:</strong> {DateTime.Now:dd/MM/yyyy HH:mm}</p>"
             );
 
             await _repoIncapacidades.EliminarIncapacidadAsync(id);
+
+            await _auditoria.RegistrarAsync(
+                tablaAfectada: "incapacidades",
+                descripcion: $"Incapacidad ID {id} eliminada. " +
+                               $"Empleado ID {empleadoId}, " +
+                               $"tipo: {tipoLabel}, " +
+                               $"período: {fechaInicio:dd/MM/yyyy} - {fechaFin:dd/MM/yyyy}."
+            );
 
             return true;
         }
@@ -181,23 +187,18 @@ namespace BusinessLogicLayer.Managers
 
         public async Task<IncapacidadDto> RegistrarIncapacidad(RegistrarIncapacidadDto dto)
         {
-            // 1. Validaciones
             if (dto == null)
                 throw new ArgumentNullException(nameof(dto));
 
             if (dto.FechaFin < dto.FechaInicio)
                 throw new InvalidOperationException("La fecha fin no puede ser menor a la fecha de inicio");
 
-            // Validar que el TipoIncapacidad sea válido
             if (!Enum.TryParse<TipoIncapacidad>(dto.TipoIncapacidad, true, out _))
-            {
                 throw new ArgumentException(
                     $"El tipo de incapacidad '{dto.TipoIncapacidad}' no es válido. " +
                     $"Valores permitidos: ENFERMEDAD, ACCIDENTE, MATERNIDAD, PATERNIDAD",
                     nameof(dto.TipoIncapacidad));
-            }
 
-            // 2. Crear entidad
             var nuevaIncapacidad = new Incapacidades
             {
                 EmpleadoId = dto.EmpleadoId,
@@ -210,32 +211,32 @@ namespace BusinessLogicLayer.Managers
                 FechaCreacion = DateTime.Now
             };
 
-            // 3. Guardar
             var incapacidadGuardada = await _repoIncapacidades.RegistarIncapacidadesAsync(nuevaIncapacidad);
 
             if (incapacidadGuardada == null)
                 throw new InvalidOperationException("Error al registrar la incapacidad");
 
-            // Enviar notificacion
+            await _auditoria.RegistrarAsync(
+                tablaAfectada: "incapacidades",
+                descripcion: $"Incapacidad registrada (ID {incapacidadGuardada.IdIncapacidad}) " +
+                               $"para empleado ID {dto.EmpleadoId}, " +
+                               $"tipo: {ObtenerLabelTipo(dto.TipoIncapacidad)}, " +
+                               $"período: {dto.FechaInicio:dd/MM/yyyy} - {dto.FechaFin:dd/MM/yyyy}."
+            );
+
             var dias = (dto.FechaFin - dto.FechaInicio).Days + 1;
             var tipoLabel = ObtenerLabelTipo(dto.TipoIncapacidad);
 
-            var detalles = $@"
-                <p><strong>Tipo:</strong> {tipoLabel}</p>
-                <p><strong>Diagnóstico:</strong> {dto.Diagnostico}</p>
-                <p><strong>Fecha de Inicio:</strong> {dto.FechaInicio:dd/MM/yyyy}</p>
-                <p><strong>Fecha de Fin:</strong> {dto.FechaFin:dd/MM/yyyy}</p>
-                <p><strong>Total de Días:</strong> {dias} día(s)</p>
-                <p><strong>Estado:</strong> ACTIVA</p>
-            ";
-
             await _notificacionesManager.NotificarSolicitudCreadaAsync(
-                dto.EmpleadoId,
-                "Incapacidad",
-                detalles
+                dto.EmpleadoId, "Incapacidad",
+                $@"<p><strong>Tipo:</strong> {tipoLabel}</p>
+                   <p><strong>Diagnóstico:</strong> {dto.Diagnostico}</p>
+                   <p><strong>Fecha de Inicio:</strong> {dto.FechaInicio:dd/MM/yyyy}</p>
+                   <p><strong>Fecha de Fin:</strong> {dto.FechaFin:dd/MM/yyyy}</p>
+                   <p><strong>Total de Días:</strong> {dias} día(s)</p>
+                   <p><strong>Estado:</strong> ACTIVA</p>"
             );
 
-            // 4. Retornar DTO
             return new IncapacidadDto
             {
                 IdIncapacidad = incapacidadGuardada.IdIncapacidad,

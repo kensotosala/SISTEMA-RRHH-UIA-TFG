@@ -14,6 +14,7 @@ namespace BusinessLogicLayer.DTOs
         public string? NombreEmpleado { get; set; }
         public string? Departamento { get; set; }
         public string? Puesto { get; set; }
+        public int Anio { get; set; }
 
         public DateTime FechaCalculo { get; set; }
 

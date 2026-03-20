@@ -7,6 +7,8 @@ namespace DataAccessLayer.Interfaces
         // CRUD
         Task<IEnumerable<Liquidaciones>> ListarLiquidaciones();
 
+        Task<IEnumerable<Liquidaciones>> ListarLiquidacionesPorEmpleado(int idEmpleado);
+
         Task<bool> ModificarLiquidacion(Liquidaciones liquidacion);
 
         Task<bool> AnularLiquidacion(int id);

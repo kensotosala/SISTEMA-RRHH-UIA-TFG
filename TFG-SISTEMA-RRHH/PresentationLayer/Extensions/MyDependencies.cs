@@ -135,6 +135,14 @@ namespace PresentationLayer.Extensions
             services.AddScoped<BusinessLogicLayer.Interfaces.IMetricasRendimientoManager,
                                        BusinessLogicLayer.Managers.MetricasRendimientoManager>();
 
+            // Auditoria
+
+            services.AddScoped<DataAccessLayer.Interfaces.IAuditoriaRepository,
+                           DataAccessLayer.Repositories.AuditoriaRepository>();
+
+            services.AddScoped<BusinessLogicLayer.Interfaces.IAuditoriaService,
+                                      BusinessLogicLayer.Managers.AuditoriaService>();
+
             return services;
         }
     }

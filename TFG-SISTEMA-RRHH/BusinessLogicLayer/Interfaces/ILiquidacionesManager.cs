@@ -16,6 +16,8 @@ namespace BusinessLogicLayer.Interfaces
 
         Task<ResultDTO<IEnumerable<LiquidacionDTO>>> ListarLiquidaciones();
 
+        Task<ResultDTO<IEnumerable<LiquidacionDTO>>> ListarLiquidacionesPorEmpleado(int idEmpleado);
+
         // Cálculos
         Task<decimal> CalcularSalarioPromedio(int idEmpleado);
 

@@ -10,12 +10,14 @@ namespace BusinessLogicLayer.Managers
         private readonly NotificacionesManager _notificacionesManager;
         private readonly ILiquidacionesRepository _repo;
         private readonly IEmpleadosRepository _repoEmpleados;
+        private readonly IAuditoriaService _auditoria;
 
-        public LiquidacionesManager(ILiquidacionesRepository repo, IEmpleadosRepository repoEmpleados, NotificacionesManager notificacionesManager)
+        public LiquidacionesManager(ILiquidacionesRepository repo, IEmpleadosRepository repoEmpleados, NotificacionesManager notificacionesManager, IAuditoriaService auditoria)
         {
             _repo = repo;
             _repoEmpleados = repoEmpleados;
             _notificacionesManager = notificacionesManager;
+            _auditoria = auditoria;
         }
 
         public async Task<ResultDTO<bool>> AnularLiquidacion(int idLiquidacion)
@@ -23,24 +25,29 @@ namespace BusinessLogicLayer.Managers
             if (idLiquidacion <= 0)
                 return ResultDTO<bool>.Failure("La liquidación no es válida.");
 
-            var liquidacionExistente = await _repo.ObtenerLiquidacionPorId(idLiquidacion);
-            if (liquidacionExistente == null)
+            var liquidacion = await _repo.ObtenerLiquidacionPorId(idLiquidacion);
+            if (liquidacion == null)
                 return ResultDTO<bool>.Failure("La liquidación no existe.");
 
-            liquidacionExistente.Estado = "ANULADA";
+            liquidacion.Estado = "ANULADA";
 
-            var detalles = $@"
-    <p><strong>Fecha de Liquidación:</strong> {liquidacionExistente.FechaLiquidacion:dd/MM/yyyy}</p>
-    <p>La liquidación con Id {liquidacionExistente.IdLiquidacion} fue <strong>ANULADA</strong> correctamente.</p>
-";
+            var resultado = await _repo.ModificarLiquidacion(liquidacion);
+
+            if (resultado)
+                await _auditoria.RegistrarAsync(
+                    tablaAfectada: "liquidaciones",
+                    descripcion: $"Liquidación ID {idLiquidacion} anulada. " +
+                                   $"Empleado ID {liquidacion.EmpleadoId}, " +
+                                   $"fecha liquidación: {liquidacion.FechaLiquidacion:dd/MM/yyyy}."
+                );
 
             await _notificacionesManager.NotificarSolicitudAprobadaAsync(
-                liquidacionExistente.EmpleadoId,
-                "Liquidación",
-                detalles
+                liquidacion.EmpleadoId, "Liquidación",
+                $@"<p><strong>Fecha de Liquidación:</strong> {liquidacion.FechaLiquidacion:dd/MM/yyyy}</p>
+                   <p>La liquidación con Id {liquidacion.IdLiquidacion} fue <strong>ANULADA</strong> correctamente.</p>"
             );
 
-            return await _repo.ModificarLiquidacion(liquidacionExistente)
+            return resultado
                 ? ResultDTO<bool>.Success(true, "Liquidación anulada exitosamente.")
                 : ResultDTO<bool>.Failure("No se pudo anular la liquidación.");
         }
@@ -265,14 +272,13 @@ namespace BusinessLogicLayer.Managers
             };
         }
 
-        public async Task<Liquidaciones> CrearLiquidacion(int idEmpleado, DateOnly fechaSalida, string motivo, bool preavisoEntregado = true)
+        public async Task<Liquidaciones> CrearLiquidacion(
+            int idEmpleado, DateOnly fechaSalida, string motivo, bool preavisoEntregado = true)
         {
             var empleado = await _repo.ObtenerEmpleadoPorId(idEmpleado);
-
             if (empleado is null)
                 throw new ArgumentException("Empleado no encontrado.", nameof(idEmpleado));
 
-            // 1️. Calcular conceptos generales
             var vacaciones = await CalcularVacacionesProporcionales(idEmpleado, fechaSalida);
             var aguinaldo = await CalcularAguinaldoProporcional(idEmpleado, fechaSalida);
             var preaviso = await CalcularPreaviso(idEmpleado, fechaSalida);
@@ -284,27 +290,16 @@ namespace BusinessLogicLayer.Managers
             switch (motivo)
             {
                 case "RENUNCIA":
-                    // Empleado renuncia: recibe vacaciones + aguinaldo
-                    // Si NO entregó preaviso, se le deduce ese monto
                     if (!preavisoEntregado)
                         deduccionPreaviso = preaviso.MontoPreaviso;
                     break;
 
                 case "RENUNCIA_RESPONSABILIDAD_PATRONAL":
-                    // Despido indirecto: empleado tiene derecho a cesantía + preaviso
-                    indemnizacion = cesantia.MontoAuxilioCesantia + preaviso.MontoPreaviso;
-                    break;
-
                 case "DESPIDO_RESPONSABILIDAD_PATRONAL":
-                    // Despido sin causa: cesantía + preaviso
                     indemnizacion = cesantia.MontoAuxilioCesantia + preaviso.MontoPreaviso;
                     break;
 
                 case "DESPIDO_SIN_RESPONSABILIDAD":
-                    // Despido con causa justificada: sin cesantía ni preaviso
-                    indemnizacion = 0m;
-                    break;
-
                 case "JUBILACION":
                     indemnizacion = 0m;
                     break;
@@ -313,7 +308,6 @@ namespace BusinessLogicLayer.Managers
                     throw new ArgumentException($"Motivo de liquidación no reconocido: {motivo}");
             }
 
-            // 2️. Crear entidad Liquidaciones
             var liquidacion = new Liquidaciones
             {
                 EmpleadoId = idEmpleado,
@@ -325,20 +319,33 @@ namespace BusinessLogicLayer.Managers
                 Indemnizacion = cesantia.MontoAuxilioCesantia,
                 OtrosConceptos = deduccionPreaviso > 0 ? -deduccionPreaviso : 0m,
                 TotalLiquidacion = vacaciones.MontoVacacionesProporcionales
-                                  + aguinaldo.MontoAguinaldoProporcional
-                                  + indemnizacion
-                                  - deduccionPreaviso,
+                                      + aguinaldo.MontoAguinaldoProporcional
+                                      + indemnizacion
+                                      - deduccionPreaviso,
                 Estado = "CALCULADA",
                 FechaCreacion = DateTime.Now
             };
 
             await _repo.CrearLiquidacion(liquidacion);
 
-            // 3. Inactivar empleado si es despido
+            await _auditoria.RegistrarAsync(
+                tablaAfectada: "liquidaciones",
+                descripcion: $"Liquidación creada (ID {liquidacion.IdLiquidacion}) " +
+                               $"para empleado ID {idEmpleado}, " +
+                               $"motivo: {motivo}, " +
+                               $"total: {liquidacion.TotalLiquidacion:N2}."
+            );
+
             if (motivo.StartsWith("DESPIDO"))
             {
                 empleado.Estado = "Inactivo";
                 await _repoEmpleados.UpdateAsync(empleado);
+
+                await _auditoria.RegistrarAsync(
+                    tablaAfectada: "empleados",
+                    descripcion: $"Empleado ID {idEmpleado} inactivado por liquidación " +
+                                   $"(ID {liquidacion.IdLiquidacion}), motivo: {motivo}."
+                );
             }
 
             return liquidacion;
@@ -362,7 +369,40 @@ namespace BusinessLogicLayer.Managers
                     MontoVacaciones = l.VacacionesPendientes ?? 0m,
                     MontoAguinaldo = l.AguinaldoProporcional ?? 0m,
                     MontoCesantia = l.Indemnizacion ?? 0m,
+                    FechaLiquidacion = l.FechaLiquidacion,
                     Estado = l.Estado
+                }).ToList();
+
+                return ResultDTO<IEnumerable<LiquidacionDTO>>
+                    .Success(listaDTO, "Liquidaciones obtenidas exitosamente.");
+            }
+            catch (Exception ex)
+            {
+                return ResultDTO<IEnumerable<LiquidacionDTO>>
+                    .Failure($"Error al obtener las liquidaciones: {ex.Message}");
+            }
+        }
+
+        public async Task<ResultDTO<IEnumerable<LiquidacionDTO>>> ListarLiquidacionesPorEmpleado(int idEmpleado)
+        {
+            try
+            {
+                var listaLiquidaciones = await _repo.ListarLiquidacionesPorEmpleado(idEmpleado);
+
+                if (listaLiquidaciones == null || !listaLiquidaciones.Any())
+                    return ResultDTO<IEnumerable<LiquidacionDTO>>
+                        .Failure("No se encontraron liquidaciones.");
+
+                var listaDTO = listaLiquidaciones.Select(l => new LiquidacionDTO
+                {
+                    IdLiquidacion = l.IdLiquidacion,
+                    IdEmpleado = l.EmpleadoId,
+                    MontoPreaviso = l.MontoPreaviso ?? 0m,
+                    MontoVacaciones = l.VacacionesPendientes ?? 0m,
+                    MontoAguinaldo = l.AguinaldoProporcional ?? 0m,
+                    MontoCesantia = l.Indemnizacion ?? 0m,
+                    Estado = l.Estado,
+                    FechaLiquidacion = l.FechaLiquidacion
                 }).ToList();
 
                 return ResultDTO<IEnumerable<LiquidacionDTO>>
@@ -377,7 +417,8 @@ namespace BusinessLogicLayer.Managers
 
         public async Task<ResultDTO<bool>> ModificarLiquidacion(Liquidaciones liquidacion)
         {
-            if (liquidacion is null) return ResultDTO<bool>.Failure("La liquidación no es válida.");
+            if (liquidacion is null)
+                return ResultDTO<bool>.Failure("La liquidación no es válida.");
 
             if (liquidacion.Estado != "CALCULADA")
                 return ResultDTO<bool>.Failure("Solo se pueden modificar liquidaciones CALCULADAS");
@@ -386,18 +427,22 @@ namespace BusinessLogicLayer.Managers
 
             var resultado = await _repo.ModificarLiquidacion(liquidacion);
 
-            var detalles = $@"
-        <p><strong>Fecha de Liquidación:</strong> {liquidacion.FechaLiquidacion:dd/MM/yyyy}</p>
-        <p><strong>Motivo:</strong> {liquidacion.MotivoLiquidacion}</p>
-        <p><strong>Indemnización:</strong> {liquidacion.Indemnizacion}</p>
-        <p><strong>Otros Conceptos:</strong> {liquidacion.OtrosConceptos}</p>
-        <p><strong>Total Liquidación:</strong> {liquidacion.TotalLiquidacion}</p>
-    ";
+            if (resultado)
+                await _auditoria.RegistrarAsync(
+                    tablaAfectada: "liquidaciones",
+                    descripcion: $"Liquidación ID {liquidacion.IdLiquidacion} modificada. " +
+                                   $"Empleado ID {liquidacion.EmpleadoId}, " +
+                                   $"motivo: {liquidacion.MotivoLiquidacion}, " +
+                                   $"total: {liquidacion.TotalLiquidacion:N2}."
+                );
 
             await _notificacionesManager.NotificarSolicitudAprobadaAsync(
-                liquidacion.EmpleadoId,
-                "Liquidación",
-                detalles
+                liquidacion.EmpleadoId, "Liquidación",
+                $@"<p><strong>Fecha de Liquidación:</strong> {liquidacion.FechaLiquidacion:dd/MM/yyyy}</p>
+                   <p><strong>Motivo:</strong> {liquidacion.MotivoLiquidacion}</p>
+                   <p><strong>Indemnización:</strong> {liquidacion.Indemnizacion}</p>
+                   <p><strong>Otros Conceptos:</strong> {liquidacion.OtrosConceptos}</p>
+                   <p><strong>Total Liquidación:</strong> {liquidacion.TotalLiquidacion}</p>"
             );
 
             return resultado

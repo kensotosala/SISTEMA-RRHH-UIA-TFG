@@ -126,6 +126,21 @@ namespace PresentationLayer.Controllers
             }
         }
 
+        [HttpGet("empleado/{idEmpleado}")]
+        public async Task<IActionResult> ListarLiquidacionesPorEmpleado(int idEmpleado)
+        {
+            try
+            {
+                var liquidaciones = await _manager.ListarLiquidacionesPorEmpleado(idEmpleado);
+                return Ok(liquidaciones);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error al listar las liquidaciones");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error al listar las liquidaciones.");
+            }
+        }
+
         [HttpPost]
         public async Task<IActionResult> CrearLiquidacion([FromBody] CrearLiquidacionRequest request)
         {

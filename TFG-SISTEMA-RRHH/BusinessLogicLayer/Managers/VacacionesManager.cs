@@ -9,43 +9,35 @@ namespace BusinessLogicLayer.Managers
     {
         private readonly IVacacionesRepository _vacacionesRepo;
         private readonly NotificacionesManager _notificacionesManager;
+        private readonly IAuditoriaService _auditoria;
 
-        // Constantes según la ley de Costa Rica
         private const int DIAS_MINIMOS_SOLICITUD = 1;
 
         private const int DIAS_MAXIMOS_CONSECUTIVOS = 14;
         private const int DIAS_ANTICIPACION_MINIMA = 15;
 
-        public VacacionesManager(IVacacionesRepository vacacionesRepo, NotificacionesManager notificacionesManager)
+        public VacacionesManager(IVacacionesRepository vacacionesRepo, NotificacionesManager notificacionesManager, IAuditoriaService auditoria)
         {
             _vacacionesRepo = vacacionesRepo ?? throw new ArgumentNullException(nameof(vacacionesRepo));
             _notificacionesManager = notificacionesManager;
+            _auditoria = auditoria;
         }
-
-        // ========================================
-        // OPERACIONES CRUD
-        // ========================================
 
         public async Task<ResultDTO<ListarVacacionByIdDTO>> CrearSolicitudAsync(CrearVacacionDTO dto)
         {
             try
             {
-                // Validaciones básicas
                 var validacionesBasicas = ValidarDatosBasicos(dto);
                 if (!validacionesBasicas.Exitoso)
-                    return ResultDTO<ListarVacacionByIdDTO>.Failure(validacionesBasicas.Mensaje, validacionesBasicas.Errores);
+                    return ResultDTO<ListarVacacionByIdDTO>.Failure(
+                        validacionesBasicas.Mensaje, validacionesBasicas.Errores);
 
-                // Validar reglas de negocio
                 var validacion = await ValidarSolicitudAsync(dto.EmpleadoId, dto.FechaInicio, dto.FechaFin);
                 if (!validacion.Exitoso || !validacion.Datos!.EsValida)
-                {
                     return ResultDTO<ListarVacacionByIdDTO>.Failure(
                         "La solicitud no cumple con las validaciones",
-                        validacion.Datos?.Errores ?? new List<string>()
-                    );
-                }
+                        validacion.Datos?.Errores ?? new List<string>());
 
-                // Crear entidad
                 var vacacion = new Vacaciones
                 {
                     EmpleadoId = dto.EmpleadoId,
@@ -53,33 +45,33 @@ namespace BusinessLogicLayer.Managers
                     FechaFin = dto.FechaFin
                 };
 
-                // Guardar
                 var vacacionCreada = await _vacacionesRepo.CrearAsync(vacacion);
-
-                // Mapear manualmente a DTO
                 var resultado = MapearAVacacionByIdDTO(vacacionCreada);
 
+                await _auditoria.RegistrarAsync(
+                    tablaAfectada: "vacaciones",
+                    descripcion: $"Solicitud de vacaciones creada (ID {vacacionCreada.IdVacacion}) " +
+                                   $"para empleado ID {dto.EmpleadoId}, " +
+                                   $"período: {dto.FechaInicio:dd/MM/yyyy} - {dto.FechaFin:dd/MM/yyyy}, " +
+                                   $"días: {(dto.FechaFin - dto.FechaInicio).Days + 1}."
+                );
+
                 var dias = (dto.FechaFin - dto.FechaInicio).Days + 1;
-
-                var detalles = $@"
-                <p><strong>Fecha de Inicio:</strong> {dto.FechaInicio:dd/MM/yyyy}</p>
-                <p><strong>Fecha de Fin:</strong> {dto.FechaFin:dd/MM/yyyy}</p>
-                <p><strong>Total de Días:</strong> {dias} día(s)</p>
-                <p><strong>Estado:</strong> PENDIENTE</p>";
-
-                await _notificacionesManager.NotificarSolicitudCreadaAsync(dto.EmpleadoId, "Vacaciones", detalles);
+                await _notificacionesManager.NotificarSolicitudCreadaAsync(
+                    dto.EmpleadoId, "Vacaciones",
+                    $@"<p><strong>Fecha de Inicio:</strong> {dto.FechaInicio:dd/MM/yyyy}</p>
+                       <p><strong>Fecha de Fin:</strong> {dto.FechaFin:dd/MM/yyyy}</p>
+                       <p><strong>Total de Días:</strong> {dias} día(s)</p>
+                       <p><strong>Estado:</strong> PENDIENTE</p>"
+                );
 
                 return ResultDTO<ListarVacacionByIdDTO>.Success(
-                    resultado,
-                    "Solicitud creada exitosamente. Pendiente de aprobación."
-                );
+                    resultado, "Solicitud creada exitosamente. Pendiente de aprobación.");
             }
             catch (Exception ex)
             {
                 return ResultDTO<ListarVacacionByIdDTO>.Failure(
-                    "Error al crear la solicitud",
-                    new List<string> { ex.Message }
-                );
+                    "Error al crear la solicitud", new List<string> { ex.Message });
             }
         }
 
@@ -87,34 +79,26 @@ namespace BusinessLogicLayer.Managers
         {
             try
             {
-                // Verificar existencia
                 var vacacionExistente = await _vacacionesRepo.ObtenerPorIdAsync(id);
                 if (vacacionExistente == null)
                     return ResultDTO<bool>.Failure("La solicitud no existe");
 
-                // Validar estado
                 if (vacacionExistente.EstadoSolicitud != "PENDIENTE")
-                {
-                    return ResultDTO<bool>.Failure(
-                        "Solo se pueden modificar solicitudes PENDIENTES"
-                    );
-                }
+                    return ResultDTO<bool>.Failure("Solo se pueden modificar solicitudes PENDIENTES");
 
-                // Validar nuevas fechas si cambiaron
                 if (dto.FechaInicio != vacacionExistente.FechaInicio ||
                     dto.FechaFin != vacacionExistente.FechaFin)
                 {
                     var validacion = await ValidarSolicitudAsync(dto.EmpleadoId, dto.FechaInicio, dto.FechaFin);
                     if (!validacion.Exitoso || !validacion.Datos!.EsValida)
-                    {
                         return ResultDTO<bool>.Failure(
                             "Las nuevas fechas no son válidas",
-                            validacion.Datos?.Errores ?? new List<string>()
-                        );
-                    }
+                            validacion.Datos?.Errores ?? new List<string>());
                 }
 
-                // Actualizar campos manualmente
+                var fechaInicioAnterior = vacacionExistente.FechaInicio;
+                var fechaFinAnterior = vacacionExistente.FechaFin;
+
                 vacacionExistente.EmpleadoId = dto.EmpleadoId;
                 vacacionExistente.FechaInicio = dto.FechaInicio;
                 vacacionExistente.FechaFin = dto.FechaFin;
@@ -122,21 +106,24 @@ namespace BusinessLogicLayer.Managers
                 vacacionExistente.FechaAprobacion = dto.FechaAprobacon;
                 vacacionExistente.ComentariosRechazo = dto.ComentariosRechazo;
 
-                // Guardar
                 var resultado = await _vacacionesRepo.ActualizarAsync(vacacionExistente);
 
-                var dias = (vacacionExistente.FechaFin - vacacionExistente.FechaInicio).Days + 1;
-                var detalles = $@"
-                <p><strong>Fecha de Inicio:</strong> {vacacionExistente.FechaInicio:dd/MM/yyyy}</p>
-                <p><strong>Fecha de Fin:</strong> {vacacionExistente.FechaFin:dd/MM/yyyy}</p>
-                <p><strong>Total de Días:</strong> {dias} día(s)</p>
-                <p><strong>Fecha de Aprobación:</strong> {vacacionExistente.FechaAprobacion:dd/MM/yyyy HH:mm}</p>
-            ";
+                if (resultado)
+                    await _auditoria.RegistrarAsync(
+                        tablaAfectada: "vacaciones",
+                        descripcion: $"Solicitud de vacaciones ID {id} actualizada. " +
+                                       $"Empleado ID {dto.EmpleadoId}, " +
+                                       $"período anterior: {fechaInicioAnterior:dd/MM/yyyy} - {fechaFinAnterior:dd/MM/yyyy}, " +
+                                       $"período nuevo: {dto.FechaInicio:dd/MM/yyyy} - {dto.FechaFin:dd/MM/yyyy}."
+                    );
 
+                var dias = (vacacionExistente.FechaFin - vacacionExistente.FechaInicio).Days + 1;
                 await _notificacionesManager.NotificarSolicitudAprobadaAsync(
-                    vacacionExistente.EmpleadoId,
-                    "Vacaciones",
-                    detalles
+                    vacacionExistente.EmpleadoId, "Vacaciones",
+                    $@"<p><strong>Fecha de Inicio:</strong> {vacacionExistente.FechaInicio:dd/MM/yyyy}</p>
+                       <p><strong>Fecha de Fin:</strong> {vacacionExistente.FechaFin:dd/MM/yyyy}</p>
+                       <p><strong>Total de Días:</strong> {dias} día(s)</p>
+                       <p><strong>Fecha de Aprobación:</strong> {vacacionExistente.FechaAprobacion:dd/MM/yyyy HH:mm}</p>"
                 );
 
                 return resultado
@@ -145,10 +132,7 @@ namespace BusinessLogicLayer.Managers
             }
             catch (Exception ex)
             {
-                return ResultDTO<bool>.Failure(
-                    "Error al actualizar",
-                    new List<string> { ex.Message }
-                );
+                return ResultDTO<bool>.Failure("Error al actualizar", new List<string> { ex.Message });
             }
         }
 
@@ -161,26 +145,29 @@ namespace BusinessLogicLayer.Managers
                     return ResultDTO<bool>.Failure("La solicitud no existe");
 
                 if (vacacion.EstadoSolicitud != "PENDIENTE")
-                {
-                    return ResultDTO<bool>.Failure(
-                        "Solo se pueden cancelar solicitudes PENDIENTES"
-                    );
-                }
+                    return ResultDTO<bool>.Failure("Solo se pueden cancelar solicitudes PENDIENTES");
+
+                var empleadoId = vacacion.EmpleadoId;
+                var fechaInicio = vacacion.FechaInicio;
+                var fechaFin = vacacion.FechaFin;
+                var dias = (fechaFin - fechaInicio).Days + 1;
 
                 var resultado = await _vacacionesRepo.EliminarAsync(id);
 
-                var dias = (vacacion.FechaFin - vacacion.FechaInicio).Days + 1;
-                var detalles = $@"
-                <p><strong>Fecha de Inicio:</strong> {vacacion.FechaInicio:dd/MM/yyyy}</p>
-                <p><strong>Fecha de Fin:</strong> {vacacion.FechaFin:dd/MM/yyyy}</p>
-                <p><strong>Total de Días:</strong> {dias} día(s)</p>
-                <p><strong>Fecha de Cancelación:</strong> {DateTime.Now:dd/MM/yyyy HH:mm}</p>
-            ";
+                if (resultado)
+                    await _auditoria.RegistrarAsync(
+                        tablaAfectada: "vacaciones",
+                        descripcion: $"Solicitud de vacaciones ID {id} cancelada. " +
+                                       $"Empleado ID {empleadoId}, " +
+                                       $"período: {fechaInicio:dd/MM/yyyy} - {fechaFin:dd/MM/yyyy}."
+                    );
 
                 await _notificacionesManager.NotificarSolicitudCanceladaAsync(
-                    vacacion.EmpleadoId,
-                    "Vacaciones",
-                    detalles
+                    empleadoId, "Vacaciones",
+                    $@"<p><strong>Fecha de Inicio:</strong> {fechaInicio:dd/MM/yyyy}</p>
+                       <p><strong>Fecha de Fin:</strong> {fechaFin:dd/MM/yyyy}</p>
+                       <p><strong>Total de Días:</strong> {dias} día(s)</p>
+                       <p><strong>Fecha de Cancelación:</strong> {DateTime.Now:dd/MM/yyyy HH:mm}</p>"
                 );
 
                 return resultado
@@ -189,10 +176,7 @@ namespace BusinessLogicLayer.Managers
             }
             catch (Exception ex)
             {
-                return ResultDTO<bool>.Failure(
-                    "Error al cancelar",
-                    new List<string> { ex.Message }
-                );
+                return ResultDTO<bool>.Failure("Error al cancelar", new List<string> { ex.Message });
             }
         }
 
@@ -278,10 +262,6 @@ namespace BusinessLogicLayer.Managers
             }
         }
 
-        // ========================================
-        // APROBACIÓN Y RECHAZO
-        // ========================================
-
         public async Task<ResultDTO<bool>> AprobarSolicitudAsync(int idVacacion, int jefeId)
         {
             try
@@ -293,27 +273,28 @@ namespace BusinessLogicLayer.Managers
                 if (vacacion.EstadoSolicitud != "PENDIENTE")
                     return ResultDTO<bool>.Failure("Solo se pueden aprobar solicitudes PENDIENTES");
 
-                // Validar que aún tenga días disponibles
                 var validacion = await ValidarSolicitudAsync(
-                    vacacion.EmpleadoId,
-                    vacacion.FechaInicio,
-                    vacacion.FechaFin
-                );
+                    vacacion.EmpleadoId, vacacion.FechaInicio, vacacion.FechaFin);
 
                 if (!validacion.Exitoso || !validacion.Datos!.EsValida)
-                {
                     return ResultDTO<bool>.Failure(
                         "El empleado ya no tiene días disponibles",
-                        validacion.Datos?.Errores ?? new List<string>()
-                    );
-                }
+                        validacion.Datos?.Errores ?? new List<string>());
 
-                // Actualizar
                 vacacion.EstadoSolicitud = "APROBADA";
                 vacacion.JefeApruebaId = jefeId;
                 vacacion.FechaAprobacion = DateTime.Now;
 
                 var resultado = await _vacacionesRepo.ActualizarAsync(vacacion);
+
+                if (resultado)
+                    await _auditoria.RegistrarAsync(
+                        tablaAfectada: "vacaciones",
+                        descripcion: $"Solicitud de vacaciones ID {idVacacion} aprobada " +
+                                       $"por jefe ID {jefeId}. " +
+                                       $"Empleado ID {vacacion.EmpleadoId}, " +
+                                       $"período: {vacacion.FechaInicio:dd/MM/yyyy} - {vacacion.FechaFin:dd/MM/yyyy}."
+                    );
 
                 return resultado
                     ? ResultDTO<bool>.Success(true, "Solicitud aprobada exitosamente")
@@ -321,10 +302,7 @@ namespace BusinessLogicLayer.Managers
             }
             catch (Exception ex)
             {
-                return ResultDTO<bool>.Failure(
-                    "Error al aprobar",
-                    new List<string> { ex.Message }
-                );
+                return ResultDTO<bool>.Failure("Error al aprobar", new List<string> { ex.Message });
             }
         }
 
@@ -342,7 +320,6 @@ namespace BusinessLogicLayer.Managers
                 if (string.IsNullOrWhiteSpace(comentarios))
                     return ResultDTO<bool>.Failure("Debe proporcionar comentarios");
 
-                // Actualizar
                 vacacion.EstadoSolicitud = "RECHAZADA";
                 vacacion.JefeApruebaId = jefeId;
                 vacacion.FechaAprobacion = DateTime.Now;
@@ -350,17 +327,21 @@ namespace BusinessLogicLayer.Managers
 
                 var resultado = await _vacacionesRepo.ActualizarAsync(vacacion);
 
-                var dias = (vacacion.FechaFin - vacacion.FechaInicio).Days + 1;
-                var detalles = $@"
-                <p><strong>Fecha de Inicio:</strong> {vacacion.FechaInicio:dd/MM/yyyy}</p>
-                <p><strong>Fecha de Fin:</strong> {vacacion.FechaFin:dd/MM/yyyy}</p>
-                <p><strong>Total de Días:</strong> {dias} día(s)</p>";
+                if (resultado)
+                    await _auditoria.RegistrarAsync(
+                        tablaAfectada: "vacaciones",
+                        descripcion: $"Solicitud de vacaciones ID {idVacacion} rechazada " +
+                                       $"por jefe ID {jefeId}. " +
+                                       $"Empleado ID {vacacion.EmpleadoId}, " +
+                                       $"comentarios: '{comentarios}'."
+                    );
 
+                var dias = (vacacion.FechaFin - vacacion.FechaInicio).Days + 1;
                 await _notificacionesManager.NotificarSolicitudRechazadaAsync(
-                    vacacion.EmpleadoId,
-                    "Vacaciones",
-                    comentarios,
-                    detalles
+                    vacacion.EmpleadoId, "Vacaciones", comentarios,
+                    $@"<p><strong>Fecha de Inicio:</strong> {vacacion.FechaInicio:dd/MM/yyyy}</p>
+                       <p><strong>Fecha de Fin:</strong> {vacacion.FechaFin:dd/MM/yyyy}</p>
+                       <p><strong>Total de Días:</strong> {dias} día(s)</p>"
                 );
 
                 return resultado
@@ -369,10 +350,7 @@ namespace BusinessLogicLayer.Managers
             }
             catch (Exception ex)
             {
-                return ResultDTO<bool>.Failure(
-                    "Error al rechazar",
-                    new List<string> { ex.Message }
-                );
+                return ResultDTO<bool>.Failure("Error al rechazar", new List<string> { ex.Message });
             }
         }
 
@@ -455,7 +433,15 @@ namespace BusinessLogicLayer.Managers
             {
                 var saldo = await _vacacionesRepo.CalcularYGuardarSaldoAsync(empleadoId, anio);
 
-                var resultado = new SaldoVacacionesDTO
+                await _auditoria.RegistrarAsync(
+                    tablaAfectada: "saldo_vacaciones",
+                    descripcion: $"Saldo de vacaciones recalculado para empleado ID {empleadoId}, " +
+                                   $"año {anio}. " +
+                                   $"Días acumulados: {saldo.DiasAcumulados}, " +
+                                   $"días disfrutados: {saldo.DiasDisfrutados ?? 0}."
+                );
+
+                return ResultDTO<SaldoVacacionesDTO>.Success(new SaldoVacacionesDTO
                 {
                     EmpleadoId = saldo.EmpleadoId,
                     NombreEmpleado = saldo.Empleado?.Nombre ?? "N/A",
@@ -464,16 +450,12 @@ namespace BusinessLogicLayer.Managers
                     DiasDisfrutados = saldo.DiasDisfrutados ?? 0,
                     DiasPendientesAprobacion = 0,
                     Mensaje = "Saldo recalculado exitosamente"
-                };
-
-                return ResultDTO<SaldoVacacionesDTO>.Success(resultado, "Saldo recalculado");
+                }, "Saldo recalculado");
             }
             catch (Exception ex)
             {
                 return ResultDTO<SaldoVacacionesDTO>.Failure(
-                    "Error al recalcular",
-                    new List<string> { ex.Message }
-                );
+                    "Error al recalcular", new List<string> { ex.Message });
             }
         }
 

@@ -3,6 +3,7 @@ using BusinessLogicLayer.Interfaces;
 using BusinessLogicLayer.Shared;
 using DataAccessLayer.Entities;
 using DataAccessLayer.Interfaces;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace BusinessLogicLayer.Managers
 {
@@ -13,6 +14,7 @@ namespace BusinessLogicLayer.Managers
         private readonly IPuestosRepository _repoPuestos;
         private readonly IDepartamentosRepository _repoDepartamentos;
         private readonly IRolesRepository _repoRoles;
+        private readonly IAuditoriaService _auditoria;
         private readonly IPasswordHasher _passwordHasher;
 
         public EmpleadosManager(
@@ -22,6 +24,7 @@ namespace BusinessLogicLayer.Managers
             IDepartamentosRepository repoDepartamentos,
             IRolesRepository repoRoles,
             IUsuariosRolesRepository repoUsuariosRoles,
+            IAuditoriaService auditoria,
             IPasswordHasher passwordHasher)
         {
             _repoEmpleados = repoEmpleados;
@@ -30,6 +33,7 @@ namespace BusinessLogicLayer.Managers
             _repoDepartamentos = repoDepartamentos;
             _repoRoles = repoRoles;
             _passwordHasher = passwordHasher;
+            _auditoria = auditoria ?? throw new ArgumentNullException(nameof(auditoria));
         }
 
         public async Task<DetalleEmpleadoDTO> CreateAsync(CrearEmpleadoYUsuarioDTO dto)
@@ -139,6 +143,13 @@ namespace BusinessLogicLayer.Managers
             // ======================================================
             // RESPUESTA (ENTIDAD → DTO)
             // ======================================================
+
+            await _auditoria.RegistrarAsync(
+              tablaAfectada: "empleados",
+              descripcion: $"Empleado creado: '{empleadoCreado.Nombre} {empleadoCreado.PrimerApellido}' " +
+                             $"(ID {empleadoCreado.IdEmpleado}, código: {empleadoCreado.CodigoEmpleado}), " +
+                             $"usuario '{usuarioCreado.NombreUsuario}' (ID {usuarioCreado.IdUsuario}) creado."
+          );
 
             var rol = await _repoRoles.GetByIdAsync(dto.RolId);
 
@@ -296,6 +307,13 @@ namespace BusinessLogicLayer.Managers
                 throw new InvalidOperationException("No se pudo inactivar el empleado.");
             }
 
+            var nombre = $"{empleado.Nombre} {empleado.PrimerApellido}".Trim();
+
+            await _auditoria.RegistrarAsync(
+                tablaAfectada: "empleados",
+                descripcion: $"Empleado ID {id} ('{nombre}') inactivado."
+            );
+
             var usuario = await _repoUsuarios.GetByIdAsync(id);
 
             if (usuario != null)
@@ -311,6 +329,12 @@ namespace BusinessLogicLayer.Managers
                         "El empleado fue inactivado, pero no se pudo inactivar el usuario asociado."
                     );
                 }
+
+                await _auditoria.RegistrarAsync(
+                    tablaAfectada: "usuarios",
+                    descripcion: $"Usuario ID {usuario.IdUsuario} ('{usuario.NombreUsuario}') " +
+                                   $"inactivado junto con el empleado ID {id}."
+                );
             }
         }
 
@@ -323,6 +347,9 @@ namespace BusinessLogicLayer.Managers
                 throw new ArgumentException("El ID debe ser mayor a 0.", nameof(id));
 
             var empleado = await _repoEmpleados.GetByIdAsync(id);
+
+            var nombreAnterior = $"{empleado?.Nombre} {empleado?.PrimerApellido}".Trim();
+
             if (empleado == null)
                 throw new KeyNotFoundException($"Empleado con ID {id} no encontrado.");
 
@@ -369,6 +396,13 @@ namespace BusinessLogicLayer.Managers
 
             await _repoEmpleados.UpdateAsync(empleado);
 
+            await _auditoria.RegistrarAsync(
+                tablaAfectada: "empleados",
+                descripcion: $"Empleado ID {id} actualizado. " +
+                               $"Nombre anterior: '{nombreAnterior}', " +
+                               $"nombre nuevo: '{empleado.Nombre} {empleado.PrimerApellido}'.".Trim()
+            );
+
             if (dto.RolId.HasValue && dto.RolId.Value > 0 && empleado.Usuarios != null)
             {
                 var usuario = empleado.Usuarios;
@@ -382,6 +416,12 @@ namespace BusinessLogicLayer.Managers
                 usuario.FechaModificacion = DateTime.UtcNow;
 
                 await _repoUsuarios.UpdateAsync(usuario);
+
+                await _auditoria.RegistrarAsync(
+                    tablaAfectada: "usuarios_roles",
+                    descripcion: $"Rol del usuario ID {usuario.IdUsuario} " +
+                                   $"(empleado ID {id}) actualizado al rol ID {dto.RolId.Value}."
+                );
             }
         }
 
@@ -399,11 +439,18 @@ namespace BusinessLogicLayer.Managers
                 throw new InvalidOperationException("El empleado ya está activo.");
             }
 
+            var nombre = $"{empleado.Nombre} {empleado.PrimerApellido}".Trim();
+
             // Reactivar el empleado
             empleado.Estado = "ACTIVO";
             empleado.FechaModificacion = DateTime.UtcNow;
 
             await _repoEmpleados.UpdateAsync(empleado);
+
+            await _auditoria.RegistrarAsync(
+                tablaAfectada: "empleados",
+                descripcion: $"Empleado ID {id} ('{nombre}') reactivado."
+            );
 
             // Reactivar el usuario asociado
             var usuario = await _repoUsuarios.GetByIdAsync(id);
@@ -414,6 +461,12 @@ namespace BusinessLogicLayer.Managers
                 usuario.FechaModificacion = DateTime.UtcNow;
 
                 await _repoUsuarios.UpdateAsync(usuario);
+
+                await _auditoria.RegistrarAsync(
+                    tablaAfectada: "usuarios",
+                    descripcion: $"Usuario ID {usuario.IdUsuario} ('{usuario.NombreUsuario}') " +
+                                   $"reactivado junto con el empleado ID {id}."
+                );
             }
         }
     }

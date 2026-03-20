@@ -16,15 +16,18 @@ namespace BusinessLogicLayer.Managers
 
         private readonly IAguinaldoRepository _aguinaldoRepo;
         private readonly IEmpleadosRepository _empleadosRepo;
+        private readonly IAuditoriaService _auditoria;
         private readonly ILogger<AguinaldoManager> _logger;
 
         public AguinaldoManager(
             IAguinaldoRepository aguinaldoRepo,
             IEmpleadosRepository empleadosRepo,
+            IAuditoriaService auditoria,
             ILogger<AguinaldoManager> logger)
         {
             _aguinaldoRepo = aguinaldoRepo ?? throw new ArgumentNullException(nameof(aguinaldoRepo));
             _empleadosRepo = empleadosRepo ?? throw new ArgumentNullException(nameof(empleadosRepo));
+            _auditoria = auditoria;
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
@@ -129,14 +132,20 @@ namespace BusinessLogicLayer.Managers
             var creado = await _aguinaldoRepo.CreateAsync(entidad);
             var completo = await _aguinaldoRepo.GetByIdAsync(creado.IdAguinaldo);
 
+            await _auditoria.RegistrarAsync(
+                tablaAfectada: "aguinaldos",
+                descripcion: $"Aguinaldo calculado para empleado ID {dto.EmpleadoId} " +
+                             $"({empleado.Nombre} {empleado.PrimerApellido}), " +
+                             $"año {dto.Anio}, monto: {montoAguinaldo:N2}, " +
+                             $"días trabajados: {diasTrabajados}."
+            );
+
             return MapToDTO(completo!);
         }
 
-        // FIX #8: recibe el objeto empleado para no re-consultar la BD por cada uno
         public async Task<(List<AguinaldoDTO> registrados, List<string> errores)>
             CalcularAguinaldoMasivoAsync(CalcularAguinaldoMasivoDTO dto)
         {
-            // FIX #5: GetAllAsync ya filtra ACTIVOS — no se necesita segundo .Where()
             var empleados = await _empleadosRepo.GetAllAsync();
             var registrados = new List<AguinaldoDTO>();
             var errores = new List<string>();
@@ -145,7 +154,6 @@ namespace BusinessLogicLayer.Managers
             {
                 try
                 {
-                    // FIX #7: validar FechaCorte una sola vez antes del loop
                     var fechaLimiteLegal = new DateTime(dto.Anio, MES_FIN_AGUINALDO, DIA_FIN_AGUINALDO);
                     if (dto.FechaCorte.HasValue && dto.FechaCorte.Value > fechaLimiteLegal)
                         throw new ArgumentException(
@@ -186,6 +194,13 @@ namespace BusinessLogicLayer.Managers
                     var creado = await _aguinaldoRepo.CreateAsync(entidad);
                     var completo = await _aguinaldoRepo.GetByIdAsync(creado.IdAguinaldo);
                     registrados.Add(MapToDTO(completo!));
+
+                    await _auditoria.RegistrarAsync(
+                        tablaAfectada: "aguinaldos",
+                        descripcion: $"Cálculo masivo: aguinaldo generado para empleado ID {empleado.IdEmpleado} " +
+                                     $"({empleado.Nombre} {empleado.PrimerApellido}), " +
+                                     $"año {dto.Anio}, monto: {montoAguinaldo:N2}."
+                    );
                 }
                 catch (Exception ex)
                 {
@@ -197,21 +212,26 @@ namespace BusinessLogicLayer.Managers
                 }
             }
 
+            await _auditoria.RegistrarAsync(
+                tablaAfectada: "aguinaldos",
+                descripcion: $"Cálculo masivo año {dto.Anio} finalizado: " +
+                             $"{registrados.Count} exitosos, {errores.Count} fallidos."
+            );
+
             return (registrados, errores);
         }
 
         private static int CalcularDiasLaborados(DateTime fechaInicio, DateTime fechaFin)
         {
             if (fechaFin < fechaInicio) return 0;
-            var totalDias = (fechaFin.Date - fechaInicio.Date).Days + 1;
-            return Math.Min(totalDias, DIAS_ANIO);
+            return (fechaFin.Date - fechaInicio.Date).Days + 1;
         }
 
         private async Task<decimal> CalcularSalarioPromedioAsync(
-            int empleadoId,
-            DateTime fechaInicio,
-            DateTime fechaFin,
-            decimal salarioBaseActual)
+    int empleadoId,
+    DateTime fechaInicio,
+    DateTime fechaFin,
+    decimal salarioBaseActual)
         {
             var nominas = (await _aguinaldoRepo
                 .GetNominasPorPeriodoAsync(empleadoId, fechaInicio, fechaFin))
@@ -220,12 +240,13 @@ namespace BusinessLogicLayer.Managers
             if (!nominas.Any())
                 return salarioBaseActual;
 
-            // Agrupar por año-mes y sumar quincenas del mismo mes
-            // para obtener el salario mensual real antes de promediar
             var salariosPorMes = nominas
                 .GroupBy(n => new { n.PeriodoNomina.Year, n.PeriodoNomina.Month })
                 .Select(g => g.Sum(n => n.TotalBruto))
                 .ToList();
+
+            if (salariosPorMes.Count == 0)
+                return salarioBaseActual;
 
             return salariosPorMes.Sum() / salariosPorMes.Count;
         }
@@ -243,6 +264,15 @@ namespace BusinessLogicLayer.Managers
 
             if (aguinaldo.Estado == "PAGADO")
                 throw new InvalidOperationException("No se puede anular un aguinaldo ya pagado");
+
+            var resultado = await _aguinaldoRepo.DeleteAsync(idAguinaldo);
+
+            if (resultado)
+                await _auditoria.RegistrarAsync(
+                    tablaAfectada: "aguinaldos",
+                    descripcion: $"Aguinaldo ID {idAguinaldo} anulado. " +
+                                 $"Empleado ID {aguinaldo.EmpleadoId}, año {aguinaldo.Anio}."
+                );
 
             return await _aguinaldoRepo.DeleteAsync(idAguinaldo);
         }
@@ -268,6 +298,17 @@ namespace BusinessLogicLayer.Managers
             aguinaldo.Estado = "PAGADO";
             aguinaldo.FechaModificacion = DateTime.UtcNow;
 
+            var resultado = await _aguinaldoRepo.UpdateAsync(aguinaldo);
+
+            if (resultado)
+                await _auditoria.RegistrarAsync(
+                    tablaAfectada: "aguinaldos",
+                    descripcion: $"Aguinaldo ID {idAguinaldo} marcado como PAGADO. " +
+                                 $"Empleado ID {aguinaldo.EmpleadoId}, " +
+                                 $"monto: {aguinaldo.MontoAguinaldo:N2}, " +
+                                 $"fecha pago: {fechaPago:dd/MM/yyyy}."
+                );
+
             return await _aguinaldoRepo.UpdateAsync(aguinaldo);
         }
 
@@ -292,6 +333,12 @@ namespace BusinessLogicLayer.Managers
                 }
             }
 
+            await _auditoria.RegistrarAsync(
+               tablaAfectada: "aguinaldos",
+               descripcion: $"Pago masivo completado: {exitosos} exitosos, {fallidos} fallidos. " +
+                            $"Fecha de pago: {fechaPago:dd/MM/yyyy}."
+           );
+
             return (exitosos, fallidos, errores);
         }
 
@@ -305,6 +352,7 @@ namespace BusinessLogicLayer.Managers
             return Math.Round(monto, 2, MidpointRounding.AwayFromZero);
         }
 
+
         private static AguinaldoDTO MapToDTO(Aguinaldos aguinaldo)
         {
             var nombreCompleto = aguinaldo.Empleado != null
@@ -316,6 +364,7 @@ namespace BusinessLogicLayer.Managers
                 IdAguinaldo = aguinaldo.IdAguinaldo,
                 EmpleadoId = aguinaldo.EmpleadoId,
                 CodigoEmpleado = aguinaldo.Empleado?.CodigoEmpleado,
+                Anio = aguinaldo.Anio,
                 NombreEmpleado = nombreCompleto,
                 Departamento = aguinaldo.Empleado?.Departamento?.NombreDepartamento,
                 Puesto = aguinaldo.Empleado?.Puesto?.NombrePuesto,

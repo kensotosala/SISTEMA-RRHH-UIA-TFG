@@ -88,6 +88,7 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddAuthorization();
+builder.Services.AddHttpContextAccessor();
 builder.Services.Dependencies();
 
 var app = builder.Build();

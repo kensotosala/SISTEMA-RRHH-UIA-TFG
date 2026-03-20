@@ -1141,6 +1141,16 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "PresentationLayer.Controllers.AuditoriaController",
+    "Method": "ListarLogs",
+    "RelativePath": "api/v1/Auditoria",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "PresentationLayer.Controllers.EvaluacionesRendimientoController",
     "Method": "GetAll",
     "RelativePath": "api/v1/EvaluacionesRendimiento",
@@ -1765,6 +1775,22 @@
         "Name": "fechaSalida",
         "Type": "System.DateOnly",
         "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PresentationLayer.Controllers.LiquidacionesController",
+    "Method": "ListarLiquidacionesPorEmpleado",
+    "RelativePath": "api/v1/Liquidaciones/empleado/{idEmpleado}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idEmpleado",
+        "Type": "System.Int32",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []
