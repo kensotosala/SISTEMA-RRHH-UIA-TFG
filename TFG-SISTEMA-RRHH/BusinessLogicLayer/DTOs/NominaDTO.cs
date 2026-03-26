@@ -31,11 +31,11 @@
 
     public class GenerarNominaQuincenalDTO
     {
-        public int Quincena { get; set; } // 1 o 2
-        public int Mes { get; set; }      // 1-12
-        public int Anio { get; set; }     // 2026
+        public int Quincena { get; set; }
+        public int Mes { get; set; }
+        public int Anio { get; set; }
         public DateTime FechaPago { get; set; }
-        public List<int>? EmpleadosIds { get; set; } // null = todos los empleados activos
+        public List<int>? EmpleadosIds { get; set; }
     }
 
     public class DetalleNominaDTO
@@ -46,7 +46,6 @@
         public string Puesto { get; set; } = string.Empty;
         public string Departamento { get; set; } = string.Empty;
 
-        // INGRESOS
         public decimal SalarioBaseQuincenal { get; set; }
 
         public decimal HorasExtraDiurnas { get; set; }
@@ -55,37 +54,27 @@
         public decimal TotalHorasExtra { get; set; }
         public decimal Bonificaciones { get; set; }
         public decimal TotalBruto { get; set; }
-
-        // DEDUCCIONES CCSS
         public DeduccionesCCSSDTO DeduccionesCCSS { get; set; } = new();
-
         public decimal TotalCCSS { get; set; }
-
-        // IMPUESTO SOBRE LA RENTA
         public ImpuestoRentaDTO ImpuestoRenta { get; set; } = new();
-
-        // OTRAS DEDUCCIONES
         public decimal PensionAlimenticia { get; set; }
-
         public decimal Prestamos { get; set; }
         public decimal Embargos { get; set; }
         public decimal OtrasDeducciones { get; set; }
         public decimal TotalDeducciones { get; set; }
 
-        // AJUSTES POR AUSENCIAS
         public AjustesAusenciasDTO AjustesAusencias { get; set; } = new();
 
-        // TOTAL
         public decimal TotalNeto { get; set; }
     }
 
     public class DeduccionesCCSSDTO
     {
-        public decimal SEM { get; set; }             // 10.50%
-        public decimal IVM { get; set; }             // 4.17%
-        public decimal BancoPopular { get; set; }    // 1.00%
-        public decimal ANP { get; set; }             // 1.00%
-        public decimal Total { get; set; }           // 16.67%
+        public decimal SEM { get; set; }
+        public decimal IVM { get; set; }
+        public decimal BancoPopular { get; set; }
+        public decimal ANP { get; set; }
+        public decimal Total { get; set; }
     }
 
     public class ImpuestoRentaDTO
@@ -120,21 +109,17 @@
         public TipoHoraExtra Tipo { get; set; }
         public decimal HorasTrabajadas { get; set; }
         public decimal SalarioPorHora { get; set; }
-        public decimal Recargo { get; set; } // 1.5 o 2.0
+        public decimal Recargo { get; set; }
         public decimal MontoTotal { get; set; }
     }
 
     public enum TipoHoraExtra
     {
-        DIURNA,      // 1.5x
-        NOCTURNA,    // 1.5x
-        FERIADO,     // 2.0x
-        DOMINGO      // 2.0x
+        DIURNA,
+        NOCTURNA,
+        FERIADO,
+        DOMINGO
     }
-
-    // ============================================
-    // DTOs PARA REPORTES
-    // ============================================
 
     public class ResumenNominaQuincenalDTO
     {
@@ -166,8 +151,8 @@
         public string Cedula { get; set; } = string.Empty;
         public string NombreCompleto { get; set; } = string.Empty;
         public decimal SalarioReportado { get; set; }
-        public decimal CuotaObrera { get; set; }    // 16.67%
-        public decimal CuotaPatronal { get; set; }  // 26.33% (SEM + IVM + BP + RT + FCL + ANP)
+        public decimal CuotaObrera { get; set; }
+        public decimal CuotaPatronal { get; set; }
     }
 
     public class DeclaracionD151DTO
@@ -188,19 +173,64 @@
         public decimal ImpuestoRetenido { get; set; }
     }
 
-    // ============================================
-    // DTOs PARA AGUINALDO
-    // ============================================
-
     public class CalculoAguinaldoDTO
     {
         public int EmpleadoId { get; set; }
         public int Anio { get; set; }
-        public DateTime FechaInicio { get; set; }  // 1 dic año anterior
-        public DateTime FechaFin { get; set; }      // 30 nov año actual
+        public DateTime FechaInicio { get; set; }
+        public DateTime FechaFin { get; set; }
         public decimal TotalSalariosAnuales { get; set; }
-        public decimal MontoAguinaldo { get; set; } // Total / 12
+        public decimal MontoAguinaldo { get; set; }
         public bool Pagado { get; set; }
         public DateTime? FechaPago { get; set; }
+    }
+
+    public class NominaParcialDTO
+    {
+        public int Quincena { get; set; }
+
+        public DateTime InicioQuincena { get; set; }
+
+        public DateTime FechaCalculo { get; set; }
+
+        public int DiasTranscurridos { get; set; }
+
+        public int DiasTotalesQuincena { get; set; }
+
+        public List<DetalleNominaParcialEmpleadoDTO> Empleados { get; set; } = new();
+
+        public decimal TotalBruto { get; set; }
+
+        public decimal TotalDeducciones { get; set; }
+        public decimal TotalNeto { get; set; }
+    }
+
+    public class DetalleNominaParcialEmpleadoDTO
+    {
+        public int EmpleadoId { get; set; }
+        public string CodigoEmpleado { get; set; } = string.Empty;
+        public string NombreCompleto { get; set; } = string.Empty;
+        public string Puesto { get; set; } = string.Empty;
+        public string Departamento { get; set; } = string.Empty;
+
+        public decimal SalarioBaseQuincenal { get; set; }
+
+        public decimal SalarioProporcional { get; set; }
+
+        public decimal TotalHorasExtra { get; set; }
+
+        public decimal Bonificaciones { get; set; }
+
+        public decimal TotalBruto { get; set; }
+
+        public DeduccionesCCSSDTO DeduccionesCCSS { get; set; } = new();
+
+        public ImpuestoRentaDTO ImpuestoRenta { get; set; } = new();
+
+        public decimal TotalDeducciones { get; set; }
+
+        public decimal TotalNeto { get; set; }
+
+        public decimal PorcentajeCompletado { get; set; }
     }
 }

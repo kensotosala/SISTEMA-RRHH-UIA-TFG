@@ -1964,6 +1964,26 @@
   },
   {
     "ContainingType": "PresentationLayer.Controllers.NominaController",
+    "Method": "ObtenerNominaParcialHoy",
+    "RelativePath": "api/v1/Nomina/parcial/hoy",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "BusinessLogicLayer.DTOs.NominaParcialDTO",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PresentationLayer.Controllers.NominaController",
     "Method": "ObtenerNominasQuincena",
     "RelativePath": "api/v1/Nomina/quincena/{quincena}/mes/{mes}/anio/{anio}",
     "HttpMethod": "GET",

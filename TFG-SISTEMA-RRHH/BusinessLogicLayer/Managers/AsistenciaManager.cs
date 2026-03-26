@@ -39,7 +39,7 @@ namespace BusinessLogicLayer.Managers
             if (empleado == null)
                 throw new BusinessException("Empleado no encontrado", "EMPLEADO_NO_ENCONTRADO");
 
-            var hoy = DateTime.Today;
+            var hoy = DateTime.Now.Date;
             var ahora = DateTime.Now;
 
             var registro = await _asistenciasRepo.GetByEmpleadoYFechaAsync(empleadoId, hoy);

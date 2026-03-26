@@ -4,6 +4,7 @@ using BusinessLogicLayer.Services;
 using BusinessLogicLayer.Shared;
 using DataAccessLayer.Entities;
 using DataAccessLayer.Interfaces;
+using System.Numerics;
 
 namespace BusinessLogicLayer.Managers
 {
@@ -45,7 +46,7 @@ namespace BusinessLogicLayer.Managers
             if (dto.Mes < 1 || dto.Mes > 12)
                 throw new ArgumentException("El mes debe estar entre 1 y 12");
 
-            if (dto.Anio < 2000 || dto.Anio > DateTime.UtcNow.Year + 1)
+            if (dto.Anio < 2000 || dto.Anio > DateTime.Now.Year + 1)
                 throw new ArgumentException("El año no es válido");
 
             List<Empleados> empleados;
@@ -178,7 +179,7 @@ namespace BusinessLogicLayer.Managers
                 return PagarNominaResultado.NoAprobada;
 
             nomina.Estado = "PAGADA";
-            nomina.FechaPago = DateTime.UtcNow;
+            nomina.FechaPago = DateTime.Now;
             await _nominaRepo.ActualizarNominaAsync(nomina);
 
             await _auditoria.RegistrarAsync(
@@ -245,7 +246,7 @@ namespace BusinessLogicLayer.Managers
                 TotalImpuestoRenta = totalImpuestoRenta,
                 TotalDeducciones = totalDeducciones,
                 TotalNeto = nominas.Sum(n => n.TotalNeto),
-                FechaGeneracion = DateTime.UtcNow,
+                FechaGeneracion = DateTime.Now,
                 Estado = estadoResumen
             };
         }
@@ -345,6 +346,130 @@ namespace BusinessLogicLayer.Managers
                 CodigoEmpleado = nomina.Empleado?.CodigoEmpleado,
                 Puesto = nomina.Empleado?.Puesto?.NombrePuesto,
                 Departamento = nomina.Empleado?.Departamento?.NombreDepartamento
+            };
+        }
+
+        public async Task<NominaParcialDTO> CalcularNominaParcialHoyAsync()
+        {
+            var hoy = DateTime.Today;
+            var mes = hoy.Month;
+            var anio = hoy.Year;
+
+            // Siempre del 16 hasta hoy — fijo, sin importar en qué día estamos
+            var inicioQuincena = new DateTime(anio, mes, 16);
+            var finQuincena = new DateTime(anio, mes, DateTime.DaysInMonth(anio, mes));
+
+            int diasTotales = (finQuincena - inicioQuincena).Days + 1;
+            int diasTranscurridos = (hoy - inicioQuincena).Days + 1;
+
+            // Factor proporcional: ej. si hoy es día 25, son 10 días de 16 → 10/16
+            decimal factor = (decimal)diasTranscurridos / diasTotales;
+
+            // Empleados activos
+            var todos = await _empleadosRepo.GetAllAsync();
+            var empleados = todos.Where(e => e.Estado == "ACTIVO").ToList();
+
+            var todasIncapacidades = await _incapacidadesRepo.ListarIncapacidadesAsync();
+            var todosPermisos = await _permisosRepo.GetAllPermisosAsync();
+
+            var detallesEmpleados = new List<DetalleNominaParcialEmpleadoDTO>();
+
+            foreach (var empleado in empleados)
+            {
+                var horasExtras = (await _horasExtraRepo
+                    .GetByEmpleadoAsync(empleado.IdEmpleado)).ToList();
+
+                var incapacidades = todasIncapacidades
+                    .Where(i => i.EmpleadoId == empleado.IdEmpleado).ToList();
+
+                var permisos = todosPermisos
+                    .Where(p => p.EmpleadoId == empleado.IdEmpleado).ToList();
+
+                // Calcula la quincena 2 completa y luego aplica el factor
+                var detalleCompleto = _calculador.CalcularNominaQuincenal(
+                    empleado, quincena: 2, mes, anio,
+                    horasExtras, incapacidades, permisos);
+
+                decimal salarioProporcional = detalleCompleto.SalarioBaseQuincenal * factor;
+                decimal horasExtraProporcionadas = detalleCompleto.TotalHorasExtra * factor;
+                decimal bonificacionesProporcionales = detalleCompleto.Bonificaciones * factor;
+                decimal totalBruto = salarioProporcional + horasExtraProporcionadas + bonificacionesProporcionales;
+                decimal totalDeducciones = detalleCompleto.TotalDeducciones * factor;
+                decimal totalNeto = totalBruto - totalDeducciones;
+
+                // Guardar en BD como si fuera una nómina normal de la quincena 2
+                var nomina = new Nominas
+                {
+                    EmpleadoId = empleado.IdEmpleado,
+                    PeriodoNomina = inicioQuincena,               // 16 del mes actual
+                    FechaPago = hoy,                          // hoy como fecha de pago
+                    SalarioBase = Math.Round(salarioProporcional, 2),
+                    HorasExtras = horasExtraProporcionadas > 0
+                                        ? (decimal?)Math.Round(horasExtraProporcionadas, 2) : null,
+                    MontoHorasExtra = horasExtraProporcionadas > 0
+                                        ? (decimal?)Math.Round(horasExtraProporcionadas, 2) : null,
+                    Bonificaciones = bonificacionesProporcionales > 0
+                                        ? (decimal?)Math.Round(bonificacionesProporcionales, 2) : null,
+                    Deducciones = Math.Round(totalDeducciones, 2),
+                    TotalBruto = Math.Round(totalBruto, 2),
+                    TotalNeto = Math.Round(totalNeto, 2),
+                    Estado = "PENDIENTE"   // igual que cualquier nómina normal
+                };
+
+                await _nominaRepo.CrearNominaAsync(nomina);
+
+                // DTO de respuesta
+                detallesEmpleados.Add(new DetalleNominaParcialEmpleadoDTO
+                {
+                    EmpleadoId = empleado.IdEmpleado,
+                    CodigoEmpleado = empleado.CodigoEmpleado ?? string.Empty,
+                    NombreCompleto = $"{empleado.Nombre} {empleado.PrimerApellido}".Trim(),
+                    Departamento = empleado.Departamento?.NombreDepartamento ?? "Sin departamento",
+                    Puesto = empleado.Puesto?.NombrePuesto ?? "Sin puesto",
+                    SalarioBaseQuincenal = detalleCompleto.SalarioBaseQuincenal,
+                    SalarioProporcional = Math.Round(salarioProporcional, 2),
+                    TotalHorasExtra = Math.Round(horasExtraProporcionadas, 2),
+                    Bonificaciones = Math.Round(bonificacionesProporcionales, 2),
+                    TotalBruto = Math.Round(totalBruto, 2),
+                    DeduccionesCCSS = new DeduccionesCCSSDTO
+                    {
+                        SEM = Math.Round(detalleCompleto.DeduccionesCCSS.SEM * factor, 2),
+                        IVM = Math.Round(detalleCompleto.DeduccionesCCSS.IVM * factor, 2),
+                        BancoPopular = Math.Round(detalleCompleto.DeduccionesCCSS.BancoPopular * factor, 2),
+                        ANP = Math.Round(detalleCompleto.DeduccionesCCSS.ANP * factor, 2),
+                        Total = Math.Round(detalleCompleto.DeduccionesCCSS.Total * factor, 2)
+                    },
+                    ImpuestoRenta = new ImpuestoRentaDTO
+                    {
+                        BaseImponible = Math.Round(detalleCompleto.ImpuestoRenta.BaseImponible * factor, 2),
+                        ProyeccionMensual = detalleCompleto.ImpuestoRenta.ProyeccionMensual,
+                        ImpuestoMensual = detalleCompleto.ImpuestoRenta.ImpuestoMensual,
+                        ImpuestoQuincenal = Math.Round(detalleCompleto.ImpuestoRenta.ImpuestoQuincenal * factor, 2),
+                        TramoAplicado = detalleCompleto.ImpuestoRenta.TramoAplicado
+                    },
+                    TotalDeducciones = Math.Round(totalDeducciones, 2),
+                    TotalNeto = Math.Round(totalNeto, 2),
+                    PorcentajeCompletado = Math.Round(factor * 100, 1)
+                });
+            }
+
+            await _auditoria.RegistrarAsync(
+                tablaAfectada: "nominas",
+                descripcion: $"Nómina demostrativa del 16/{mes}/{anio} al {hoy:dd/MM/yyyy}. " +
+                             $"{detallesEmpleados.Count} empleado(s) procesado(s)."
+            );
+
+            return new NominaParcialDTO
+            {
+                Quincena = 2,
+                InicioQuincena = inicioQuincena,
+                FechaCalculo = hoy,
+                DiasTranscurridos = diasTranscurridos,
+                DiasTotalesQuincena = diasTotales,
+                Empleados = detallesEmpleados,
+                TotalBruto = detallesEmpleados.Sum(e => e.TotalBruto),
+                TotalDeducciones = detallesEmpleados.Sum(e => e.TotalDeducciones),
+                TotalNeto = detallesEmpleados.Sum(e => e.TotalNeto)
             };
         }
     }

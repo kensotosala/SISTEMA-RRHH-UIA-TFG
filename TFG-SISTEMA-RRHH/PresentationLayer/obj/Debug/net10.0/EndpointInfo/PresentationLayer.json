@@ -3035,6 +3035,35 @@
         }
       }
     },
+    "/api/v1/Nomina/parcial/hoy": {
+      "get": {
+        "tags": [
+          "Nomina"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/NominaParcialDTO"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NominaParcialDTO"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NominaParcialDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/Permisos/{id}": {
       "put": {
         "tags": [
@@ -5606,6 +5635,70 @@
         },
         "additionalProperties": false
       },
+      "DetalleNominaParcialEmpleadoDTO": {
+        "type": "object",
+        "properties": {
+          "empleadoId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "codigoEmpleado": {
+            "type": "string",
+            "nullable": true
+          },
+          "nombreCompleto": {
+            "type": "string",
+            "nullable": true
+          },
+          "puesto": {
+            "type": "string",
+            "nullable": true
+          },
+          "departamento": {
+            "type": "string",
+            "nullable": true
+          },
+          "salarioBaseQuincenal": {
+            "type": "number",
+            "format": "double"
+          },
+          "salarioProporcional": {
+            "type": "number",
+            "format": "double"
+          },
+          "totalHorasExtra": {
+            "type": "number",
+            "format": "double"
+          },
+          "bonificaciones": {
+            "type": "number",
+            "format": "double"
+          },
+          "totalBruto": {
+            "type": "number",
+            "format": "double"
+          },
+          "deduccionesCCSS": {
+            "$ref": "#/components/schemas/DeduccionesCCSSDTO"
+          },
+          "impuestoRenta": {
+            "$ref": "#/components/schemas/ImpuestoRentaDTO"
+          },
+          "totalDeducciones": {
+            "type": "number",
+            "format": "double"
+          },
+          "totalNeto": {
+            "type": "number",
+            "format": "double"
+          },
+          "porcentajeCompletado": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
       "EstadoAsistenciaDTO": {
         "type": "object",
         "properties": {
@@ -6356,6 +6449,51 @@
           "departamento": {
             "type": "string",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "NominaParcialDTO": {
+        "type": "object",
+        "properties": {
+          "quincena": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "inicioQuincena": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "fechaCalculo": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "diasTranscurridos": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "diasTotalesQuincena": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "empleados": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DetalleNominaParcialEmpleadoDTO"
+            },
+            "nullable": true
+          },
+          "totalBruto": {
+            "type": "number",
+            "format": "double"
+          },
+          "totalDeducciones": {
+            "type": "number",
+            "format": "double"
+          },
+          "totalNeto": {
+            "type": "number",
+            "format": "double"
           }
         },
         "additionalProperties": false

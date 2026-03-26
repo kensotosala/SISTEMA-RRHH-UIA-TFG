@@ -228,5 +228,20 @@ namespace PresentationLayer.Controllers
                 return StatusCode(500, new { mensaje = "Error interno del servidor" });
             }
         }
+
+        [HttpGet("parcial/hoy")]
+        public async Task<ActionResult<NominaParcialDTO>> ObtenerNominaParcialHoy()
+        {
+            try
+            {
+                var resultado = await _nominaManager.CalcularNominaParcialHoyAsync();
+                return Ok(resultado);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error al calcular nómina parcial");
+                return StatusCode(500, new { mensaje = "Error interno del servidor" });
+            }
+        }
     }
 }

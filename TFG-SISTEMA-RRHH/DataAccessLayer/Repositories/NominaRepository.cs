@@ -157,5 +157,21 @@ namespace DataAccessLayer.Repositories
                 .Where(n => n.PeriodoNomina >= fechaInicio && n.PeriodoNomina <= fechaFin)
                 .SumAsync(n => n.TotalNeto);
         }
+
+        public async Task<Nominas?> ObtenerNominaParcialEmpleadoQuincenaAsync(
+            int empleadoId, int quincena, int mes, int anio)
+        {
+            var fechaInicio = new DateTime(anio, mes, quincena == 1 ? 1 : 16);
+            var fechaFin = quincena == 1
+                ? new DateTime(anio, mes, 15)
+                : new DateTime(anio, mes, DateTime.DaysInMonth(anio, mes));
+
+            return await _context.Nominas
+                .FirstOrDefaultAsync(n =>
+                    n.EmpleadoId == empleadoId &&
+                    n.Estado == "PARCIAL" &&  
+                    n.PeriodoNomina >= fechaInicio &&
+                    n.PeriodoNomina <= fechaFin);
+        }
     }
 }
