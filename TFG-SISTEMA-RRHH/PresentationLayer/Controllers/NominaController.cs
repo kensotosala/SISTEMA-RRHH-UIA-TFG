@@ -104,7 +104,7 @@ namespace PresentationLayer.Controllers
                 if (mes < 1 || mes > 12)
                     return BadRequest(new { mensaje = "El mes debe estar entre 1 y 12" });
 
-                if (anio < 2000 || anio > DateTime.UtcNow.Year + 1)
+                if (anio < 2000 || anio > DateTime.Now.Year + 1)
                     return BadRequest(new { mensaje = "El año no es válido" });
 
                 var nominas = await _nominaManager.ObtenerNominasQuincenaAsync(quincena, mes, anio);

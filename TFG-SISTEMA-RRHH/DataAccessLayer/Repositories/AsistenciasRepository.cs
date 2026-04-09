@@ -16,7 +16,7 @@ namespace DataAccessLayer.Repositories
 
         public async Task CreateAsync(Asistencias asistencia)
         {
-            asistencia.FechaCreacion = DateTime.UtcNow;
+            asistencia.FechaCreacion = DateTime.Now;
             await _context.Asistencias.AddAsync(asistencia);
             await _context.SaveChangesAsync();
         }
@@ -30,6 +30,16 @@ namespace DataAccessLayer.Repositories
             _context.Asistencias.Remove(asistencia);
             await _context.SaveChangesAsync();
             return true;
+        }
+
+        public async Task<int> DiasTrabajadosPorPeriodoAsync(int empleadoId, DateTime fechaInicio, DateTime fechaFin)
+        {
+            return await _context.Asistencias
+                .Where(a => a.EmpleadoId == empleadoId &&
+                            a.FechaRegistro.Date >= fechaInicio.Date &&
+                            a.FechaRegistro.Date <= fechaFin.Date &&
+                            a.Estado == "Presente")
+                .CountAsync();
         }
 
         public async Task<bool> ExisteRegistroAsync(int empleadoId, DateTime fecha)
@@ -114,7 +124,7 @@ namespace DataAccessLayer.Repositories
             if (!existe)
                 return false;
 
-            asistencia.FechaModificacion = DateTime.UtcNow;
+            asistencia.FechaModificacion = DateTime.Now;
             _context.Asistencias.Update(asistencia);
             await _context.SaveChangesAsync();
             return true;

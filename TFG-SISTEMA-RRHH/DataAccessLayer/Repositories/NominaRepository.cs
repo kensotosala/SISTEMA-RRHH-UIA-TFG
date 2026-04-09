@@ -16,7 +16,7 @@ namespace DataAccessLayer.Repositories
 
         public async Task<Nominas> CrearNominaAsync(Nominas nomina)
         {
-            nomina.FechaCreacion = DateTime.UtcNow;
+            nomina.FechaCreacion = DateTime.Now;
             nomina.Estado = nomina.Estado ?? "PENDIENTE";
 
             _context.Nominas.Add(nomina);
@@ -47,7 +47,7 @@ namespace DataAccessLayer.Repositories
 
         public async Task<Nominas> ActualizarNominaAsync(Nominas nomina)
         {
-            nomina.FechaActualizacion = DateTime.UtcNow;
+            nomina.FechaActualizacion = DateTime.Now;
             _context.Nominas.Update(nomina);
             await _context.SaveChangesAsync();
             return nomina;
@@ -169,9 +169,19 @@ namespace DataAccessLayer.Repositories
             return await _context.Nominas
                 .FirstOrDefaultAsync(n =>
                     n.EmpleadoId == empleadoId &&
-                    n.Estado == "PARCIAL" &&  
+                    n.Estado == "PARCIAL" &&
                     n.PeriodoNomina >= fechaInicio &&
                     n.PeriodoNomina <= fechaFin);
+        }
+
+        public async Task<decimal> GetTotalSalariosBrutosAsync(int idEmpleado, DateTime fechaInicio, DateTime fechaCorte)
+        {
+            return await _context.Nominas
+                .Where(n => n.EmpleadoId == idEmpleado
+                         && n.Estado == "APROBADA"
+                         && n.PeriodoNomina >= fechaInicio
+                         && n.FechaPago < fechaCorte)
+                .SumAsync(n => n.TotalBruto);
         }
     }
 }

@@ -11,6 +11,8 @@ namespace DataAccessLayer.Interfaces
 
         Task<List<Nominas>> ListarNominasAsync();
 
+        Task<decimal> GetTotalSalariosBrutosAsync(int idEmpleado, DateTime fechaInicio, DateTime fechaCorte);
+
         Task<Nominas> ActualizarNominaAsync(Nominas nomina);
 
         Task<bool> EliminarNominaAsync(int id);

@@ -33,7 +33,7 @@ namespace BusinessLogicLayer.Managers
                 TablaAfectada = tablaAfectada,
                 Descripcion = descripcion,
                 UsuarioId = usuarioId.Value,
-                FechaCreacion = DateTime.UtcNow
+                FechaCreacion = DateTime.Now
             };
 
             await _repo.CrearAsync(auditoria);

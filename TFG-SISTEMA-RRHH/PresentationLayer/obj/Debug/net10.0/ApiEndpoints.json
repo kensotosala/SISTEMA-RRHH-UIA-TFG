@@ -1078,6 +1078,16 @@
   },
   {
     "ContainingType": "PresentationLayer.Controllers.AguinaldoController",
+    "Method": "CalcularAguinaldoHastaHoy",
+    "RelativePath": "api/v1/Aguinaldo/calcular-hasta-hoy",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PresentationLayer.Controllers.AguinaldoController",
     "Method": "CalcularAguinaldoMasivo",
     "RelativePath": "api/v1/Aguinaldo/calcular-masivo",
     "HttpMethod": "POST",
@@ -1088,6 +1098,32 @@
         "Name": "dto",
         "Type": "BusinessLogicLayer.DTOs.CalcularAguinaldoMasivoDTO",
         "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PresentationLayer.Controllers.AguinaldoController",
+    "Method": "CalcularAguinaldoMasivoV2",
+    "RelativePath": "api/v1/Aguinaldo/calcular-masivo-v2",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PresentationLayer.Controllers.AguinaldoController",
+    "Method": "CalcularAguinaldoPresenteAnio",
+    "RelativePath": "api/v1/Aguinaldo/calcular-v2",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idEmpleado",
+        "Type": "System.Int32",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -1118,7 +1154,7 @@
     "Parameters": [
       {
         "Name": "request",
-        "Type": "PresentationLayer.Controllers.PagarAguinaldosMasivoRequest",
+        "Type": "PresentationLayer.Controllers.AguinaldoController\u002BPagarAguinaldosMasivoRequest",
         "IsRequired": true
       }
     ],

@@ -16,7 +16,7 @@ namespace BusinessLogicLayer.Profiles
             CreateMap<CrearPuestoDTO, Puestos>()
             .ForMember(dest => dest.IdPuesto, opt => opt.Ignore())
             .ForMember(dest => dest.Estado, opt => opt.MapFrom(_ => true))
-            .ForMember(dest => dest.FechaCreacion, opt => opt.MapFrom(_ => DateTime.UtcNow))
+            .ForMember(dest => dest.FechaCreacion, opt => opt.MapFrom(_ => DateTime.Now))
             .ForMember(dest => dest.FechaModificacion, opt => opt.Ignore())
             .ForMember(dest => dest.NivelJerarquico,
                 opt => opt.MapFrom(src => (sbyte?)src.NivelJerarquico))
@@ -26,7 +26,7 @@ namespace BusinessLogicLayer.Profiles
             CreateMap<ActualizarPuestoDTO, Puestos>()
            .ForMember(dest => dest.FechaCreacion, opt => opt.Ignore())
            .ForMember(dest => dest.FechaModificacion,
-               opt => opt.MapFrom(_ => DateTime.UtcNow))
+               opt => opt.MapFrom(_ => DateTime.Now))
            .ForMember(dest => dest.NivelJerarquico,
                opt => opt.MapFrom(src => (sbyte?)src.NivelJerarquico))
            .ForMember(dest => dest.Empleados, opt => opt.Ignore());

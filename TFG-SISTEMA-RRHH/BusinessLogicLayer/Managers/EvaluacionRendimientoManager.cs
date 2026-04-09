@@ -92,8 +92,8 @@ namespace BusinessLogicLayer.Managers
                         IdMetrica = d.IdMetrica,
                         Puntuacion = d.Puntuacion,
                         Comentarios = d.Comentarios?.Trim(),
-                        FechaCreacion = DateTime.UtcNow,
-                        FechaModificacion = DateTime.UtcNow
+                        FechaCreacion = DateTime.Now,
+                        FechaModificacion = DateTime.Now
                     }).ToList()
                 };
 

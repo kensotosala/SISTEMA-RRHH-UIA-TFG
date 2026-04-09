@@ -15,14 +15,14 @@ namespace BusinessLogicLayer.Profiles
             CreateMap<CrearDepartamentoDTO, Departamentos>()
             .ForMember(dest => dest.IdDepartamento, opt => opt.Ignore())
             .ForMember(dest => dest.Estado, opt => opt.MapFrom(_ => "Activo"))
-            .ForMember(dest => dest.FechaCreacion, opt => opt.MapFrom(_ => DateTime.UtcNow))
+            .ForMember(dest => dest.FechaCreacion, opt => opt.MapFrom(_ => DateTime.Now))
             .ForMember(dest => dest.FechaModificacion, opt => opt.Ignore());
 
             // DTO -> Entity (ACTUALIZAR)
             CreateMap<ActualizarDepartamentoDTO, Departamentos>()
             .ForMember(dest => dest.IdDepartamento, opt => opt.Ignore())
             .ForMember(dest => dest.FechaCreacion, opt => opt.Ignore())
-            .ForMember(dest => dest.FechaModificacion, opt => opt.MapFrom(_ => DateTime.UtcNow));
+            .ForMember(dest => dest.FechaModificacion, opt => opt.MapFrom(_ => DateTime.Now));
         }
     }
 }

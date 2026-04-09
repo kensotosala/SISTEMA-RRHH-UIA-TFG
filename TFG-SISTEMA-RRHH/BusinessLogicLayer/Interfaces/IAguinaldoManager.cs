@@ -20,6 +20,10 @@ namespace BusinessLogicLayer.Interfaces
 
         Task<AguinaldoDTO> CalcularAguinaldoEmpleadoAsync(CalcularAguinaldoDTO dto);
 
+        Task<AguinaldoDTO> CalcularAguinaldoPresenteAnio(int idEmpleado);
+
+        Task<(int registrados, List<string> errores)> CalcularAguinaldoMasivoV2Async();
+
         Task<(List<AguinaldoDTO> registrados, List<string> errores)> CalcularAguinaldoMasivoAsync(
             CalcularAguinaldoMasivoDTO dto);
 

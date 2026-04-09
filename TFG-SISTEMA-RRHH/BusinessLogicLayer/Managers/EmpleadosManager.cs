@@ -74,7 +74,7 @@ namespace BusinessLogicLayer.Managers
                     "El salario base no puede ser negativo.",
                     "SALARIO_INVALIDO");
 
-            if (dto.FechaContratacion > DateOnly.FromDateTime(DateTime.UtcNow))
+            if (dto.FechaContratacion > DateOnly.FromDateTime(DateTime.Now))
                 throw new BusinessException(
                    $"La fecha de contratación no puede ser futura.",
                    code: "FUTURE_DATE");
@@ -112,8 +112,8 @@ namespace BusinessLogicLayer.Managers
                 TipoContrato = dto.TipoContrato.ToString(),
 
                 Estado = "ACTIVO",
-                FechaCreacion = DateTime.UtcNow,
-                FechaModificacion = DateTime.UtcNow
+                FechaCreacion = DateTime.Now,
+                FechaModificacion = DateTime.Now
             };
 
             var empleadoCreado = await _repoEmpleados.CreateAsync(empleado);
@@ -129,7 +129,7 @@ namespace BusinessLogicLayer.Managers
                 EmpleadoId = empleadoCreado.IdEmpleado,
 
                 Estado = "ACTIVO",
-                FechaCreacion = DateTime.UtcNow
+                FechaCreacion = DateTime.Now
             };
 
             var usuarioCreado = await _repoUsuarios.CreateAsync(usuario);
@@ -298,7 +298,7 @@ namespace BusinessLogicLayer.Managers
             }
 
             empleado.Estado = "INACTIVO";
-            empleado.FechaModificacion = DateTime.UtcNow;
+            empleado.FechaModificacion = DateTime.Now;
 
             var empleadoActualizado = await _repoEmpleados.UpdateAsync(empleado);
 
@@ -319,7 +319,7 @@ namespace BusinessLogicLayer.Managers
             if (usuario != null)
             {
                 usuario.Estado = "INACTIVO";
-                usuario.FechaModificacion = DateTime.UtcNow;
+                usuario.FechaModificacion = DateTime.Now;
 
                 var usuarioActualizado = await _repoUsuarios.UpdateAsync(usuario);
 
@@ -392,7 +392,7 @@ namespace BusinessLogicLayer.Managers
             if (dto.Estado.HasValue)
                 empleado.Estado = dto.Estado.Value.ToString();
 
-            empleado.FechaModificacion = DateTime.UtcNow;
+            empleado.FechaModificacion = DateTime.Now;
 
             await _repoEmpleados.UpdateAsync(empleado);
 
@@ -413,7 +413,7 @@ namespace BusinessLogicLayer.Managers
                     RolId = dto.RolId.Value
                 });
 
-                usuario.FechaModificacion = DateTime.UtcNow;
+                usuario.FechaModificacion = DateTime.Now;
 
                 await _repoUsuarios.UpdateAsync(usuario);
 
@@ -443,7 +443,7 @@ namespace BusinessLogicLayer.Managers
 
             // Reactivar el empleado
             empleado.Estado = "ACTIVO";
-            empleado.FechaModificacion = DateTime.UtcNow;
+            empleado.FechaModificacion = DateTime.Now;
 
             await _repoEmpleados.UpdateAsync(empleado);
 
@@ -458,7 +458,7 @@ namespace BusinessLogicLayer.Managers
             if (usuario != null)
             {
                 usuario.Estado = "ACTIVO";
-                usuario.FechaModificacion = DateTime.UtcNow;
+                usuario.FechaModificacion = DateTime.Now;
 
                 await _repoUsuarios.UpdateAsync(usuario);
 

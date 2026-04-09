@@ -105,7 +105,7 @@ namespace DataAccessLayer.Repositories
             if (!existe)
                 return false;
 
-            horaExtra.FechaModificacion = DateTime.UtcNow;
+            horaExtra.FechaModificacion = DateTime.Now;
             _context.HorasExtras.Update(horaExtra);
             await _context.SaveChangesAsync();
             return true;

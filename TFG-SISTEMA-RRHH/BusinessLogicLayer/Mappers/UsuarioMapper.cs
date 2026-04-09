@@ -14,7 +14,7 @@ namespace BusinessLogicLayer.Mappers
                 PasswordHash = hasher.Hash(dto.Password),
                 EmpleadoId = empleadoId,
                 Estado = "ACTIVO",
-                FechaCreacion = DateTime.UtcNow
+                FechaCreacion = DateTime.Now
             };
         }
     }

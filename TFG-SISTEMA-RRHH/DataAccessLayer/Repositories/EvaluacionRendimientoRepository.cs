@@ -39,8 +39,8 @@ namespace DataAccessLayer.Repositories
 
         public async Task<EvaluacionesRendimiento> CreateAsync(EvaluacionesRendimiento evaluacion)
         {
-            evaluacion.FechaCreacion = DateTime.UtcNow;
-            evaluacion.FechaModificacion = DateTime.UtcNow;
+            evaluacion.FechaCreacion = DateTime.Now;
+            evaluacion.FechaModificacion = DateTime.Now;
 
             _context.EvaluacionesRendimiento.Add(evaluacion);
             await _context.SaveChangesAsync();
@@ -59,7 +59,7 @@ namespace DataAccessLayer.Repositories
 
         public async Task<EvaluacionesRendimiento> UpdateAsync(EvaluacionesRendimiento evaluacion)
         {
-            evaluacion.FechaModificacion = DateTime.UtcNow;
+            evaluacion.FechaModificacion = DateTime.Now;
             _context.EvaluacionesRendimiento.Update(evaluacion);
             await _context.SaveChangesAsync();
             return evaluacion;
@@ -105,8 +105,8 @@ namespace DataAccessLayer.Repositories
 
         public async Task<DetalleEvaluaciones> CreateDetalleAsync(DetalleEvaluaciones detalle)
         {
-            detalle.FechaCreacion = DateTime.UtcNow;
-            detalle.FechaModificacion = DateTime.UtcNow;
+            detalle.FechaCreacion = DateTime.Now;
+            detalle.FechaModificacion = DateTime.Now;
             _context.DetalleEvaluaciones.Add(detalle);
             await _context.SaveChangesAsync();
             return detalle;
@@ -114,7 +114,7 @@ namespace DataAccessLayer.Repositories
 
         public async Task<DetalleEvaluaciones> UpdateDetalleAsync(DetalleEvaluaciones detalle)
         {
-            detalle.FechaModificacion = DateTime.UtcNow;
+            detalle.FechaModificacion = DateTime.Now;
             _context.DetalleEvaluaciones.Update(detalle);
             await _context.SaveChangesAsync();
             return detalle;

@@ -15,19 +15,25 @@ namespace BusinessLogicLayer.Managers
         private const int MES_INICIO_AGUINALDO = 12;
 
         private readonly IAguinaldoRepository _aguinaldoRepo;
-        private readonly IEmpleadosRepository _empleadosRepo;
+        private readonly IAsistenciasRepository _asistenciaRepo;
         private readonly IAuditoriaService _auditoria;
+        private readonly IEmpleadosRepository _empleadosRepo;
         private readonly ILogger<AguinaldoManager> _logger;
+        private readonly INominaRepository _nominaRepo;
 
         public AguinaldoManager(
-            IAguinaldoRepository aguinaldoRepo,
-            IEmpleadosRepository empleadosRepo,
-            IAuditoriaService auditoria,
-            ILogger<AguinaldoManager> logger)
+        IAguinaldoRepository aguinaldoRepo,
+        IEmpleadosRepository empleadosRepo,
+        IAuditoriaService auditoria,
+        INominaRepository nominaRepo,
+        IAsistenciasRepository asistenciaRepo,
+        ILogger<AguinaldoManager> logger)
         {
             _aguinaldoRepo = aguinaldoRepo ?? throw new ArgumentNullException(nameof(aguinaldoRepo));
             _empleadosRepo = empleadosRepo ?? throw new ArgumentNullException(nameof(empleadosRepo));
-            _auditoria = auditoria;
+            _nominaRepo = nominaRepo ?? throw new ArgumentNullException(nameof(nominaRepo));
+            _asistenciaRepo = asistenciaRepo ?? throw new ArgumentNullException(nameof(asistenciaRepo));
+            _auditoria = auditoria ?? throw new ArgumentNullException(nameof(auditoria));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
@@ -90,7 +96,10 @@ namespace BusinessLogicLayer.Managers
                 throw new InvalidOperationException(
                     $"Empleado {empleado.Nombre} no está activo");
 
-            // FIX #7: validar FechaCorte antes de usarla
+            if (await _aguinaldoRepo.ExisteAguinaldoAsync(dto.EmpleadoId, dto.Anio))
+                throw new InvalidOperationException(
+                    $"Ya existe un aguinaldo registrado para {empleado.Nombre} en el año {dto.Anio}");
+
             var fechaLimiteLegal = new DateTime(dto.Anio, MES_FIN_AGUINALDO, DIA_FIN_AGUINALDO);
             var fechaFin = dto.FechaCorte.HasValue
                 ? dto.FechaCorte.Value <= fechaLimiteLegal
@@ -109,10 +118,6 @@ namespace BusinessLogicLayer.Managers
             if (fechaContratacion > fechaInicio)
                 fechaInicio = fechaContratacion;
 
-            if (await _aguinaldoRepo.ExisteAguinaldoAsync(dto.EmpleadoId, dto.Anio))
-                throw new InvalidOperationException(
-                    $"Ya existe un aguinaldo registrado para {empleado.Nombre} en el año {dto.Anio}");
-
             var diasTrabajados = CalcularDiasLaborados(fechaInicio, fechaFin);
             var salarioPromedio = await CalcularSalarioPromedioAsync(dto.EmpleadoId, fechaInicio, fechaFin, empleado.SalarioBase);
             var montoAguinaldo = CalcularMontoAguinaldo(salarioPromedio, diasTrabajados);
@@ -120,13 +125,13 @@ namespace BusinessLogicLayer.Managers
             var entidad = new Aguinaldos
             {
                 EmpleadoId = dto.EmpleadoId,
-                Anio = dto.Anio,        // FIX #1: poblar el campo Anio
-                FechaCalculo = DateTime.UtcNow,
+                Anio = dto.Anio,
+                FechaCalculo = DateTime.Now,
                 DiasTrabajados = diasTrabajados,
                 SalarioPromedio = salarioPromedio,
                 MontoAguinaldo = montoAguinaldo,
                 Estado = "PENDIENTE",
-                FechaCreacion = DateTime.UtcNow
+                FechaCreacion = DateTime.Now
             };
 
             var creado = await _aguinaldoRepo.CreateAsync(entidad);
@@ -144,7 +149,7 @@ namespace BusinessLogicLayer.Managers
         }
 
         public async Task<(List<AguinaldoDTO> registrados, List<string> errores)>
-            CalcularAguinaldoMasivoAsync(CalcularAguinaldoMasivoDTO dto)
+    CalcularAguinaldoMasivoAsync(CalcularAguinaldoMasivoDTO dto)
         {
             var empleados = await _empleadosRepo.GetAllAsync();
             var registrados = new List<AguinaldoDTO>();
@@ -165,7 +170,7 @@ namespace BusinessLogicLayer.Managers
 
                     if (fechaContratacion > fechaFin)
                         throw new InvalidOperationException(
-                            $"Empleado contratado después del período de cálculo");
+                            "Empleado contratado después del período de cálculo");
 
                     if (fechaContratacion > fechaInicio)
                         fechaInicio = fechaContratacion;
@@ -187,7 +192,7 @@ namespace BusinessLogicLayer.Managers
                         DiasTrabajados = diasTrabajados,
                         SalarioPromedio = salarioPromedio,
                         MontoAguinaldo = montoAguinaldo,
-                        Estado = "PENDIENTE",
+                        Estado = "PAGADO",
                         FechaCreacion = DateTime.UtcNow
                     };
 
@@ -221,17 +226,39 @@ namespace BusinessLogicLayer.Managers
             return (registrados, errores);
         }
 
+        public async Task<(int registrados, List<string> errores)> CalcularAguinaldoMasivoV2Async()
+        {
+            var empleados = await _empleadosRepo.GetAllAsync();
+            var registrados = 0;
+            var errores = new List<string>();
+
+            foreach (var empleado in empleados)
+            {
+                try
+                {
+                    await CalcularAguinaldoPresenteAnio(empleado.IdEmpleado);
+                    registrados++;
+                }
+                catch (Exception ex)
+                {
+                    var nombre = $"{empleado.Nombre} {empleado.PrimerApellido}".Trim();
+                    _logger.LogWarning(ex,
+                        "No se pudo calcular aguinaldo para empleado {EmpleadoId} ({Nombre})",
+                        empleado.IdEmpleado, nombre);
+                    errores.Add($"{nombre}: {ex.Message}");
+                }
+            }
+
+            return (registrados, errores);
+        }
+
         private static int CalcularDiasLaborados(DateTime fechaInicio, DateTime fechaFin)
         {
             if (fechaFin < fechaInicio) return 0;
             return (fechaFin.Date - fechaInicio.Date).Days + 1;
         }
 
-        private async Task<decimal> CalcularSalarioPromedioAsync(
-    int empleadoId,
-    DateTime fechaInicio,
-    DateTime fechaFin,
-    decimal salarioBaseActual)
+        private async Task<decimal> CalcularSalarioPromedioAsync(int empleadoId, DateTime fechaInicio, DateTime fechaFin, decimal salarioBaseActual)
         {
             var nominas = (await _aguinaldoRepo
                 .GetNominasPorPeriodoAsync(empleadoId, fechaInicio, fechaFin))
@@ -274,7 +301,70 @@ namespace BusinessLogicLayer.Managers
                                  $"Empleado ID {aguinaldo.EmpleadoId}, año {aguinaldo.Anio}."
                 );
 
-            return await _aguinaldoRepo.DeleteAsync(idAguinaldo);
+            return resultado;
+        }
+
+        public async Task<AguinaldoDTO> CalcularAguinaldoPresenteAnio(int idEmpleado)
+        {
+            var anioActual = DateTime.Now.Year;
+
+            // VALIDACIONES
+
+            var empleado = await _empleadosRepo.GetByIdAsync(idEmpleado);
+
+            if (empleado == null)
+                throw new ArgumentException($"Empleado {idEmpleado} no encontrado");
+
+            if (empleado.Estado != "ACTIVO")
+                throw new InvalidOperationException(
+                    $"Empleado {empleado.Nombre} no está activo");
+
+            // Obtener Salarios entre el 01 de dicimeb re del año anterior y el 30 de noviembre del annio actual
+            var totalSalariosBrutos = await _nominaRepo.GetTotalSalariosBrutosAsync(
+                idEmpleado,
+                new DateTime(anioActual - 1, MES_INICIO_AGUINALDO, DIA_INICIO_AGUINALDO),
+                new DateTime(anioActual, MES_FIN_AGUINALDO, DIA_FIN_AGUINALDO));
+
+            // CALCULAR AGUINALDO TOTAL
+            var montoAguinaldo = totalSalariosBrutos / 12;
+
+            // DIAS TRABAJADOS ENTRE EL 1 DE DICIEMBRE DEL AÑO ANTERIOR Y EL 30 DE NOVIEMBRE DEL AÑO ACTUAL
+            var diasTrabajados = await _asistenciaRepo.DiasTrabajadosPorPeriodoAsync(
+                idEmpleado,
+                new DateTime(anioActual - 1, MES_INICIO_AGUINALDO, DIA_INICIO_AGUINALDO),
+                new DateTime(anioActual, MES_FIN_AGUINALDO, DIA_FIN_AGUINALDO));
+
+            // SALARIO PROMEDIO
+            var nominas = await _nominaRepo.ObtenerNominasPorEmpleadoAsync(idEmpleado);
+            var totalSalarios = nominas.Sum(n => n.TotalBruto);
+            var salarioPromedio = totalSalarios / 12;
+
+            // RESULTADO FINAL
+
+            var entidad = new Aguinaldos
+            {
+                EmpleadoId = idEmpleado,
+                Anio = anioActual,
+                FechaCalculo = DateTime.Now,
+                DiasTrabajados = diasTrabajados,
+                SalarioPromedio = salarioPromedio,
+                MontoAguinaldo = montoAguinaldo,
+                Estado = "PAGADO",
+                FechaCreacion = DateTime.Now
+            };
+
+            var creado = await _aguinaldoRepo.CreateAsync(entidad);
+            var completo = await _aguinaldoRepo.GetByIdAsync(creado.IdAguinaldo);
+
+            await _auditoria.RegistrarAsync(
+                tablaAfectada: "aguinaldos",
+                descripcion: $"Aguinaldo calculado para empleado ID {idEmpleado} " +
+                             $"({empleado.Nombre} {empleado.PrimerApellido}), " +
+                             $"año {anioActual}, monto: {montoAguinaldo:N2}, " +
+                             $"días trabajados: {diasTrabajados}."
+            );
+
+            return MapToDTO(entidad);
         }
 
         public async Task<bool> PagarAguinaldoAsync(int idAguinaldo, DateTime fechaPago)
@@ -309,7 +399,7 @@ namespace BusinessLogicLayer.Managers
                                  $"fecha pago: {fechaPago:dd/MM/yyyy}."
                 );
 
-            return await _aguinaldoRepo.UpdateAsync(aguinaldo);
+            return resultado;
         }
 
         public async Task<(int exitosos, int fallidos, List<string> errores)>
@@ -351,7 +441,6 @@ namespace BusinessLogicLayer.Managers
             var monto = salarioPromedio * diasTrabajados / DIAS_ANIO;
             return Math.Round(monto, 2, MidpointRounding.AwayFromZero);
         }
-
 
         private static AguinaldoDTO MapToDTO(Aguinaldos aguinaldo)
         {

@@ -192,6 +192,18 @@
         }
       }
     },
+    "/api/v1/Aguinaldo/calcular-masivo-v2": {
+      "post": {
+        "tags": [
+          "Aguinaldo"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/v1/Aguinaldo/{id}/pagar": {
       "put": {
         "tags": [
@@ -258,6 +270,40 @@
             }
           }
         },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/Aguinaldo/calcular-hasta-hoy": {
+      "post": {
+        "tags": [
+          "Aguinaldo"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/Aguinaldo/calcular-v2": {
+      "post": {
+        "tags": [
+          "Aguinaldo"
+        ],
+        "parameters": [
+          {
+            "name": "idEmpleado",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"

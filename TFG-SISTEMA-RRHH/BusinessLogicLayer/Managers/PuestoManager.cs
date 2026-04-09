@@ -79,7 +79,7 @@ namespace BusinessLogicLayer.Managers
 
             var puesto = _mapper.Map<Puestos>(dto);
             puesto.Estado = true;
-            puesto.FechaCreacion = DateTime.UtcNow;
+            puesto.FechaCreacion = DateTime.Now;
 
             await _repo.CreateAsync(puesto);
             return puesto.IdPuesto;

@@ -26,5 +26,7 @@ namespace DataAccessLayer.Interfaces
         Task<bool> ExistsAsync(int id);
 
         Task<bool> ExisteRegistroAsync(int empleadoId, DateTime fecha);
+
+        Task<int> DiasTrabajadosPorPeriodoAsync(int empleadoId, DateTime fechaInicio, DateTime fechaFin);
     }
 }

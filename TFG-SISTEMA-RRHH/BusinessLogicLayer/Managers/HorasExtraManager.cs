@@ -75,7 +75,7 @@ namespace BusinessLogicLayer.Managers
             await ValidarJefeExisteAsync(dto.JefeApruebaId);
             await ValidarSolapamientoAsync(dto.EmpleadoId, fechaInicio, fechaFin);
 
-            var fechaActual = DateTime.UtcNow;
+            var fechaActual = DateTime.Now;
 
             var horaExtra = new HorasExtras
             {
@@ -130,7 +130,7 @@ namespace BusinessLogicLayer.Managers
             horaExtra.TipoHoraExtra = dto.TipoHoraExtra;
             horaExtra.Motivo = dto.Motivo.Trim();
             horaExtra.JefeApruebaId = dto.JefeApruebaId;
-            horaExtra.FechaModificacion = DateTime.UtcNow;
+            horaExtra.FechaModificacion = DateTime.Now;
 
             var resultado = await _horasExtrasRepo.UpdateAsync(horaExtra);
 
@@ -186,8 +186,8 @@ namespace BusinessLogicLayer.Managers
 
             horaExtra.EstadoSolicitud = dto.EstadoSolicitud;
             horaExtra.JefeApruebaId = dto.JefeApruebaId;
-            horaExtra.FechaAprobacion = DateTime.UtcNow;
-            horaExtra.FechaModificacion = DateTime.UtcNow;
+            horaExtra.FechaAprobacion = DateTime.Now;
+            horaExtra.FechaModificacion = DateTime.Now;
 
             var resultado = await _horasExtrasRepo.UpdateAsync(horaExtra);
 
@@ -297,7 +297,7 @@ namespace BusinessLogicLayer.Managers
             if (fechaFin <= fechaInicio)
                 throw new BusinessException("La fecha de fin debe ser posterior a la de inicio", "FECHAS_INVALIDAS");
 
-            var limiteMaximo = DateTime.UtcNow.AddMonths(3);
+            var limiteMaximo = DateTime.Now.AddMonths(3);
             if (fechaInicio > limiteMaximo || fechaFin > limiteMaximo)
                 throw new BusinessException(
                     "No se pueden solicitar horas extras con más de 3 meses de anticipación",

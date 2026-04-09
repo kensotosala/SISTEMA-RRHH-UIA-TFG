@@ -61,7 +61,7 @@ namespace BusinessLogicLayer.Managers
                     usuarioExistente.Estado = actualizarDTO.Estado;
                 }
 
-                usuarioExistente.FechaModificacion = DateTime.UtcNow;
+                usuarioExistente.FechaModificacion = DateTime.Now;
 
                 await _repo.UpdateAsync(usuarioExistente);
 

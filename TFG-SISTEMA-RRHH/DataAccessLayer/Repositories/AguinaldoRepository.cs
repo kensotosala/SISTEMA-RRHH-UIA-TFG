@@ -16,7 +16,7 @@ namespace DataAccessLayer.Repositories
 
         public async Task<Aguinaldos> CreateAsync(Aguinaldos aguinaldo)
         {
-            aguinaldo.FechaCreacion = DateTime.UtcNow;
+            aguinaldo.FechaCreacion = DateTime.Now;
             aguinaldo.FechaModificacion = null;
             aguinaldo.Estado ??= "PENDIENTE";
 
@@ -34,7 +34,7 @@ namespace DataAccessLayer.Repositories
                 return false;
 
             aguinaldo.Estado = "ANULADO";
-            aguinaldo.FechaModificacion = DateTime.UtcNow;
+            aguinaldo.FechaModificacion = DateTime.Now;
 
             await _context.SaveChangesAsync();
             return true;
@@ -179,7 +179,7 @@ namespace DataAccessLayer.Repositories
 
             existing.MontoAguinaldo = aguinaldo.MontoAguinaldo;
             existing.Estado = aguinaldo.Estado;
-            existing.FechaModificacion = DateTime.UtcNow;
+            existing.FechaModificacion = DateTime.Now;
 
             await _context.SaveChangesAsync();
 

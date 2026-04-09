@@ -86,7 +86,7 @@ namespace DataAccessLayer.Repositories
             if (usuario == null)
                 throw new ArgumentNullException(nameof(usuario));
 
-            usuario.FechaCreacion = DateTime.UtcNow;
+            usuario.FechaCreacion = DateTime.Now;
             usuario.Estado = usuario.Estado ?? "ACTIVO";
 
             _context.Set<Usuarios>().Add(usuario);
@@ -103,7 +103,7 @@ namespace DataAccessLayer.Repositories
             if (usuario == null)
                 throw new ArgumentNullException(nameof(usuario));
 
-            usuario.FechaModificacion = DateTime.UtcNow;
+            usuario.FechaModificacion = DateTime.Now;
 
             _context.Set<Usuarios>().Update(usuario);
             var result = await _context.SaveChangesAsync();
@@ -121,7 +121,7 @@ namespace DataAccessLayer.Repositories
                 return false;
 
             usuario.Estado = "INACTIVO";
-            usuario.FechaModificacion = DateTime.UtcNow;
+            usuario.FechaModificacion = DateTime.Now;
 
             return await UpdateAsync(usuario);
         }
@@ -154,7 +154,7 @@ namespace DataAccessLayer.Repositories
             if (usuario == null)
                 return false;
 
-            usuario.UltimoAcceso = DateTime.UtcNow;
+            usuario.UltimoAcceso = DateTime.Now;
             return await UpdateAsync(usuario);
         }
 
@@ -172,7 +172,7 @@ namespace DataAccessLayer.Repositories
                 return false;
 
             usuario.Estado = newStatus.ToUpper();
-            usuario.FechaModificacion = DateTime.UtcNow;
+            usuario.FechaModificacion = DateTime.Now;
 
             return await UpdateAsync(usuario);
         }

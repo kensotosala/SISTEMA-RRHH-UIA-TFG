@@ -50,7 +50,7 @@ namespace BusinessLogicLayer.Managers
                 if (!_passwordHasher.Verify(dto.Password, user.PasswordHash))
                     return null; // Esto se convierte en 401
 
-                user.UltimoAcceso = DateTime.UtcNow;
+                user.UltimoAcceso = DateTime.Now;
                 await _repo.UpdateAsync(user);
 
                 return GenerateJwt(user);
@@ -83,7 +83,7 @@ namespace BusinessLogicLayer.Managers
                 // Hash de la contraseña con BCrypt
                 usuario.PasswordHash = _passwordHasher.Hash(usuario.PasswordHash);
                 usuario.Estado = "ACTIVO";
-                usuario.FechaCreacion = DateTime.UtcNow;
+                usuario.FechaCreacion = DateTime.Now;
 
                 return await _repo.CreateAsync(usuario);
             }
@@ -163,7 +163,7 @@ namespace BusinessLogicLayer.Managers
 
                 // Establecer nueva contraseña (siempre con BCrypt)
                 usuario.PasswordHash = _passwordHasher.Hash(dto.NuevaPassword);
-                usuario.FechaModificacion = DateTime.UtcNow;
+                usuario.FechaModificacion = DateTime.Now;
 
                 return await _repo.UpdateAsync(usuario);
             }
@@ -294,7 +294,7 @@ namespace BusinessLogicLayer.Managers
                 SecurityAlgorithms.HmacSha256
             );
 
-            var expiration = DateTime.UtcNow.AddMinutes(
+            var expiration = DateTime.Now.AddMinutes(
                 double.Parse(jwtSettings["ExpireMinutes"]!)
             );
 
