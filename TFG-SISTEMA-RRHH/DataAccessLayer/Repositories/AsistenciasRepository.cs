@@ -1,6 +1,7 @@
 ﻿using DataAccessLayer.Data;
 using DataAccessLayer.Entities;
 using DataAccessLayer.Interfaces;
+using DataAccessLayer.Shared;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataAccessLayer.Repositories
@@ -59,8 +60,8 @@ namespace DataAccessLayer.Repositories
         {
             return await _context.Asistencias
                 .Include(a => a.Empleado)
-                    .ThenInclude(e => e.Puesto)  
-                .Include(a => a.Empleado.Departamento) 
+                    .ThenInclude(e => e.Puesto)
+                .Include(a => a.Empleado.Departamento)
                 .OrderByDescending(a => a.FechaRegistro)
                 .ToListAsync();
         }
@@ -73,6 +74,16 @@ namespace DataAccessLayer.Repositories
                 .FirstOrDefaultAsync(a =>
                     a.EmpleadoId == empleadoId &&
                     a.FechaRegistro.Date == fechaSolo);
+        }
+
+        public async Task<Asistencias?> GetByEmpleadoFechaYTipo(int empleadoId, DateTime fecha, TipoAsistencia tipo)
+        {
+            return await _context.Asistencias
+                .Include(a => a.Empleado)
+                .FirstOrDefaultAsync(a =>
+                    a.EmpleadoId == empleadoId &&
+                    a.FechaRegistro.Date == fecha.Date &&
+                    a.TipoAsistencia == tipo);
         }
 
         public async Task<IEnumerable<Asistencias>> GetByFiltrosAsync(
@@ -113,9 +124,10 @@ namespace DataAccessLayer.Repositories
             return await _context.Asistencias
                 .Include(a => a.Empleado)
                     .ThenInclude(e => e.Departamento)
-                .Include(a => a.Empleado.Puesto)  
+                .Include(a => a.Empleado.Puesto)
                 .FirstOrDefaultAsync(a => a.IdAsistencia == id);
         }
+
         public async Task<bool> UpdateAsync(Asistencias asistencia)
         {
             var existe = await _context.Asistencias

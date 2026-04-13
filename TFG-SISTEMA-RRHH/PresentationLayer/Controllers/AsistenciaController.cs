@@ -1,7 +1,6 @@
 ﻿using BusinessLogicLayer.DTOs;
 using BusinessLogicLayer.Interfaces;
 using BusinessLogicLayer.Shared;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace PresentationLayer.Controllers
@@ -224,6 +223,27 @@ namespace PresentationLayer.Controllers
             try
             {
                 var resultado = await _asistenciaManager.MarcarAsistenciaAsync(request.EmpleadoId);
+                return Ok(resultado);
+            }
+            catch (BusinessException ex)
+            {
+                _logger.LogWarning(ex, "Error de negocio al marcar asistencia");
+                return BadRequest(new { message = ex.Message, code = ex.Code });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error al marcar asistencia");
+                return StatusCode(500, new { message = "Error al marcar asistencia" });
+            }
+        }
+
+        [HttpPost("v2/marcar")]
+        public async Task<ActionResult<MarcarAsistenciaResponse>> MarcarAsistenciaV2(
+            [FromBody] MarcarAsistenciaRequest request)
+        {
+            try
+            {
+                var resultado = await _asistenciaManager.MarcarAsistenciaAsyncV2(request.EmpleadoId);
                 return Ok(resultado);
             }
             catch (BusinessException ex)

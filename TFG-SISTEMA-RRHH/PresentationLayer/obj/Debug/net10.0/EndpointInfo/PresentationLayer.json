@@ -5,20 +5,8 @@
     "version": "1.0"
   },
   "paths": {
-    "/api/v1/Aguinaldo": {
-      "get": {
-        "tags": [
-          "Aguinaldo"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/api/v1/Aguinaldo/{id}": {
-      "get": {
+      "delete": {
         "tags": [
           "Aguinaldo"
         ],
@@ -39,7 +27,7 @@
           }
         }
       },
-      "delete": {
+      "get": {
         "tags": [
           "Aguinaldo"
         ],
@@ -48,6 +36,114 @@
             "name": "id",
             "in": "path",
             "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/Aguinaldo/calcular": {
+      "post": {
+        "tags": [
+          "Aguinaldo"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CalcularAguinaldoDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CalcularAguinaldoDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CalcularAguinaldoDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/Aguinaldo/calcular-hasta-hoy": {
+      "post": {
+        "tags": [
+          "Aguinaldo"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/Aguinaldo/calcular-masivo": {
+      "post": {
+        "tags": [
+          "Aguinaldo"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CalcularAguinaldoMasivoDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CalcularAguinaldoMasivoDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CalcularAguinaldoMasivoDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/Aguinaldo/calcular-masivo-v2": {
+      "post": {
+        "tags": [
+          "Aguinaldo"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/Aguinaldo/calcular-v2": {
+      "post": {
+        "tags": [
+          "Aguinaldo"
+        ],
+        "parameters": [
+          {
+            "name": "idEmpleado",
+            "in": "query",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -130,70 +226,8 @@
         }
       }
     },
-    "/api/v1/Aguinaldo/calcular": {
-      "post": {
-        "tags": [
-          "Aguinaldo"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CalcularAguinaldoDTO"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CalcularAguinaldoDTO"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/CalcularAguinaldoDTO"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/v1/Aguinaldo/calcular-masivo": {
-      "post": {
-        "tags": [
-          "Aguinaldo"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CalcularAguinaldoMasivoDTO"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CalcularAguinaldoMasivoDTO"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/CalcularAguinaldoMasivoDTO"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/v1/Aguinaldo/calcular-masivo-v2": {
-      "post": {
+    "/api/v1/Aguinaldo": {
+      "get": {
         "tags": [
           "Aguinaldo"
         ],
@@ -270,40 +304,6 @@
             }
           }
         },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/v1/Aguinaldo/calcular-hasta-hoy": {
-      "post": {
-        "tags": [
-          "Aguinaldo"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/v1/Aguinaldo/calcular-v2": {
-      "post": {
-        "tags": [
-          "Aguinaldo"
-        ],
-        "parameters": [
-          {
-            "name": "idEmpleado",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -610,6 +610,54 @@
       }
     },
     "/api/Asistencias/marcar": {
+      "post": {
+        "tags": [
+          "Asistencias"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MarcarAsistenciaRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MarcarAsistenciaRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/MarcarAsistenciaRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/MarcarAsistenciaResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MarcarAsistenciaResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MarcarAsistenciaResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Asistencias/v2/marcar": {
       "post": {
         "tags": [
           "Asistencias"
@@ -6560,6 +6608,10 @@
       "PagarAguinaldosMasivoRequest": {
         "type": "object",
         "properties": {
+          "fechaPago": {
+            "type": "string",
+            "format": "date-time"
+          },
           "idsAguinaldos": {
             "type": "array",
             "items": {
@@ -6567,10 +6619,6 @@
               "format": "int32"
             },
             "nullable": true
-          },
-          "fechaPago": {
-            "type": "string",
-            "format": "date-time"
           }
         },
         "additionalProperties": false

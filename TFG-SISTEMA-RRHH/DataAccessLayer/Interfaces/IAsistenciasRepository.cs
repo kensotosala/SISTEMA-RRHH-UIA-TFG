@@ -1,4 +1,5 @@
 ﻿using DataAccessLayer.Entities;
+using DataAccessLayer.Shared;
 
 namespace DataAccessLayer.Interfaces
 {
@@ -28,5 +29,7 @@ namespace DataAccessLayer.Interfaces
         Task<bool> ExisteRegistroAsync(int empleadoId, DateTime fecha);
 
         Task<int> DiasTrabajadosPorPeriodoAsync(int empleadoId, DateTime fechaInicio, DateTime fechaFin);
+
+        Task<Asistencias?> GetByEmpleadoFechaYTipo(int empleadoId, DateTime fecha, TipoAsistencia tipo);
     }
 }

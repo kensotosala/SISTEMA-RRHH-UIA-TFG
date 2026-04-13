@@ -18,6 +18,8 @@ namespace BusinessLogicLayer.Interfaces
 
         Task<MarcarAsistenciaResponse> MarcarAsistenciaAsync(int empleadoId);
 
+        Task<MarcarAsistenciaResponse> MarcarAsistenciaAsyncV2(int empleadoId);
+
         Task<EstadoAsistenciaDTO> ObtenerEstadoAsistenciaAsync(int empleadoId);
 
         Task<bool> UpdateAsync(int id, ActualizarAsistenciaDTO dto);

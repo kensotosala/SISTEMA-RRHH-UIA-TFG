@@ -137,7 +137,11 @@ public partial class SistemaRhContext : DbContext
             entity.Property(e => e.HoraSalida)
                 .HasColumnType("datetime")
                 .HasColumnName("hora_salida");
-
+            entity.Property(e => e.TipoAsistencia)
+                .HasConversion<string>()          
+                .HasDefaultValueSql("'NORMAL'")
+                .HasColumnType("enum('NORMAL','HORA_EXTRA')")
+                .HasColumnName("tipo_asistencia");
             entity.HasOne(d => d.Empleado).WithMany(p => p.Asistencias)
                 .HasForeignKey(d => d.EmpleadoId)
                 .OnDelete(DeleteBehavior.ClientSetNull)

@@ -3,16 +3,16 @@ using BusinessLogicLayer.Interfaces;
 using BusinessLogicLayer.Shared;
 using DataAccessLayer.Entities;
 using DataAccessLayer.Interfaces;
+using DataAccessLayer.Shared;
 
 namespace BusinessLogicLayer.Managers
 {
     public class AsistenciaManager : IAsistenciaManager
     {
         private readonly IAsistenciasRepository _asistenciasRepo;
+        private readonly IAuditoriaService _auditoria;
         private readonly IEmpleadosRepository _empleadosRepo;
         private readonly IHorasExtrasManager _horasExtrasManager;
-        private readonly IAuditoriaService _auditoria;
-
 
         // Horario Laboral: 8:00 AM a 5:00 PM
         private readonly TimeSpan HoraEntradaNormal = new(8, 0, 0);
@@ -31,17 +31,18 @@ namespace BusinessLogicLayer.Managers
             _auditoria = auditoria;
         }
 
-        #region Métodos originales (Marcado de asistencia por empleado)
-
         public async Task<MarcarAsistenciaResponse> MarcarAsistenciaAsync(int empleadoId)
         {
+            // BUSCAR EMPLEADO
             var empleado = await _empleadosRepo.GetByIdAsync(empleadoId);
             if (empleado == null)
                 throw new BusinessException("Empleado no encontrado", "EMPLEADO_NO_ENCONTRADO");
 
+            // FECHAS Y TIEMPO
             var hoy = DateTime.Now.Date;
             var ahora = DateTime.Now;
 
+            // BUSCAR REGISTRO DE ASISTENCIA PARA HOY
             var registro = await _asistenciasRepo.GetByEmpleadoYFechaAsync(empleadoId, hoy);
 
             // ENTRADA
@@ -126,20 +127,56 @@ namespace BusinessLogicLayer.Managers
                                  registro.Estado, "Salida registrada con horas extras aprobadas", true);
         }
 
-        private static MarcarAsistenciaResponse BuildResponse(
-            string accion, DateTime hora, DateTime? horaEntrada,
-            DateTime? horaSalida, string estado, string mensaje, bool exito)
+        public async Task<MarcarAsistenciaResponse> MarcarAsistenciaAsyncV2(int empleadoId)
         {
-            return new MarcarAsistenciaResponse
-            {
-                Accion = accion,
-                Hora = hora,
-                HoraEntrada = horaEntrada,
-                HoraSalida = horaSalida,
-                Estado = estado,
-                Mensaje = mensaje,
-                Exito = exito
-            };
+            var empleado = await _empleadosRepo.GetByIdAsync(empleadoId);
+            if (empleado == null)
+                throw new BusinessException("Empleado no encontrado", "EMPLEADO_NO_ENCONTRADO");
+
+            var ahora = DateTime.Now;
+            var hoy = ahora.Date;
+
+            // Un solo registro por día
+            var asistencia = await _asistenciasRepo.GetByEmpleadoYFechaAsync(empleadoId, hoy);
+
+            // 1. Sin registro → registrar entrada normal
+            if (asistencia == null)
+                return await RegistrarEntrada(empleado, TipoAsistencia.NORMAL, ahora);
+
+            // 2. Con entrada pero sin salida → registrar salida
+            if (asistencia.HoraSalida == null)
+                return await RegistrarSalida(asistencia, ahora);
+
+            // 3. Ya tiene salida → verificar si tiene hora extra aprobada
+            var horaExtra = await _horasExtrasManager
+                .ObtenerHoraExtraActivaAsync(empleadoId, ahora);
+
+            if (horaExtra == null)
+                return BuildResponse("NINGUNA", ahora,
+                    asistencia.HoraEntrada,
+                    asistencia.HoraSalida,
+                    asistencia.Estado,
+                    "Ya completaste tu jornada", false);
+
+            if (ahora > horaExtra.FechaFin)
+                throw new BusinessException(
+                    "Has excedido el límite de horas extras aprobadas",
+                    "HORA_EXTRA_EXCEDIDA");
+
+            // Actualizar la salida del mismo registro (no crear uno nuevo)
+            asistencia.HoraSalida = ahora;
+            asistencia.TipoAsistencia = TipoAsistencia.HORA_EXTRA;
+            asistencia.FechaModificacion = ahora;
+            await _asistenciasRepo.UpdateAsync(asistencia);
+
+            await _auditoria.RegistrarAsync(
+                "asistencias",
+                $"Salida con hora extra actualizada para empleado {empleadoId}, " +
+                $"hora extra ID: {horaExtra.IdHoraExtra}, hora: {ahora:HH:mm:ss}."
+            );
+
+            return BuildResponse("SALIDA", ahora, asistencia.HoraEntrada, ahora,
+                asistencia.Estado, "Salida con hora extra registrada", true);
         }
 
         public async Task<EstadoAsistenciaDTO> ObtenerEstadoAsistenciaAsync(int empleadoId)
@@ -179,9 +216,71 @@ namespace BusinessLogicLayer.Managers
             };
         }
 
-        #endregion Métodos originales (Marcado de asistencia por empleado)
+        private static MarcarAsistenciaResponse BuildResponse(
+            string accion, DateTime hora, DateTime? horaEntrada,
+            DateTime? horaSalida, string? estado, string mensaje, bool exito)
+        {
+            return new MarcarAsistenciaResponse
+            {
+                Accion = accion,
+                Hora = hora,
+                HoraEntrada = horaEntrada,
+                HoraSalida = horaSalida,
+                Estado = estado,
+                Mensaje = mensaje,
+                Exito = exito
+            };
+        }
 
-        #region CRUD para Administrador
+        private async Task<MarcarAsistenciaResponse> RegistrarEntrada(
+    Empleados empleado, TipoAsistencia tipo, DateTime ahora)
+        {
+            var existe = await _asistenciasRepo.ExisteRegistroAsync(
+                empleado.IdEmpleado,
+                ahora.Date);
+
+            if (existe)
+                throw new BusinessException(
+                    "Ya existe un registro de asistencia para este empleado en esta fecha. " +
+                    "La base de datos no permite múltiples registros por día.",
+                    "REGISTRO_DUPLICADO");
+
+            var nuevo = new Asistencias
+            {
+                EmpleadoId = empleado.IdEmpleado,
+                FechaRegistro = ahora.Date,
+                HoraEntrada = ahora,
+                TipoAsistencia = tipo,
+                Estado = DeterminarEstado(ahora, tipo),
+                FechaCreacion = ahora
+            };
+
+            await _asistenciasRepo.CreateAsync(nuevo);
+
+            await _auditoria.RegistrarAsync(
+                "asistencias",
+                $"Entrada {tipo} registrada para empleado {empleado.IdEmpleado}"
+            );
+
+            return BuildResponse("ENTRADA", ahora, ahora, null,
+                nuevo.Estado, $"Entrada {tipo} registrada", true);
+        }
+
+        private async Task<MarcarAsistenciaResponse> RegistrarSalida(
+    Asistencias registro, DateTime ahora)
+        {
+            registro.HoraSalida = ahora;
+            registro.FechaModificacion = ahora;
+            await _asistenciasRepo.UpdateAsync(registro);
+
+            await _auditoria.RegistrarAsync(
+                "asistencias",
+                $"Salida registrada para asistencia ID {registro.IdAsistencia}, hora: {ahora:HH:mm:ss}."
+            );
+
+            return BuildResponse("SALIDA", ahora, registro.HoraEntrada, ahora,
+                registro.Estado, "Salida registrada correctamente", true);
+        }
 
         public async Task<AsistenciaDTO> CreateAsync(CrearAsistenciaDTO dto)
         {
@@ -222,7 +321,6 @@ namespace BusinessLogicLayer.Managers
             );
 
             var registroCreado = await _asistenciasRepo.GetByIdAsync(asistencia.IdAsistencia);
-
 
             return MapToDTO(registroCreado!);
         }
@@ -356,16 +454,14 @@ namespace BusinessLogicLayer.Managers
                                  $"nuevo estado: {dto.Estado}."
                 );
 
-
             return await _asistenciasRepo.UpdateAsync(asistencia);
         }
 
-        #endregion CRUD para Administrador
-
-        #region Métodos privados
-
-        private string DeterminarEstado(DateTime horaEntrada, DateTime? horaSalida)
+        private string DeterminarEstado(DateTime horaEntrada, TipoAsistencia? tipo)
         {
+            if (tipo == TipoAsistencia.HORA_EXTRA)
+                return TipoAsistencia.HORA_EXTRA.ToString();
+
             var horaTrabajo = new TimeSpan(8, 0, 0);
             return horaEntrada.TimeOfDay > horaTrabajo
                 ? EstadoAsistencia.TARDANZA.ToString()
@@ -398,7 +494,5 @@ namespace BusinessLogicLayer.Managers
                 HorasTrabajadas = horasTrabajadas
             };
         }
-
-        #endregion Métodos privados
     }
 }

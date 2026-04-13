@@ -223,6 +223,32 @@
     ]
   },
   {
+    "ContainingType": "PresentationLayer.Controllers.AsistenciasController",
+    "Method": "MarcarAsistenciaV2",
+    "RelativePath": "api/Asistencias/v2/marcar",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "BusinessLogicLayer.DTOs.MarcarAsistenciaRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "BusinessLogicLayer.DTOs.MarcarAsistenciaResponse",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "PresentationLayer.Controllers.AuthController",
     "Method": "CambiarPassword",
     "RelativePath": "api/Auth/cambiar-password",
@@ -993,9 +1019,9 @@
   },
   {
     "ContainingType": "PresentationLayer.Controllers.AguinaldoController",
-    "Method": "ObtenerPorId",
+    "Method": "AnularAguinaldo",
     "RelativePath": "api/v1/Aguinaldo/{id}",
-    "HttpMethod": "GET",
+    "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
     "Parameters": [
@@ -1009,9 +1035,9 @@
   },
   {
     "ContainingType": "PresentationLayer.Controllers.AguinaldoController",
-    "Method": "AnularAguinaldo",
+    "Method": "ObtenerPorId",
     "RelativePath": "api/v1/Aguinaldo/{id}",
-    "HttpMethod": "DELETE",
+    "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [

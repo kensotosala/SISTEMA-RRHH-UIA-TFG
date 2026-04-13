@@ -1,4 +1,6 @@
-﻿namespace DataAccessLayer.Entities;
+﻿using DataAccessLayer.Shared;
+
+namespace DataAccessLayer.Entities;
 
 public partial class Asistencias
 {
@@ -11,6 +13,8 @@ public partial class Asistencias
     public DateTime? HoraEntrada { get; set; }
 
     public DateTime? HoraSalida { get; set; }
+
+    public TipoAsistencia? TipoAsistencia { get; set; }
 
     public string? Estado { get; set; }
 
