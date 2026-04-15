@@ -58,3 +58,18 @@ C:\Users\USER\Documents\UIA\TRABAJO FINAL DE GRADUACION\SERVIDOR\SISTEMA-RRHH-UI
 C:\Users\USER\Documents\UIA\TRABAJO FINAL DE GRADUACION\SERVIDOR\SISTEMA-RRHH-UIA-TFG\TFG-SISTEMA-RRHH\DataAccessLayer\obj\Debug\net10.0\DataAccessLayer.pdb
 C:\Users\USER\Documents\UIA\TRABAJO FINAL DE GRADUACION\SERVIDOR\SISTEMA-RRHH-UIA-TFG\TFG-SISTEMA-RRHH\DataAccessLayer\obj\Debug\net10.0\DataAccessLayer.genruntimeconfig.cache
 C:\Users\USER\Documents\UIA\TRABAJO FINAL DE GRADUACION\SERVIDOR\SISTEMA-RRHH-UIA-TFG\TFG-SISTEMA-RRHH\DataAccessLayer\obj\Debug\net10.0\ref\DataAccessLayer.dll
+C:\SISTEMA-RRHH-UIA-TFG\TFG-SISTEMA-RRHH\DataAccessLayer\bin\Debug\net10.0\DataAccessLayer.deps.json
+C:\SISTEMA-RRHH-UIA-TFG\TFG-SISTEMA-RRHH\DataAccessLayer\bin\Debug\net10.0\DataAccessLayer.runtimeconfig.json
+C:\SISTEMA-RRHH-UIA-TFG\TFG-SISTEMA-RRHH\DataAccessLayer\bin\Debug\net10.0\DataAccessLayer.dll
+C:\SISTEMA-RRHH-UIA-TFG\TFG-SISTEMA-RRHH\DataAccessLayer\bin\Debug\net10.0\DataAccessLayer.pdb
+C:\SISTEMA-RRHH-UIA-TFG\TFG-SISTEMA-RRHH\DataAccessLayer\obj\Debug\net10.0\DataAccessLayer.csproj.AssemblyReference.cache
+C:\SISTEMA-RRHH-UIA-TFG\TFG-SISTEMA-RRHH\DataAccessLayer\obj\Debug\net10.0\DataAccessLayer.GeneratedMSBuildEditorConfig.editorconfig
+C:\SISTEMA-RRHH-UIA-TFG\TFG-SISTEMA-RRHH\DataAccessLayer\obj\Debug\net10.0\DataAccessLayer.AssemblyInfoInputs.cache
+C:\SISTEMA-RRHH-UIA-TFG\TFG-SISTEMA-RRHH\DataAccessLayer\obj\Debug\net10.0\DataAccessLayer.AssemblyInfo.cs
+C:\SISTEMA-RRHH-UIA-TFG\TFG-SISTEMA-RRHH\DataAccessLayer\obj\Debug\net10.0\DataAccessLayer.csproj.CoreCompileInputs.cache
+C:\SISTEMA-RRHH-UIA-TFG\TFG-SISTEMA-RRHH\DataAccessLayer\obj\Debug\net10.0\DataAccessLayer.sourcelink.json
+C:\SISTEMA-RRHH-UIA-TFG\TFG-SISTEMA-RRHH\DataAccessLayer\obj\Debug\net10.0\DataAccessLayer.dll
+C:\SISTEMA-RRHH-UIA-TFG\TFG-SISTEMA-RRHH\DataAccessLayer\obj\Debug\net10.0\refint\DataAccessLayer.dll
+C:\SISTEMA-RRHH-UIA-TFG\TFG-SISTEMA-RRHH\DataAccessLayer\obj\Debug\net10.0\DataAccessLayer.pdb
+C:\SISTEMA-RRHH-UIA-TFG\TFG-SISTEMA-RRHH\DataAccessLayer\obj\Debug\net10.0\DataAccessLayer.genruntimeconfig.cache
+C:\SISTEMA-RRHH-UIA-TFG\TFG-SISTEMA-RRHH\DataAccessLayer\obj\Debug\net10.0\ref\DataAccessLayer.dll
