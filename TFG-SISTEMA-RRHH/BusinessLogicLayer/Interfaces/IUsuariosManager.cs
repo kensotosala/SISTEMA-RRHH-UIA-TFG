@@ -1,5 +1,6 @@
 ﻿using BusinessLayer.DTOs;
 using BusinessLogicLayer.DTOs;
+using DataAccessLayer.Entities;
 
 namespace BusinessLogicLayer.Interfaces
 {
@@ -18,5 +19,7 @@ namespace BusinessLogicLayer.Interfaces
         Task<ResultadoOperacion<UsuarioDTO>> AutenticarAsync(LoginDTO loginDTO);
 
         Task<ResultadoOperacion<bool>> CambiarEstadoAsync(int idUsuario, string nuevoEstado);
+
+        Task<ResultadoOperacion<IEnumerable<UsuarioDTO>>> ListarEmpleadosAdmin();
     }
 }

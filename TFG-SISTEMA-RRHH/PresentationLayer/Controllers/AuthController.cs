@@ -11,7 +11,7 @@ namespace PresentationLayer.Controllers
     /// Controlador para autenticación y gestión de usuarios
     /// </summary>
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     public class AuthController : ControllerBase
     {
         private readonly IAuthManager _authManager;

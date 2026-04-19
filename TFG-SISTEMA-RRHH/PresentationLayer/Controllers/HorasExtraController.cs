@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace PresentationLayer.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     public class HorasExtrasController : ControllerBase
     {
         private readonly IHorasExtrasManager _horasExtrasManager;

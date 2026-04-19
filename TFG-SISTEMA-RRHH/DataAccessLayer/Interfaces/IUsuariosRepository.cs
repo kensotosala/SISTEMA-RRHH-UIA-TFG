@@ -27,5 +27,7 @@ namespace DataAccessLayer.Interfaces
         Task<bool> UpdateLastAccessAsync(int userId);
 
         Task<bool> ChangeStatusAsync(int userId, string newStatus);
+
+        Task<IEnumerable<Usuarios>> ListaUsuariosAdministradores();
     }
 }

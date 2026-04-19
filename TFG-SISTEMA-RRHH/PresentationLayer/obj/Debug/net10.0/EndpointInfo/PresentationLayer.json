@@ -311,7 +311,7 @@
         }
       }
     },
-    "/api/Asistencias": {
+    "/api/v1/Asistencias": {
       "get": {
         "tags": [
           "Asistencias"
@@ -395,7 +395,7 @@
         }
       }
     },
-    "/api/Asistencias/{id}": {
+    "/api/v1/Asistencias/{id}": {
       "get": {
         "tags": [
           "Asistencias"
@@ -496,7 +496,7 @@
         }
       }
     },
-    "/api/Asistencias/buscar": {
+    "/api/v1/Asistencias/buscar": {
       "post": {
         "tags": [
           "Asistencias"
@@ -553,7 +553,7 @@
         }
       }
     },
-    "/api/Asistencias/reporte/{empleadoId}": {
+    "/api/v1/Asistencias/reporte/{empleadoId}": {
       "get": {
         "tags": [
           "Asistencias"
@@ -609,7 +609,7 @@
         }
       }
     },
-    "/api/Asistencias/marcar": {
+    "/api/v1/Asistencias/marcar": {
       "post": {
         "tags": [
           "Asistencias"
@@ -657,7 +657,7 @@
         }
       }
     },
-    "/api/Asistencias/v2/marcar": {
+    "/api/v1/Asistencias/v2/marcar": {
       "post": {
         "tags": [
           "Asistencias"
@@ -705,7 +705,7 @@
         }
       }
     },
-    "/api/Asistencias/estado/{empleadoId}": {
+    "/api/v1/Asistencias/estado/{empleadoId}": {
       "get": {
         "tags": [
           "Asistencias"
@@ -757,7 +757,7 @@
         }
       }
     },
-    "/api/Auth/login": {
+    "/api/v1/Auth/login": {
       "post": {
         "tags": [
           "Auth"
@@ -788,7 +788,7 @@
         }
       }
     },
-    "/api/Auth/registro": {
+    "/api/v1/Auth/registro": {
       "post": {
         "tags": [
           "Auth"
@@ -819,7 +819,7 @@
         }
       }
     },
-    "/api/Auth/perfil": {
+    "/api/v1/Auth/perfil": {
       "get": {
         "tags": [
           "Auth"
@@ -831,7 +831,7 @@
         }
       }
     },
-    "/api/Auth/validar": {
+    "/api/v1/Auth/validar": {
       "post": {
         "tags": [
           "Auth"
@@ -862,7 +862,7 @@
         }
       }
     },
-    "/api/Auth/cambiar-password": {
+    "/api/v1/Auth/cambiar-password": {
       "post": {
         "tags": [
           "Auth"
@@ -893,7 +893,7 @@
         }
       }
     },
-    "/api/Auth/validar-token": {
+    "/api/v1/Auth/validar-token": {
       "post": {
         "tags": [
           "Auth"
@@ -924,7 +924,7 @@
         }
       }
     },
-    "/api/Auth/logout": {
+    "/api/v1/Auth/logout": {
       "post": {
         "tags": [
           "Auth"
@@ -936,7 +936,7 @@
         }
       }
     },
-    "/api/Departamentos": {
+    "/api/v1/Departamentos": {
       "get": {
         "tags": [
           "Departamentos"
@@ -977,7 +977,7 @@
         }
       }
     },
-    "/api/Departamentos/{id}": {
+    "/api/v1/Departamentos/{id}": {
       "get": {
         "tags": [
           "Departamentos"
@@ -1061,7 +1061,7 @@
         }
       }
     },
-    "/api/Empleados": {
+    "/api/v1/Empleados": {
       "get": {
         "tags": [
           "Empleados"
@@ -1102,7 +1102,7 @@
         }
       }
     },
-    "/api/Empleados/{id}": {
+    "/api/v1/Empleados/{id}": {
       "get": {
         "tags": [
           "Empleados"
@@ -1186,7 +1186,19 @@
         }
       }
     },
-    "/api/Empleados/{id}/reactivar": {
+    "/api/v1/Empleados/empleados-sin-horas-extra-en-proceso": {
+      "get": {
+        "tags": [
+          "Empleados"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/Empleados/{id}/reactivar": {
       "patch": {
         "tags": [
           "Empleados"
@@ -1435,7 +1447,7 @@
         }
       }
     },
-    "/api/HorasExtras": {
+    "/api/v1/HorasExtras": {
       "get": {
         "tags": [
           "HorasExtras"
@@ -1519,7 +1531,7 @@
         }
       }
     },
-    "/api/HorasExtras/{id}": {
+    "/api/v1/HorasExtras/{id}": {
       "get": {
         "tags": [
           "HorasExtras"
@@ -1620,7 +1632,7 @@
         }
       }
     },
-    "/api/HorasExtras/buscar": {
+    "/api/v1/HorasExtras/buscar": {
       "post": {
         "tags": [
           "HorasExtras"
@@ -1677,7 +1689,7 @@
         }
       }
     },
-    "/api/HorasExtras/empleado/{empleadoId}": {
+    "/api/v1/HorasExtras/empleado/{empleadoId}": {
       "get": {
         "tags": [
           "HorasExtras"
@@ -1726,7 +1738,7 @@
         }
       }
     },
-    "/api/HorasExtras/pendientes/jefe/{jefeId}": {
+    "/api/v1/HorasExtras/pendientes/jefe/{jefeId}": {
       "get": {
         "tags": [
           "HorasExtras"
@@ -1775,7 +1787,7 @@
         }
       }
     },
-    "/api/HorasExtras/{id}/aprobar-rechazar": {
+    "/api/v1/HorasExtras/{id}/aprobar-rechazar": {
       "patch": {
         "tags": [
           "HorasExtras"
@@ -1817,7 +1829,7 @@
         }
       }
     },
-    "/api/HorasExtras/reporte/{empleadoId}": {
+    "/api/v1/HorasExtras/reporte/{empleadoId}": {
       "get": {
         "tags": [
           "HorasExtras"
@@ -1873,7 +1885,7 @@
         }
       }
     },
-    "/api/HorasExtras/activa/{empleadoId}": {
+    "/api/v1/HorasExtras/activa/{empleadoId}": {
       "get": {
         "tags": [
           "HorasExtras"
@@ -3408,7 +3420,7 @@
         }
       }
     },
-    "/api/Puestos": {
+    "/api/v1/Puestos": {
       "get": {
         "tags": [
           "Puestos"
@@ -3475,7 +3487,7 @@
         }
       }
     },
-    "/api/Puestos/{id}": {
+    "/api/v1/Puestos/{id}": {
       "get": {
         "tags": [
           "Puestos"
@@ -3588,7 +3600,7 @@
         }
       }
     },
-    "/api/Usuarios": {
+    "/api/v1/Usuarios": {
       "get": {
         "tags": [
           "Usuarios"
@@ -3629,7 +3641,19 @@
         }
       }
     },
-    "/api/Usuarios/{id}": {
+    "/api/v1/Usuarios/listar-usuarios-admin": {
+      "get": {
+        "tags": [
+          "Usuarios"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/Usuarios/{id}": {
       "get": {
         "tags": [
           "Usuarios"
@@ -3713,7 +3737,7 @@
         }
       }
     },
-    "/api/Usuarios/login": {
+    "/api/v1/Usuarios/login": {
       "post": {
         "tags": [
           "Usuarios"
@@ -3744,7 +3768,7 @@
         }
       }
     },
-    "/api/Usuarios/{id}/estado": {
+    "/api/v1/Usuarios/{id}/estado": {
       "patch": {
         "tags": [
           "Usuarios"

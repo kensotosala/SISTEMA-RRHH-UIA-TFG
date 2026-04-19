@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace PresentationLayer.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class EmpleadosController : ControllerBase
     {
@@ -42,6 +42,17 @@ namespace PresentationLayer.Controllers
                 return NotFound($"Departamento con ID {id} no encontrado.");
 
             return Ok(empleado);
+        }
+
+        [HttpGet("empleados-sin-horas-extra-en-proceso")]
+        public async Task<IActionResult> GetEmpleadosSinHorasExtraEnProceso()
+        {
+            var empleados = await _manager.ListarEmpleadoSinHorasExtraEnProcesoAsync();
+
+            if (empleados == null || !empleados.Any())
+                return NotFound("No se encontraron empleados sin horas extra en proceso."); 
+
+            return Ok(empleados);
         }
 
         [HttpPost]

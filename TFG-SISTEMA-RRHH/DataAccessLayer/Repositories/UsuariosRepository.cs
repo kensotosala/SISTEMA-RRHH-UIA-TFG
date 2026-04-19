@@ -176,5 +176,15 @@ namespace DataAccessLayer.Repositories
 
             return await UpdateAsync(usuario);
         }
+
+        public async Task<IEnumerable<Usuarios>> ListaUsuariosAdministradores()
+        {
+            return await _context.Set<Usuarios>()
+                .Include(u => u.Empleado)
+                .Include(u => u.UsuariosRoles)
+                    .ThenInclude(ur => ur.Rol)
+                .Where(u => u.UsuariosRoles.Any(ur => ur.Rol.Nombre == "ADMIN"))
+                .ToListAsync();
+        }
     }
 }

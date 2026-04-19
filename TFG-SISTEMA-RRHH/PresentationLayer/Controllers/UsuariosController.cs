@@ -1,13 +1,11 @@
 ﻿using BusinessLayer.DTOs;
 using BusinessLogicLayer.DTOs;
 using BusinessLogicLayer.Interfaces;
-using DataAccessLayer.Entities;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace PresentationLayer.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class UsuariosController : ControllerBase
     {
@@ -26,6 +24,25 @@ namespace PresentationLayer.Controllers
         public async Task<IActionResult> ObtenerTodos()
         {
             var resultado = await _manager.ObtenerTodosAsync();
+
+            if (!resultado.Exitoso)
+                return BadRequest(new { mensaje = resultado.Mensaje });
+
+            return Ok(new
+            {
+                mensaje = resultado.Mensaje,
+                datos = resultado.Datos
+            });
+        }
+
+        /// <summary>
+        /// Obtiene todos los usuarios con rol de Administrador
+        /// </summary>
+        /// <returns>Lista de usuarios</returns>
+        [HttpGet("listar-usuarios-admin")]
+        public async Task<IActionResult> ObtenerUsuariosAdmin()
+        {
+            var resultado = await _manager.ListarEmpleadosAdmin();
 
             if (!resultado.Exitoso)
                 return BadRequest(new { mensaje = resultado.Mensaje });

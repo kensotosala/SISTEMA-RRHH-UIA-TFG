@@ -6,9 +6,7 @@ using DataAccessLayer.Interfaces;
 
 namespace BusinessLogicLayer.Managers
 {
-    /// <summary>
-    /// Manager de usuarios actualizado con BCrypt
-    /// </summary>
+
     public class UsuariosManager : IUsuariosManager
     {
         private readonly IUsuariosRepository _repo;
@@ -222,6 +220,16 @@ namespace BusinessLogicLayer.Managers
             }
         }
 
+        public async Task<ResultadoOperacion<IEnumerable<UsuarioDTO>>> ListarEmpleadosAdmin()
+        {
+            var usuarios = await _repo.ListaUsuariosAdministradores();
+
+            return ResultadoOperacion<IEnumerable<UsuarioDTO>>.Exito(
+                usuarios.Select(MapearADTO),
+                "Lista de empleados administradores obtenida exitosamente"
+            );
+        }
+
         public async Task<ResultadoOperacion<UsuarioDTO>> ObtenerPorIdAsync(int idUsuario)
         {
             try
@@ -279,7 +287,9 @@ namespace BusinessLogicLayer.Managers
                 Estado = usuario.Estado,
                 UltimoAcceso = usuario.UltimoAcceso,
                 FechaCreacion = usuario.FechaCreacion,
-                NombreEmpleado = usuario.Empleado?.Nombre ?? "N/A"
+                NombreEmpleado = usuario.Empleado != null
+                    ? $"{usuario.Empleado.Nombre} {usuario.Empleado.PrimerApellido} {usuario.Empleado.SegundoApellido}"
+                    : "N/A"
             };
         }
 

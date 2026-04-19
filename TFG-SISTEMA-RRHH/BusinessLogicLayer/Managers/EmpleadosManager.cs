@@ -3,7 +3,6 @@ using BusinessLogicLayer.Interfaces;
 using BusinessLogicLayer.Shared;
 using DataAccessLayer.Entities;
 using DataAccessLayer.Interfaces;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace BusinessLogicLayer.Managers
 {
@@ -468,6 +467,36 @@ namespace BusinessLogicLayer.Managers
                                    $"reactivado junto con el empleado ID {id}."
                 );
             }
+        }
+
+        public async Task<IEnumerable<DetalleEmpleadoDTO>> ListarEmpleadoSinHorasExtraEnProcesoAsync()
+        {
+            var empleados = await _repoEmpleados.ListarEmpleadoSinHorasExtraEnProceso();
+            var resultado = empleados.Select(MapeatToDTO).ToList();
+            return resultado;
+        }
+
+        private DetalleEmpleadoDTO MapeatToDTO(Empleados empleado)
+        {
+            return new DetalleEmpleadoDTO
+            {
+                IdEmpleado = empleado.IdEmpleado,
+                CodigoEmpleado = empleado.CodigoEmpleado,
+                Nombre = empleado.Nombre,
+                PrimerApellido = empleado.PrimerApellido,
+                SegundoApellido = empleado.SegundoApellido,
+                Email = empleado.Email,
+                Telefono = empleado.Telefono,
+                FechaContratacion = empleado.FechaContratacion,
+                PuestoId = empleado.PuestoId,
+                DepartamentoId = empleado.DepartamentoId,
+                JefeInmediatoId = empleado.JefeInmediatoId,
+                SalarioBase = empleado.SalarioBase,
+                TipoContrato = Enum.Parse<TipoContrato>(empleado.TipoContrato),
+                Estado = empleado.Estado,
+                FechaCreacion = empleado.FechaCreacion,
+                FechaModificacion = empleado.FechaModificacion
+            };
         }
     }
 }

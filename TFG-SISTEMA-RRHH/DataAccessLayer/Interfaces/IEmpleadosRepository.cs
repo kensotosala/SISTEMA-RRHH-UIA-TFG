@@ -22,6 +22,8 @@ namespace DataAccessLayer.Interfaces
 
         Task<IEnumerable<Empleados>> GetAllWithUsersAndRolesAsync();
 
+        Task<IEnumerable<Empleados>> ListarEmpleadoSinHorasExtraEnProceso();
+
         Task<Empleados?> GetByIdAsync(int id);
 
         Task<bool> TieneSubordinadosAsync(int id);

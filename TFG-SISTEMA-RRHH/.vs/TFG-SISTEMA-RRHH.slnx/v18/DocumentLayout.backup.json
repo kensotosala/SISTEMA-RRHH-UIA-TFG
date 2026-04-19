@@ -3,100 +3,24 @@
   "WorkspaceRootPath": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{51B4CFD2-5728-0F00-60C4-E24DAE522468}|PresentationLayer\\PresentationLayer.csproj|c:\\users\\user\\documents\\uia\\trabajo final de graduacion\\servidor\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\presentationlayer\\controllers\\puestoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{51B4CFD2-5728-0F00-60C4-E24DAE522468}|PresentationLayer\\PresentationLayer.csproj|solutionrelative:presentationlayer\\controllers\\puestoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|c:\\users\\user\\documents\\uia\\trabajo final de graduacion\\servidor\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\businesslogiclayer\\interfaces\\ihorasextramanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|solutionrelative:businesslogiclayer\\interfaces\\ihorasextramanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{51B4CFD2-5728-0F00-60C4-E24DAE522468}|PresentationLayer\\PresentationLayer.csproj|c:\\users\\user\\documents\\uia\\trabajo final de graduacion\\servidor\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\presentationlayer\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{51B4CFD2-5728-0F00-60C4-E24DAE522468}|PresentationLayer\\PresentationLayer.csproj|solutionrelative:presentationlayer\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|c:\\users\\user\\documents\\uia\\trabajo final de graduacion\\servidor\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\businesslogiclayer\\managers\\horasextramanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|solutionrelative:businesslogiclayer\\managers\\horasextramanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{51B4CFD2-5728-0F00-60C4-E24DAE522468}|PresentationLayer\\PresentationLayer.csproj|c:\\users\\user\\documents\\uia\\trabajo final de graduacion\\servidor\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\presentationlayer\\controllers\\metricasrendimientocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{51B4CFD2-5728-0F00-60C4-E24DAE522468}|PresentationLayer\\PresentationLayer.csproj|solutionrelative:presentationlayer\\controllers\\metricasrendimientocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|c:\\users\\user\\documents\\uia\\trabajo final de graduacion\\servidor\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\businesslogiclayer\\managers\\usuariosmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|solutionrelative:businesslogiclayer\\managers\\usuariosmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{51B4CFD2-5728-0F00-60C4-E24DAE522468}|PresentationLayer\\PresentationLayer.csproj|c:\\users\\user\\documents\\uia\\trabajo final de graduacion\\servidor\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\presentationlayer\\controllers\\permisoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{51B4CFD2-5728-0F00-60C4-E24DAE522468}|PresentationLayer\\PresentationLayer.csproj|solutionrelative:presentationlayer\\controllers\\permisoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A9FCCEB3-DD88-F8C0-89A3-FD31A7C54F23}|DataAccessLayer\\DataAccessLayer.csproj|c:\\users\\user\\documents\\uia\\trabajo final de graduacion\\servidor\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\dataaccesslayer\\repositories\\empleadosrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A9FCCEB3-DD88-F8C0-89A3-FD31A7C54F23}|DataAccessLayer\\DataAccessLayer.csproj|solutionrelative:dataaccesslayer\\repositories\\empleadosrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{51B4CFD2-5728-0F00-60C4-E24DAE522468}|PresentationLayer\\PresentationLayer.csproj|c:\\users\\user\\documents\\uia\\trabajo final de graduacion\\servidor\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\presentationlayer\\controllers\\vacacionescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{51B4CFD2-5728-0F00-60C4-E24DAE522468}|PresentationLayer\\PresentationLayer.csproj|solutionrelative:presentationlayer\\controllers\\vacacionescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{51B4CFD2-5728-0F00-60C4-E24DAE522468}|PresentationLayer\\PresentationLayer.csproj|c:\\users\\user\\documents\\uia\\trabajo final de graduacion\\servidor\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\presentationlayer\\controllers\\usuarioscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{51B4CFD2-5728-0F00-60C4-E24DAE522468}|PresentationLayer\\PresentationLayer.csproj|solutionrelative:presentationlayer\\controllers\\usuarioscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{51B4CFD2-5728-0F00-60C4-E24DAE522468}|PresentationLayer\\PresentationLayer.csproj|c:\\users\\user\\documents\\uia\\trabajo final de graduacion\\servidor\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\presentationlayer\\controllers\\rolcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{51B4CFD2-5728-0F00-60C4-E24DAE522468}|PresentationLayer\\PresentationLayer.csproj|solutionrelative:presentationlayer\\controllers\\rolcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{51B4CFD2-5728-0F00-60C4-E24DAE522468}|PresentationLayer\\PresentationLayer.csproj|c:\\users\\user\\documents\\uia\\trabajo final de graduacion\\servidor\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\presentationlayer\\controllers\\nominacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{51B4CFD2-5728-0F00-60C4-E24DAE522468}|PresentationLayer\\PresentationLayer.csproj|solutionrelative:presentationlayer\\controllers\\nominacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{51B4CFD2-5728-0F00-60C4-E24DAE522468}|PresentationLayer\\PresentationLayer.csproj|c:\\users\\user\\documents\\uia\\trabajo final de graduacion\\servidor\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\presentationlayer\\controllers\\liquidacionescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{51B4CFD2-5728-0F00-60C4-E24DAE522468}|PresentationLayer\\PresentationLayer.csproj|solutionrelative:presentationlayer\\controllers\\liquidacionescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{51B4CFD2-5728-0F00-60C4-E24DAE522468}|PresentationLayer\\PresentationLayer.csproj|c:\\users\\user\\documents\\uia\\trabajo final de graduacion\\servidor\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\presentationlayer\\controllers\\incapacidadcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{51B4CFD2-5728-0F00-60C4-E24DAE522468}|PresentationLayer\\PresentationLayer.csproj|solutionrelative:presentationlayer\\controllers\\incapacidadcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{51B4CFD2-5728-0F00-60C4-E24DAE522468}|PresentationLayer\\PresentationLayer.csproj|c:\\users\\user\\documents\\uia\\trabajo final de graduacion\\servidor\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\presentationlayer\\controllers\\horasextracontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{51B4CFD2-5728-0F00-60C4-E24DAE522468}|PresentationLayer\\PresentationLayer.csproj|solutionrelative:presentationlayer\\controllers\\horasextracontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{51B4CFD2-5728-0F00-60C4-E24DAE522468}|PresentationLayer\\PresentationLayer.csproj|c:\\users\\user\\documents\\uia\\trabajo final de graduacion\\servidor\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\presentationlayer\\controllers\\evaluacionesrendimientocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{51B4CFD2-5728-0F00-60C4-E24DAE522468}|PresentationLayer\\PresentationLayer.csproj|solutionrelative:presentationlayer\\controllers\\evaluacionesrendimientocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{51B4CFD2-5728-0F00-60C4-E24DAE522468}|PresentationLayer\\PresentationLayer.csproj|c:\\users\\user\\documents\\uia\\trabajo final de graduacion\\servidor\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\presentationlayer\\controllers\\empleadoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{51B4CFD2-5728-0F00-60C4-E24DAE522468}|PresentationLayer\\PresentationLayer.csproj|solutionrelative:presentationlayer\\controllers\\empleadoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{51B4CFD2-5728-0F00-60C4-E24DAE522468}|PresentationLayer\\PresentationLayer.csproj|c:\\users\\user\\documents\\uia\\trabajo final de graduacion\\servidor\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\presentationlayer\\controllers\\departamentoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{51B4CFD2-5728-0F00-60C4-E24DAE522468}|PresentationLayer\\PresentationLayer.csproj|solutionrelative:presentationlayer\\controllers\\departamentoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{51B4CFD2-5728-0F00-60C4-E24DAE522468}|PresentationLayer\\PresentationLayer.csproj|c:\\users\\user\\documents\\uia\\trabajo final de graduacion\\servidor\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\presentationlayer\\controllers\\auditoriacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{51B4CFD2-5728-0F00-60C4-E24DAE522468}|PresentationLayer\\PresentationLayer.csproj|solutionrelative:presentationlayer\\controllers\\auditoriacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{51B4CFD2-5728-0F00-60C4-E24DAE522468}|PresentationLayer\\PresentationLayer.csproj|c:\\users\\user\\documents\\uia\\trabajo final de graduacion\\servidor\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\presentationlayer\\controllers\\asistenciacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{51B4CFD2-5728-0F00-60C4-E24DAE522468}|PresentationLayer\\PresentationLayer.csproj|solutionrelative:presentationlayer\\controllers\\asistenciacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{51B4CFD2-5728-0F00-60C4-E24DAE522468}|PresentationLayer\\PresentationLayer.csproj|c:\\users\\user\\documents\\uia\\trabajo final de graduacion\\servidor\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\presentationlayer\\controllers\\aguinaldocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{51B4CFD2-5728-0F00-60C4-E24DAE522468}|PresentationLayer\\PresentationLayer.csproj|solutionrelative:presentationlayer\\controllers\\aguinaldocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A9FCCEB3-DD88-F8C0-89A3-FD31A7C54F23}|DataAccessLayer\\DataAccessLayer.csproj|c:\\users\\user\\documents\\uia\\trabajo final de graduacion\\servidor\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\dataaccesslayer\\data\\sistemarhcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A9FCCEB3-DD88-F8C0-89A3-FD31A7C54F23}|DataAccessLayer\\DataAccessLayer.csproj|solutionrelative:dataaccesslayer\\data\\sistemarhcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|c:\\users\\user\\documents\\uia\\trabajo final de graduacion\\servidor\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\businesslogiclayer\\managers\\asistenciamanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|solutionrelative:businesslogiclayer\\managers\\asistenciamanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|c:\\users\\user\\documents\\uia\\trabajo final de graduacion\\servidor\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\businesslogiclayer\\interfaces\\iasistenciamanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{02CA952E-00CC-4C37-93E9-874CC1E34FB2}|BusinessLogicLayer\\BusinessLogicLayer.csproj|solutionrelative:businesslogiclayer\\interfaces\\iasistenciamanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A9FCCEB3-DD88-F8C0-89A3-FD31A7C54F23}|DataAccessLayer\\DataAccessLayer.csproj|c:\\users\\user\\documents\\uia\\trabajo final de graduacion\\servidor\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\dataaccesslayer\\entities\\asistencias.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A9FCCEB3-DD88-F8C0-89A3-FD31A7C54F23}|DataAccessLayer\\DataAccessLayer.csproj|solutionrelative:dataaccesslayer\\entities\\asistencias.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A9FCCEB3-DD88-F8C0-89A3-FD31A7C54F23}|DataAccessLayer\\DataAccessLayer.csproj|c:\\users\\user\\documents\\uia\\trabajo final de graduacion\\servidor\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\dataaccesslayer\\interfaces\\iasistenciasrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A9FCCEB3-DD88-F8C0-89A3-FD31A7C54F23}|DataAccessLayer\\DataAccessLayer.csproj|solutionrelative:dataaccesslayer\\interfaces\\iasistenciasrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A9FCCEB3-DD88-F8C0-89A3-FD31A7C54F23}|DataAccessLayer\\DataAccessLayer.csproj|c:\\users\\user\\documents\\uia\\trabajo final de graduacion\\servidor\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\dataaccesslayer\\repositories\\asistenciasrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A9FCCEB3-DD88-F8C0-89A3-FD31A7C54F23}|DataAccessLayer\\DataAccessLayer.csproj|solutionrelative:dataaccesslayer\\repositories\\asistenciasrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A9FCCEB3-DD88-F8C0-89A3-FD31A7C54F23}|DataAccessLayer\\DataAccessLayer.csproj|c:\\users\\user\\documents\\uia\\trabajo final de graduacion\\servidor\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\dataaccesslayer\\shared\\enumsasistencia.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A9FCCEB3-DD88-F8C0-89A3-FD31A7C54F23}|DataAccessLayer\\DataAccessLayer.csproj|solutionrelative:dataaccesslayer\\shared\\enumsasistencia.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A9FCCEB3-DD88-F8C0-89A3-FD31A7C54F23}|DataAccessLayer\\DataAccessLayer.csproj|c:\\users\\user\\documents\\uia\\trabajo final de graduacion\\servidor\\sistema-rrhh-uia-tfg\\tfg-sistema-rrhh\\dataaccesslayer\\interfaces\\iempleadosrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A9FCCEB3-DD88-F8C0-89A3-FD31A7C54F23}|DataAccessLayer\\DataAccessLayer.csproj|solutionrelative:dataaccesslayer\\interfaces\\iempleadosrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -114,309 +38,89 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "VacacionesController.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\PresentationLayer\\Controllers\\VacacionesController.cs",
-              "RelativeDocumentMoniker": "PresentationLayer\\Controllers\\VacacionesController.cs",
-              "ToolTip": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\PresentationLayer\\Controllers\\VacacionesController.cs",
-              "RelativeToolTip": "PresentationLayer\\Controllers\\VacacionesController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAFAAAAAAAAAA==",
+              "DocumentIndex": 1,
+              "Title": "HorasExtraManager.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\Managers\\HorasExtraManager.cs",
+              "RelativeDocumentMoniker": "BusinessLogicLayer\\Managers\\HorasExtraManager.cs",
+              "ToolTip": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\Managers\\HorasExtraManager.cs",
+              "RelativeToolTip": "BusinessLogicLayer\\Managers\\HorasExtraManager.cs",
+              "ViewState": "AgIAAE8BAAAAAAAAAAAowGsBAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-17T00:45:58.135Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "UsuariosController.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\PresentationLayer\\Controllers\\UsuariosController.cs",
-              "RelativeDocumentMoniker": "PresentationLayer\\Controllers\\UsuariosController.cs",
-              "ToolTip": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\PresentationLayer\\Controllers\\UsuariosController.cs",
-              "RelativeToolTip": "PresentationLayer\\Controllers\\UsuariosController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAATAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-17T00:45:54.623Z",
+              "WhenOpened": "2026-04-19T18:25:28.858Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "PuestosController.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\PresentationLayer\\Controllers\\PuestosController.cs",
-              "RelativeDocumentMoniker": "PresentationLayer\\Controllers\\PuestosController.cs",
-              "ToolTip": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\PresentationLayer\\Controllers\\PuestosController.cs",
-              "RelativeToolTip": "PresentationLayer\\Controllers\\PuestosController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAiAAAAAAAAAA==",
+              "Title": "IHorasExtraManager.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\Interfaces\\IHorasExtraManager.cs",
+              "RelativeDocumentMoniker": "BusinessLogicLayer\\Interfaces\\IHorasExtraManager.cs",
+              "ToolTip": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\Interfaces\\IHorasExtraManager.cs",
+              "RelativeToolTip": "BusinessLogicLayer\\Interfaces\\IHorasExtraManager.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-17T00:45:47.951Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "RolController.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\PresentationLayer\\Controllers\\RolController.cs",
-              "RelativeDocumentMoniker": "PresentationLayer\\Controllers\\RolController.cs",
-              "ToolTip": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\PresentationLayer\\Controllers\\RolController.cs",
-              "RelativeToolTip": "PresentationLayer\\Controllers\\RolController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-17T00:45:49.261Z",
+              "WhenOpened": "2026-04-19T18:25:30.24Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "PermisosController.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\PresentationLayer\\Controllers\\PermisosController.cs",
-              "RelativeDocumentMoniker": "PresentationLayer\\Controllers\\PermisosController.cs",
-              "ToolTip": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\PresentationLayer\\Controllers\\PermisosController.cs",
-              "RelativeToolTip": "PresentationLayer\\Controllers\\PermisosController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Title": "EmpleadosRepository.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\DataAccessLayer\\Repositories\\EmpleadosRepository.cs",
+              "RelativeDocumentMoniker": "DataAccessLayer\\Repositories\\EmpleadosRepository.cs",
+              "ToolTip": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\DataAccessLayer\\Repositories\\EmpleadosRepository.cs",
+              "RelativeToolTip": "DataAccessLayer\\Repositories\\EmpleadosRepository.cs",
+              "ViewState": "AgIAAHcAAAAAAAAAAADwv3oAAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-17T00:45:48.243Z",
+              "WhenOpened": "2026-04-19T17:38:08.57Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "NominaController.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\PresentationLayer\\Controllers\\NominaController.cs",
-              "RelativeDocumentMoniker": "PresentationLayer\\Controllers\\NominaController.cs",
-              "ToolTip": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\PresentationLayer\\Controllers\\NominaController.cs",
-              "RelativeToolTip": "PresentationLayer\\Controllers\\NominaController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 4,
+              "Title": "IEmpleadosRepository.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\DataAccessLayer\\Interfaces\\IEmpleadosRepository.cs",
+              "RelativeDocumentMoniker": "DataAccessLayer\\Interfaces\\IEmpleadosRepository.cs",
+              "ToolTip": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\DataAccessLayer\\Interfaces\\IEmpleadosRepository.cs",
+              "RelativeToolTip": "DataAccessLayer\\Interfaces\\IEmpleadosRepository.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAIwBgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-17T00:45:46.363Z",
+              "WhenOpened": "2026-04-19T17:38:32.099Z",
               "EditorCaption": ""
-            },
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "FloatingWindowState": {
+        "Id": "9efc8d35-e914-4f9b-a479-a6554a789e6a",
+        "Display": 1,
+        "X": 546,
+        "Y": 536,
+        "Width": 1595,
+        "Height": 958,
+        "WindowState": 2
+      },
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "MetricasRendimientoController.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\PresentationLayer\\Controllers\\MetricasRendimientoController.cs",
-              "RelativeDocumentMoniker": "PresentationLayer\\Controllers\\MetricasRendimientoController.cs",
-              "ToolTip": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\PresentationLayer\\Controllers\\MetricasRendimientoController.cs",
-              "RelativeToolTip": "PresentationLayer\\Controllers\\MetricasRendimientoController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Title": "UsuariosManager.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\Managers\\UsuariosManager.cs",
+              "RelativeDocumentMoniker": "BusinessLogicLayer\\Managers\\UsuariosManager.cs",
+              "ToolTip": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\Managers\\UsuariosManager.cs",
+              "RelativeToolTip": "BusinessLogicLayer\\Managers\\UsuariosManager.cs",
+              "ViewState": "AgIAAAUBAAAAAAAAAAAiwCUBAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-17T00:45:45.202Z",
+              "WhenOpened": "2026-04-19T18:27:47.522Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "AuthController.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\PresentationLayer\\Controllers\\AuthController.cs",
-              "RelativeDocumentMoniker": "PresentationLayer\\Controllers\\AuthController.cs",
-              "ToolTip": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\PresentationLayer\\Controllers\\AuthController.cs",
-              "RelativeToolTip": "PresentationLayer\\Controllers\\AuthController.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAAA0AAAATAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-17T00:45:24.144Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "LiquidacionesController.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\PresentationLayer\\Controllers\\LiquidacionesController.cs",
-              "RelativeDocumentMoniker": "PresentationLayer\\Controllers\\LiquidacionesController.cs",
-              "ToolTip": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\PresentationLayer\\Controllers\\LiquidacionesController.cs",
-              "RelativeToolTip": "PresentationLayer\\Controllers\\LiquidacionesController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-17T00:45:44.105Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "IncapacidadController.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\PresentationLayer\\Controllers\\IncapacidadController.cs",
-              "RelativeDocumentMoniker": "PresentationLayer\\Controllers\\IncapacidadController.cs",
-              "ToolTip": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\PresentationLayer\\Controllers\\IncapacidadController.cs",
-              "RelativeToolTip": "PresentationLayer\\Controllers\\IncapacidadController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-17T00:45:42.594Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "HorasExtraController.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\PresentationLayer\\Controllers\\HorasExtraController.cs",
-              "RelativeDocumentMoniker": "PresentationLayer\\Controllers\\HorasExtraController.cs",
-              "ToolTip": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\PresentationLayer\\Controllers\\HorasExtraController.cs",
-              "RelativeToolTip": "PresentationLayer\\Controllers\\HorasExtraController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAATAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-17T00:45:38.506Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "EvaluacionesRendimientoController.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\PresentationLayer\\Controllers\\EvaluacionesRendimientoController.cs",
-              "RelativeDocumentMoniker": "PresentationLayer\\Controllers\\EvaluacionesRendimientoController.cs",
-              "ToolTip": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\PresentationLayer\\Controllers\\EvaluacionesRendimientoController.cs",
-              "RelativeToolTip": "PresentationLayer\\Controllers\\EvaluacionesRendimientoController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-17T00:45:36.783Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "EmpleadosController.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\PresentationLayer\\Controllers\\EmpleadosController.cs",
-              "RelativeDocumentMoniker": "PresentationLayer\\Controllers\\EmpleadosController.cs",
-              "ToolTip": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\PresentationLayer\\Controllers\\EmpleadosController.cs",
-              "RelativeToolTip": "PresentationLayer\\Controllers\\EmpleadosController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAATAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-17T00:45:30.65Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "DepartamentosController.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\PresentationLayer\\Controllers\\DepartamentosController.cs",
-              "RelativeDocumentMoniker": "PresentationLayer\\Controllers\\DepartamentosController.cs",
-              "ToolTip": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\PresentationLayer\\Controllers\\DepartamentosController.cs",
-              "RelativeToolTip": "PresentationLayer\\Controllers\\DepartamentosController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAATAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-17T00:45:26.116Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "AuditoriaController.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\PresentationLayer\\Controllers\\AuditoriaController.cs",
-              "RelativeDocumentMoniker": "PresentationLayer\\Controllers\\AuditoriaController.cs",
-              "ToolTip": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\PresentationLayer\\Controllers\\AuditoriaController.cs",
-              "RelativeToolTip": "PresentationLayer\\Controllers\\AuditoriaController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-17T00:45:22.407Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 16,
-              "Title": "AguinaldoController.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\PresentationLayer\\Controllers\\AguinaldoController.cs",
-              "RelativeDocumentMoniker": "PresentationLayer\\Controllers\\AguinaldoController.cs",
-              "ToolTip": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\PresentationLayer\\Controllers\\AguinaldoController.cs",
-              "RelativeToolTip": "PresentationLayer\\Controllers\\AguinaldoController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-17T00:45:13.839Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 17,
-              "Title": "SistemaRhContext.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\DataAccessLayer\\Data\\SistemaRhContext.cs",
-              "RelativeDocumentMoniker": "DataAccessLayer\\Data\\SistemaRhContext.cs",
-              "ToolTip": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\DataAccessLayer\\Data\\SistemaRhContext.cs",
-              "RelativeToolTip": "DataAccessLayer\\Data\\SistemaRhContext.cs",
-              "ViewState": "AgIAAHQAAAAAAAAAAAAcwI0AAAAvAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-13T03:31:00.355Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 19,
-              "Title": "IAsistenciaManager.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\Interfaces\\IAsistenciaManager.cs",
-              "RelativeDocumentMoniker": "BusinessLogicLayer\\Interfaces\\IAsistenciaManager.cs",
-              "ToolTip": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\Interfaces\\IAsistenciaManager.cs",
-              "RelativeToolTip": "BusinessLogicLayer\\Interfaces\\IAsistenciaManager.cs",
-              "ViewState": "AgIAAAsAAAAAAAAAAAAwwBQAAABPAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-13T03:23:14.783Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 23,
-              "Title": "EnumsAsistencia.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\DataAccessLayer\\Shared\\EnumsAsistencia.cs",
-              "RelativeDocumentMoniker": "DataAccessLayer\\Shared\\EnumsAsistencia.cs",
-              "ToolTip": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\DataAccessLayer\\Shared\\EnumsAsistencia.cs",
-              "RelativeToolTip": "DataAccessLayer\\Shared\\EnumsAsistencia.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAeAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-13T02:59:44.304Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 20,
-              "Title": "Asistencias.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\DataAccessLayer\\Entities\\Asistencias.cs",
-              "RelativeDocumentMoniker": "DataAccessLayer\\Entities\\Asistencias.cs",
-              "ToolTip": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\DataAccessLayer\\Entities\\Asistencias.cs",
-              "RelativeToolTip": "DataAccessLayer\\Entities\\Asistencias.cs",
-              "ViewState": "AgIAAAcAAAAAAAAAAAAgwBAAAAAaAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-12T22:00:53.917Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "AsistenciaController.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\PresentationLayer\\Controllers\\AsistenciaController.cs",
-              "RelativeDocumentMoniker": "PresentationLayer\\Controllers\\AsistenciaController.cs",
-              "ToolTip": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\PresentationLayer\\Controllers\\AsistenciaController.cs",
-              "RelativeToolTip": "PresentationLayer\\Controllers\\AsistenciaController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAATAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-13T03:20:20.505Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 18,
-              "Title": "AsistenciaManager.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\Managers\\AsistenciaManager.cs",
-              "RelativeDocumentMoniker": "BusinessLogicLayer\\Managers\\AsistenciaManager.cs",
-              "ToolTip": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\BusinessLogicLayer\\Managers\\AsistenciaManager.cs",
-              "RelativeToolTip": "BusinessLogicLayer\\Managers\\AsistenciaManager.cs",
-              "ViewState": "AgIAADUBAAAAAAAAAADgv+UAAAAiAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-09T03:24:33.199Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 22,
-              "Title": "AsistenciasRepository.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\DataAccessLayer\\Repositories\\AsistenciasRepository.cs",
-              "RelativeDocumentMoniker": "DataAccessLayer\\Repositories\\AsistenciasRepository.cs",
-              "ToolTip": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\DataAccessLayer\\Repositories\\AsistenciasRepository.cs",
-              "RelativeToolTip": "DataAccessLayer\\Repositories\\AsistenciasRepository.cs",
-              "ViewState": "AgIAAIAAAAAAAAAAAAAYwJAAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-13T02:54:37.366Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 21,
-              "Title": "IAsistenciasRepository.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\DataAccessLayer\\Interfaces\\IAsistenciasRepository.cs",
-              "RelativeDocumentMoniker": "DataAccessLayer\\Interfaces\\IAsistenciasRepository.cs",
-              "ToolTip": "C:\\Users\\USER\\Documents\\UIA\\TRABAJO FINAL DE GRADUACION\\SERVIDOR\\SISTEMA-RRHH-UIA-TFG\\TFG-SISTEMA-RRHH\\DataAccessLayer\\Interfaces\\IAsistenciasRepository.cs",
-              "RelativeToolTip": "DataAccessLayer\\Interfaces\\IAsistenciasRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAdAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-13T02:54:40.995Z"
             }
           ]
         }

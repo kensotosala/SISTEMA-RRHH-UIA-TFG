@@ -123,6 +123,14 @@ namespace DataAccessLayer.Repositories
                 .ToListAsync();
         }
 
+        public async Task<IEnumerable<Empleados>> ListarEmpleadoSinHorasExtraEnProceso()
+        {
+            return await _context.Empleados
+                .Include(e => e.HorasExtrasEmpleado)
+                .Where(e => !e.HorasExtrasEmpleado.Any(he => he.EstadoSolicitud == "PENDIENTE"))
+                .ToListAsync();
+        }
+
         public async Task<bool> TieneSubordinadosAsync(int jefeId)
         {
             return await _context.Empleados

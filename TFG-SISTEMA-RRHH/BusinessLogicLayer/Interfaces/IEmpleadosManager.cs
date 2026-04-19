@@ -6,6 +6,8 @@ namespace BusinessLogicLayer.Interfaces
     {
         Task<IEnumerable<DetalleEmpleadoDTO>> ListAsync();
 
+        Task<IEnumerable<DetalleEmpleadoDTO>> ListarEmpleadoSinHorasExtraEnProcesoAsync();
+
         Task<DetalleEmpleadoDTO?> GetByIdAsync(int id);
 
         Task<DetalleEmpleadoDTO> CreateAsync(CrearEmpleadoYUsuarioDTO dto);

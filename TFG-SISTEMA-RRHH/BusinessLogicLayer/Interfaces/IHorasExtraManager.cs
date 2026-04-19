@@ -1,5 +1,4 @@
 ﻿using BusinessLogicLayer.DTOs;
-using DataAccessLayer.Entities;
 
 namespace BusinessLogicLayer.Interfaces
 {
@@ -26,7 +25,7 @@ namespace BusinessLogicLayer.Interfaces
         Task<ReporteHorasExtrasDTO> GetReporteEmpleadoAsync(int empleadoId, DateTime fechaInicio, DateTime fechaFin);
 
         Task<HoraExtraHoyDTO> ObtenerHoraExtraHoyAsync(int empleadoId);
-        Task<HoraExtraDTO?> ObtenerHoraExtraActivaAsync(int empleadoId, DateTime fechaHora);
 
+        Task<HoraExtraDTO?> ObtenerHoraExtraActivaAsync(int empleadoId, DateTime fechaHora);
     }
 }
