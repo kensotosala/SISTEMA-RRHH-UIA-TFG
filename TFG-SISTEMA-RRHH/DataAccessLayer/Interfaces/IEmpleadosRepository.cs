@@ -31,5 +31,7 @@ namespace DataAccessLayer.Interfaces
         Task<bool> UpdateAsync(Empleados empleado);
 
         Task<List<Empleados>> GetByIdsAsync(IEnumerable<int> ids);
+
+        Task<string?> GetUltimoCodigoAsync();
     }
 }

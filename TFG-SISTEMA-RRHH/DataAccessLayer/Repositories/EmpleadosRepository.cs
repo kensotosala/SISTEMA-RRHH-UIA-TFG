@@ -35,20 +35,17 @@ namespace DataAccessLayer.Repositories
                 return false;
             }
 
-            // Verificar si tiene relaciones que impiden eliminación
             var tieneAsistencias = await _context.Asistencias.AnyAsync(a => a.EmpleadoId == id);
             var tieneNominas = await _context.Nominas.AnyAsync(n => n.EmpleadoId == id);
             var tieneVacaciones = await _context.Vacaciones.AnyAsync(v => v.EmpleadoId == id);
 
             if (tieneAsistencias || tieneNominas || tieneVacaciones)
             {
-                // En lugar de eliminar físicamente, cambiar el estado a INACTIVO
                 empleado.Estado = "INACTIVO";
                 await _context.SaveChangesAsync();
                 return true;
             }
 
-            // Si no tiene registros históricos, eliminar físicamente
             _context.Empleados.Remove(empleado);
             await _context.SaveChangesAsync();
 
@@ -121,6 +118,14 @@ namespace DataAccessLayer.Repositories
                 .Include(e => e.Departamento)
                 .Where(e => idList.Contains(e.IdEmpleado))
                 .ToListAsync();
+        }
+
+        public async Task<string?> GetUltimoCodigoAsync()
+        {
+            return await _context.Empleados
+                .OrderByDescending(e => e.CodigoEmpleado)
+                .Select(e => e.CodigoEmpleado)
+                .FirstOrDefaultAsync();
         }
 
         public async Task<IEnumerable<Empleados>> ListarEmpleadoSinHorasExtraEnProceso()

@@ -76,9 +76,6 @@ namespace BusinessLogicLayer.DTOs
 
     public class CrearEmpleadoYUsuarioDTO
     {
-        [Required]
-        [StringLength(20, MinimumLength = 3)]
-        public string CodigoEmpleado { get; set; } = null!;
 
         [Required]
         [StringLength(50)]

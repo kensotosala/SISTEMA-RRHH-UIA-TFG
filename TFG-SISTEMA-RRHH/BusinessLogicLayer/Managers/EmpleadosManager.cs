@@ -44,9 +44,7 @@ namespace BusinessLogicLayer.Managers
             if (dto == null)
                 throw new ArgumentNullException(nameof(dto));
 
-            if (await _repoEmpleados.ExistsByCodigoAsync(dto.CodigoEmpleado))
-                throw new ArgumentException(
-                    $"Ya existe un empleado con el código '{dto.CodigoEmpleado}'.");
+
 
             if (await _repoUsuarios.ExistsByUsernameAsync(dto.NombreUsuario))
                 throw new BusinessException(
@@ -90,13 +88,12 @@ namespace BusinessLogicLayer.Managers
                     $"El Rol cuyo ID es '{dto.RolId}' no se encuentra.",
                     code: "ROL_NO_EXISTE");
 
-            // ======================================================
-            // CREAR EMPLEADO (DTO → ENTIDAD)
-            // ======================================================
+            var GetUltimoCodigo = await _repoEmpleados.GetUltimoCodigoAsync();
+            var nuevoCodigo = GenerarCodigo(GetUltimoCodigo);
 
             var empleado = new Empleados
             {
-                CodigoEmpleado = dto.CodigoEmpleado,
+                CodigoEmpleado = nuevoCodigo,
                 Nombre = dto.Nombre,
                 PrimerApellido = dto.PrimerApellido,
                 SegundoApellido = dto.SegundoApellido,
@@ -116,6 +113,9 @@ namespace BusinessLogicLayer.Managers
             };
 
             var empleadoCreado = await _repoEmpleados.CreateAsync(empleado);
+
+            empleadoCreado.CodigoEmpleado = $"EMP{empleadoCreado.IdEmpleado:D4}";
+            await _repoEmpleados.UpdateAsync(empleadoCreado);
 
             // ======================================================
             // CREAR USUARIO (DTO → ENTIDAD)
@@ -178,6 +178,28 @@ namespace BusinessLogicLayer.Managers
                 NombreUsuario = usuarioCreado.NombreUsuario,
                 NombreRol = rol?.Nombre ?? string.Empty
             };
+        }
+
+        private string GenerarCodigo(string? ultimoCodigo)
+        {
+            const string prefijo = "EMP";
+
+            // Si no hay registros aún
+            if (string.IsNullOrWhiteSpace(ultimoCodigo))
+                return $"{prefijo}0001";
+
+            // Validar que tenga el formato esperado
+            if (!ultimoCodigo.StartsWith(prefijo))
+                throw new InvalidOperationException($"El código '{ultimoCodigo}' no tiene el formato esperado.");
+
+            var parteNumerica = ultimoCodigo.Substring(prefijo.Length);
+
+            if (!int.TryParse(parteNumerica, out int numero))
+                throw new InvalidOperationException($"El código '{ultimoCodigo}' contiene una parte numérica inválida.");
+
+            numero++;
+
+            return $"{prefijo}{numero:D4}";
         }
 
         public async Task<DetalleEmpleadoDTO?> GetByIdAsync(int id)
