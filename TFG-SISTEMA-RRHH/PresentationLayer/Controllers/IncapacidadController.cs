@@ -12,7 +12,10 @@ namespace PresentationLayer.Controllers
         private readonly IIncapacidadesManager _managerIncapacidades;
         private readonly IWebHostEnvironment _environment;
 
-        public IncapacidadController(IIncapacidadesManager managerIncapacidades, ILogger<IncapacidadController> logger, IWebHostEnvironment environment)
+        public IncapacidadController(
+            IIncapacidadesManager managerIncapacidades,
+            ILogger<IncapacidadController> logger,
+            IWebHostEnvironment environment)
         {
             _managerIncapacidades = managerIncapacidades;
             _logger = logger;
@@ -23,7 +26,9 @@ namespace PresentationLayer.Controllers
         [ProducesResponseType(typeof(IncapacidadDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<IncapacidadDto>> ActualizarIncapacidad(int id, [FromBody] ActualizarIncapacidadDto dto)
+        public async Task<ActionResult<IncapacidadDto>> ActualizarIncapacidad(
+            int id,
+            [FromBody] ActualizarIncapacidadDto dto)
         {
             if (dto == null)
                 return BadRequest(new { mensaje = "El cuerpo de la solicitud no puede estar vacío" });
@@ -107,7 +112,6 @@ namespace PresentationLayer.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error al obtener incapacidad {Id}", id);
-
                 return StatusCode(500, new { mensaje = "Error interno del servidor" });
             }
         }
@@ -116,16 +120,28 @@ namespace PresentationLayer.Controllers
         [ProducesResponseType(typeof(IncapacidadDto), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<IncapacidadDto>> RegistrarIncapacidad(
-    [FromForm] RegistrarIncapacidadDto dto,
-    IFormFile? archivo)
+            [FromForm] RegistrarIncapacidadDto dto)
         {
+
+            _logger.LogInformation("=== REGISTRO INCAPACIDAD ===");
+            _logger.LogInformation("DTO recibido: EmpleadoId={EmpleadoId}, Tipo={Tipo}, Diagnostico={Diagnostico}",
+                dto?.EmpleadoId, dto?.TipoIncapacidad, dto?.Diagnostico);
+            _logger.LogInformation("Form files count: {Count}", Request.Form.Files.Count);
+            foreach (var file in Request.Form.Files)
+            {
+                _logger.LogInformation("File: Name={Name}, FileName={FileName}, Length={Length}",
+                    file.Name, file.FileName, file.Length);
+            }
+
+
             if (dto == null)
                 return BadRequest(new { mensaje = "El DTO no puede ser nulo" });
 
             if (dto.FechaFin < dto.FechaInicio)
                 return BadRequest(new { mensaje = "La fecha fin no puede ser menor a la fecha de inicio" });
 
-            // Guardar archivo si viene en el request
+            var archivo = Request.Form.Files.GetFile("archivo");
+
             if (archivo != null && archivo.Length > 0)
             {
                 var extensionesPermitidas = new[] { ".pdf", ".jpg", ".jpeg", ".png" };
